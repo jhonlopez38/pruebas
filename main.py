@@ -21,19 +21,20 @@ app.mount("/files", StaticFiles(directory=FILES_FOLDER), name="files")
 def home():
     index_path = os.path.join(STATIC_FOLDER, "index.html")
 
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
+    if os.path.isfile(index_path):
+        return FileResponse(index_path, media_type="text/html")
 
-    return {
+    return JSONResponse({
         "status": "Servidor Hermes GPS activo",
         "message": "Web app no instalada todavía",
+        "expected_file": "static/index.html",
         "health": f"{BASE_URL}/health",
         "links": f"{BASE_URL}/links",
         "files": {
             "kml": f"{BASE_URL}/files/ruta.kml",
             "csv": f"{BASE_URL}/files/gps_log.csv"
         }
-    }
+    })
 
 
 @app.get("/health")
@@ -41,7 +42,8 @@ def health():
     return {
         "status": "ok",
         "service": "Hermes GPS Backend",
-        "web": BASE_URL
+        "web": BASE_URL,
+        "index_exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html"))
     }
 
 
@@ -62,12 +64,16 @@ def last_files():
 
     return {
         "kml": {
-            "exists": os.path.exists(kml_path),
+            "exists": os.path.isfile(kml_path),
             "url": f"{BASE_URL}/files/ruta.kml"
         },
         "csv": {
-            "exists": os.path.exists(csv_path),
+            "exists": os.path.isfile(csv_path),
             "url": f"{BASE_URL}/files/gps_log.csv"
+        },
+        "index": {
+            "exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html")),
+            "url": BASE_URL
         }
     }
 
