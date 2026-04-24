@@ -22,7 +22,7 @@ header {
 }
 
 #map {
-    height: 70vh;
+    height: 75vh;
 }
 
 .panel {
@@ -48,8 +48,8 @@ button {
 <div id="map"></div>
 
 <div class="panel">
-    <button onclick="cargarKML()">Ver KML</button>
-    <button onclick="verCSV()">Ver CSV</button>
+    <button onclick="cargarKML()">Abrir KML</button>
+    <button onclick="verCSV()">Abrir CSV</button>
     <button onclick="status()">Status</button>
 </div>
 
@@ -60,8 +60,10 @@ const BASE = "https://gps-backend-pqzg.onrender.com";
 
 const map = L.map('map').setView([4.823, -74.345], 15);
 
-// MAPA OSCURO
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+// Mapa base
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+}).addTo(map);
 
 function cargarKML(){
     window.open(BASE + "/files/ruta.kml");
