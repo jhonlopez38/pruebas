@@ -167,12 +167,21 @@ button:hover{
 
   <div>
     <div class="card">
-      <h3>COMANDOS</h3>
+      <h3>COMANDOS WEB</h3>
       <button onclick="actualizar()">ACTUALIZAR POSICIÓN</button>
       <button onclick="verRuta()">VER RUTA EN MAPA</button>
       <button onclick="verKML()">ABRIR KML</button>
       <button onclick="verCSV()">ABRIR CSV</button>
-      <button onclick="status()">STATUS</button>
+      <button onclick="status()">STATUS BACKEND</button>
+    </div>
+
+    <div class="card">
+      <h3>COMANDOS TELEGRAM</h3>
+      <div class="row"><span>Status</span><b>status</b></div>
+      <div class="row"><span>KML</span><b>kml</b></div>
+      <div class="row"><span>CSV</span><b>csv</b></div>
+      <div class="row"><span>KML auto</span><b>kmlcada 240</b></div>
+      <div class="row"><span>Detener KML</span><b>stopkml</b></div>
     </div>
 
     <div class="card">
@@ -184,12 +193,6 @@ button:hover{
         <div class="cycle">4<br><small>30 min</small></div>
         <div class="cycle">5<br><small>60 min</small></div>
       </div>
-    </div>
-
-    <div class="card">
-      <h3>ARCHIVOS</h3>
-      <button onclick="verKML()">ruta.kml</button>
-      <button onclick="verCSV()">gps_log.csv</button>
     </div>
   </div>
 
@@ -236,10 +239,37 @@ function calcularDistancia(lat1, lon1, lat2, lon2){
   return R * c;
 }
 
+function dibujarRuta(coords, punto){
+  const puntosRuta = coords.map(p => [p.lat, p.lon]);
+
+  if(polyline){
+    map.removeLayer(polyline);
+  }
+
+  polyline = L.polyline(puntosRuta, {
+    color: "#00aaff",
+    weight: 5,
+    opacity: 0.95
+  }).addTo(map);
+
+  if(puntosRuta.length >= 2){
+    map.fitBounds(polyline.getBounds(), {
+      padding: [40, 40]
+    });
+  }else{
+    map.setView(punto, 17);
+  }
+}
+
 function actualizar(){
 
   fetch(BASE + "/files/gps_log.csv?t=" + Date.now())
-  .then(r => r.text())
+  .then(r => {
+    if(!r.ok){
+      throw new Error("CSV no disponible");
+    }
+    return r.text();
+  })
   .then(data => {
 
     let lineas = data.trim().split("\n");
@@ -304,20 +334,7 @@ function actualizar(){
       "Lon: " + ultima.lon.toFixed(6)
     ).openPopup();
 
-    if(polyline){
-      map.removeLayer(polyline);
-    }
-
-    polyline = L.polyline(
-      coords.map(p => [p.lat, p.lon]),
-      {
-        color:"#38bdf8",
-        weight:4,
-        opacity:0.9
-      }
-    ).addTo(map);
-
-    map.setView(punto, 17);
+    dibujarRuta(coords, punto);
 
     document.getElementById("lat").innerText = ultima.lat.toFixed(6);
     document.getElementById("lon").innerText = ultima.lon.toFixed(6);
