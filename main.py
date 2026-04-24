@@ -13,10 +13,7 @@ FILES_FOLDER = "static/files"
 os.makedirs(STATIC_FOLDER, exist_ok=True)
 os.makedirs(FILES_FOLDER, exist_ok=True)
 
-# Archivos de la web: index.html, style.css, app.js, imagenes, etc.
 app.mount("/static", StaticFiles(directory=STATIC_FOLDER), name="static")
-
-# Archivos generados: ruta.kml, gps_log.csv, etc.
 app.mount("/files", StaticFiles(directory=FILES_FOLDER), name="files")
 
 
@@ -27,30 +24,51 @@ def home():
     if os.path.exists(index_path):
         return FileResponse(index_path)
 
-    return JSONResponse({
+    return {
         "status": "Servidor Hermes GPS activo",
-        "message": "Sube static/index.html para activar la web app",
+        "message": "Web app no instalada todavía",
+        "health": f"{BASE_URL}/health",
+        "links": f"{BASE_URL}/links",
         "files": {
             "kml": f"{BASE_URL}/files/ruta.kml",
             "csv": f"{BASE_URL}/files/gps_log.csv"
         }
-    })
+    }
 
 
 @app.get("/health")
 def health():
     return {
         "status": "ok",
-        "service": "Hermes GPS Backend"
+        "service": "Hermes GPS Backend",
+        "web": BASE_URL
     }
 
 
 @app.get("/links")
 def links():
     return {
+        "web": BASE_URL,
+        "health": f"{BASE_URL}/health",
         "kml": f"{BASE_URL}/files/ruta.kml",
-        "csv": f"{BASE_URL}/files/gps_log.csv",
-        "web": BASE_URL
+        "csv": f"{BASE_URL}/files/gps_log.csv"
+    }
+
+
+@app.get("/last")
+def last_files():
+    kml_path = os.path.join(FILES_FOLDER, "ruta.kml")
+    csv_path = os.path.join(FILES_FOLDER, "gps_log.csv")
+
+    return {
+        "kml": {
+            "exists": os.path.exists(kml_path),
+            "url": f"{BASE_URL}/files/ruta.kml"
+        },
+        "csv": {
+            "exists": os.path.exists(csv_path),
+            "url": f"{BASE_URL}/files/gps_log.csv"
+        }
     }
 
 
@@ -77,21 +95,4 @@ async def upload_file(filename: str, request: Request):
         "status": "ok",
         "filename": safe_name,
         "url": f"{BASE_URL}/files/{safe_name}"
-    }
-
-
-@app.get("/last")
-def last_files():
-    kml_path = os.path.join(FILES_FOLDER, "ruta.kml")
-    csv_path = os.path.join(FILES_FOLDER, "gps_log.csv")
-
-    return {
-        "kml": {
-            "exists": os.path.exists(kml_path),
-            "url": f"{BASE_URL}/files/ruta.kml"
-        },
-        "csv": {
-            "exists": os.path.exists(csv_path),
-            "url": f"{BASE_URL}/files/gps_log.csv"
-        }
     }
