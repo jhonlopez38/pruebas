@@ -1,4 +1,40 @@
-from fastapi import FastAPI, Request
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <WiFiClientSecure.h>
+#include <TinyGPSPlus.h>
+#include <HardwareSerial.h>
+#include <Preferences.h>
+#include <esp_sleep.h>
+#include <LittleFS.h>
+#include <time.h>
+
+// WIFI
+const char* ssid = "POCO F6";
+const char* password = "123456780";
+
+// TELEGRAM
+String botToken = "PEGA_AQUI_TU_TOKEN";
+String chatID = "866739056";
+
+// BACKEND
+String backendBaseURL = "https://gps-backend-pqzg.onrender.com";
+
+// GPS
+TinyGPSPlus gps;
+HardwareSerial gpsSerial(2);
+const int GPS_RX = 16;
+const int GPS_TX = 17;
+
+// BATERIA
+#define ENABLE_BATTERY_READING false
+const int BATTERY_ADC_PIN = 34;
+const float ADC_REF = 3.3;
+const int ADC_RESOLUTION = 4095;
+const float VOLTAGE_DIVIDER_RATIO = 2.0;
+
+// TIEMPOS
+const unsigned long GPS_TIM…
+[3:29 p.m., 24/4/2026] J.J: from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -115,10 +151,7 @@ async def upload_file(filename: str, request: Request):
     if not data:
         return JSONResponse(
             status_code=400,
-            content={
-                "status": "error",
-                "message": "Archivo vacío"
-            }
+            content={"status": "error", "message": "Archivo vacío"}
         )
 
     with open(file_path, "wb") as f:
@@ -181,7 +214,6 @@ def get_command(device: str = "HERMES-01", clear: bool = True):
 @app.post("/device-status")
 async def set_device_status(request: Request):
     data = await request.json()
-
     data["updated_at"] = datetime.utcnow().isoformat() + "Z"
 
     save_json(STATUS_FILE, data)
