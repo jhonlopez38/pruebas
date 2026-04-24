@@ -13,7 +13,10 @@ FILES_FOLDER = "static/files"
 os.makedirs(STATIC_FOLDER, exist_ok=True)
 os.makedirs(FILES_FOLDER, exist_ok=True)
 
+# Archivos web: static/index.html, imágenes, CSS, JS, etc.
 app.mount("/static", StaticFiles(directory=STATIC_FOLDER), name="static")
+
+# Archivos GPS: ruta.kml, gps_log.csv
 app.mount("/files", StaticFiles(directory=FILES_FOLDER), name="files")
 
 
@@ -26,7 +29,7 @@ def home():
 
     return JSONResponse({
         "status": "Servidor Hermes GPS activo",
-        "message": "Web app no instalada todavía",
+        "message": "No se encontró static/index.html",
         "expected_file": "static/index.html",
         "health": f"{BASE_URL}/health",
         "links": f"{BASE_URL}/links",
@@ -43,7 +46,8 @@ def health():
         "status": "ok",
         "service": "Hermes GPS Backend",
         "web": BASE_URL,
-        "index_exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html"))
+        "index_exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html")),
+        "files_folder_exists": os.path.isdir(FILES_FOLDER)
     }
 
 
@@ -61,8 +65,13 @@ def links():
 def last_files():
     kml_path = os.path.join(FILES_FOLDER, "ruta.kml")
     csv_path = os.path.join(FILES_FOLDER, "gps_log.csv")
+    index_path = os.path.join(STATIC_FOLDER, "index.html")
 
     return {
+        "index": {
+            "exists": os.path.isfile(index_path),
+            "url": BASE_URL
+        },
         "kml": {
             "exists": os.path.isfile(kml_path),
             "url": f"{BASE_URL}/files/ruta.kml"
@@ -70,10 +79,6 @@ def last_files():
         "csv": {
             "exists": os.path.isfile(csv_path),
             "url": f"{BASE_URL}/files/gps_log.csv"
-        },
-        "index": {
-            "exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html")),
-            "url": BASE_URL
         }
     }
 
