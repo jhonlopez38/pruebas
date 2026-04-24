@@ -7,233 +7,207 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
-body {
-    margin: 0;
-    background: #07111f;
-    color: #dbeafe;
-    font-family: Arial, sans-serif;
+body{
+  margin:0;
+  background:#07111f;
+  color:#e5e7eb;
+  font-family:Arial;
 }
 
-header {
-    background: #0b1f35;
-    padding: 12px;
-    text-align: center;
-    font-weight: bold;
-    color: #ffffff;
-    letter-spacing: 1px;
+.header{
+  background:#081827;
+  padding:15px;
+  text-align:center;
+  font-weight:bold;
+  font-size:20px;
+  border-bottom:1px solid #1e3a5f;
 }
 
-#map {
-    height: 72vh;
-    width: 100%;
+.container{
+  display:grid;
+  grid-template-columns:250px 1fr 300px;
+  gap:10px;
+  padding:10px;
 }
 
-.panel {
-    padding: 12px;
-    background: #0b1f35;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+.card{
+  background:#081827;
+  border:1px solid #1e3a5f;
+  border-radius:8px;
+  padding:10px;
 }
 
-button {
-    padding: 10px 14px;
-    background: #1d4ed8;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.card h3{
+  margin:0 0 10px;
+  color:#38bdf8;
 }
 
-button:hover {
-    background: #2563eb;
+#map{
+  height:600px;
+  border-radius:8px;
 }
 
-.info {
-    background: #020617;
-    padding: 10px 14px;
-    font-size: 14px;
-    color: #93c5fd;
+button{
+  width:100%;
+  margin:5px 0;
+  padding:12px;
+  border:none;
+  border-radius:6px;
+  background:#0b3b70;
+  color:white;
+  cursor:pointer;
 }
 
-.status-ok {
-    color: #22c55e;
+button:hover{
+  background:#1d4ed8;
 }
 
-.status-error {
-    color: #ef4444;
+.console{
+  background:black;
+  color:#22c55e;
+  font-family:monospace;
+  height:150px;
+  overflow:auto;
+  padding:10px;
+  border-radius:6px;
 }
+
 </style>
 </head>
 
 <body>
 
-<header>HERMES GPS</header>
-
-<div id="map"></div>
-
-<div class="panel">
-    <button onclick="cargarRutaEnMapa()">Ver Ruta en Mapa</button>
-    <button onclick="actualizarPosicion()">Actualizar Posición</button>
-    <button onclick="abrirKML()">Abrir KML</button>
-    <button onclick="abrirCSV()">Abrir CSV</button>
-    <button onclick="status()">Status</button>
+<div class="header">
+HERMES GPS
 </div>
 
-<div class="info" id="info">
-    Sistema listo. Esperando datos GPS...
+<div class="container">
+
+<!-- IZQUIERDA -->
+<div>
+
+  <div class="card">
+    <h3>ESTADO</h3>
+    <div>Unidad: HERMES-01</div>
+    <div>Estado: <b style="color:#22c55e;">ACTIVO</b></div>
+  </div>
+
+  <div class="card">
+    <h3>POSICIÓN</h3>
+    <div>Lat: <span id="lat">--</span></div>
+    <div>Lon: <span id="lon">--</span></div>
+    <div>Hora: <span id="hora">--</span></div>
+  </div>
+
+</div>
+
+<!-- MAPA -->
+<div>
+  <div id="map"></div>
+</div>
+
+<!-- DERECHA -->
+<div>
+
+  <div class="card">
+    <h3>COMANDOS</h3>
+
+    <button onclick="actualizar()">Actualizar</button>
+    <button onclick="verKML()">Ver KML</button>
+    <button onclick="verCSV()">Ver CSV</button>
+    <button onclick="status()">Status</button>
+
+  </div>
+
+  <div class="card">
+    <h3>CONSOLA</h3>
+    <div class="console" id="console"></div>
+  </div>
+
+</div>
+
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet-omnivore/leaflet-omnivore.min.js"></script>
 
 <script>
 const BASE = "https://gps-backend-pqzg.onrender.com";
 
-let map = L.map('map').setView([4.823, -74.345], 12);
+let map = L.map('map').setView([4.82, -74.34], 13);
 let marker = null;
-let rutaLayer = null;
 
-// Mapa oscuro/azul
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: 'Hermes GPS | OpenStreetMap'
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  maxZoom:19
 }).addTo(map);
 
-function setInfo(texto, ok = true) {
-    const info = document.getElementById("info");
-    info.innerHTML = texto;
-    info.className = ok ? "info status-ok" : "info status-error";
+function log(msg){
+  let c = document.getElementById("console");
+  c.innerHTML += msg + "<br>";
+  c.scrollTop = c.scrollHeight;
 }
 
-function abrirKML() {
-    window.open(BASE + "/files/ruta.kml", "_blank");
-}
+function actualizar(){
 
-function abrirCSV() {
-    window.open(BASE + "/files/gps_log.csv", "_blank");
-}
+  fetch(BASE + "/files/gps_log.csv?t=" + Date.now())
+  .then(r => r.text())
+  .then(data => {
 
-function status() {
-    fetch(BASE + "/health")
-        .then(r => r.json())
-        .then(d => {
-            alert(JSON.stringify(d, null, 2));
-        })
-        .catch(() => {
-            alert("No se pudo consultar el estado del backend");
-        });
-}
+    let lineas = data.trim().split("\n");
 
-function cargarRutaEnMapa() {
-    const kmlUrl = BASE + "/files/ruta.kml?t=" + Date.now();
-
-    if (rutaLayer) {
-        map.removeLayer(rutaLayer);
-        rutaLayer = null;
+    if(lineas.length < 2){
+      log("Sin datos");
+      return;
     }
 
-    setInfo("Cargando ruta KML...", true);
+    let ultima = lineas[lineas.length-1].split(",");
 
-    rutaLayer = omnivore.kml(kmlUrl)
-        .on('ready', function() {
-            if (this.getBounds && this.getBounds().isValid()) {
-                map.fitBounds(this.getBounds());
-                setInfo("Ruta KML cargada correctamente.", true);
-            } else {
-                setInfo("KML cargado, pero no tiene coordenadas válidas.", false);
-            }
-        })
-        .on('error', function() {
-            setInfo("Error cargando KML. Verifica que ruta.kml exista.", false);
-        })
-        .addTo(map);
+    let lat = parseFloat(ultima[4]);
+    let lon = parseFloat(ultima[5]);
+    let hora = ultima[3];
+
+    if(isNaN(lat) || isNaN(lon)){
+      log("Coordenadas inválidas");
+      return;
+    }
+
+    if(marker){
+      marker.setLatLng([lat, lon]);
+    }else{
+      marker = L.marker([lat, lon]).addTo(map);
+    }
+
+    marker.bindPopup("Lat: " + lat + "<br>Lon: " + lon).openPopup();
+
+    map.setView([lat, lon], 16);
+
+    document.getElementById("lat").innerText = lat;
+    document.getElementById("lon").innerText = lon;
+    document.getElementById("hora").innerText = hora;
+
+    log("Actualizado: " + lat + "," + lon);
+
+  })
+  .catch(() => log("Error leyendo CSV"));
+
 }
 
-function actualizarPosicion() {
-    const csvUrl = BASE + "/files/gps_log.csv?t=" + Date.now();
-
-    fetch(csvUrl)
-        .then(r => {
-            if (!r.ok) throw new Error("CSV no disponible");
-            return r.text();
-        })
-        .then(data => {
-            const lineas = data.trim().split("\n");
-
-            if (lineas.length < 2) {
-                setInfo("CSV sin coordenadas todavía.", false);
-                return;
-            }
-
-            // Formato esperado:
-            // id,despertar,fecha,hora,lat,lon,enviadoTelegram
-            let ultimaValida = null;
-
-            for (let i = lineas.length - 1; i >= 1; i--) {
-                const partes = lineas[i].trim().split(",");
-
-                if (partes.length >= 6) {
-                    const lat = parseFloat(partes[4]);
-                    const lon = parseFloat(partes[5]);
-
-                    if (!isNaN(lat) && !isNaN(lon)) {
-                        ultimaValida = {
-                            id: partes[0],
-                            despertar: partes[1],
-                            fecha: partes[2],
-                            hora: partes[3],
-                            lat: lat,
-                            lon: lon,
-                            enviado: partes[6] || ""
-                        };
-                        break;
-                    }
-                }
-            }
-
-            if (!ultimaValida) {
-                setInfo("No se encontró una coordenada válida en el CSV.", false);
-                return;
-            }
-
-            const punto = [ultimaValida.lat, ultimaValida.lon];
-
-            if (marker) {
-                marker.setLatLng(punto);
-            } else {
-                marker = L.marker(punto).addTo(map);
-            }
-
-            marker.bindPopup(
-                "<b>HERMES GPS</b><br>" +
-                "ID: " + ultimaValida.id + "<br>" +
-                "Fecha: " + ultimaValida.fecha + "<br>" +
-                "Hora: " + ultimaValida.hora + "<br>" +
-                "Lat: " + ultimaValida.lat.toFixed(6) + "<br>" +
-                "Lon: " + ultimaValida.lon.toFixed(6)
-            ).openPopup();
-
-            map.setView(punto, 16);
-
-            setInfo(
-                "Última posición: " +
-                ultimaValida.lat.toFixed(6) + ", " +
-                ultimaValida.lon.toFixed(6) +
-                " | Hora: " + ultimaValida.hora,
-                true
-            );
-        })
-        .catch(() => {
-            setInfo("Error leyendo gps_log.csv. Verifica que el ESP32 ya haya subido datos.", false);
-        });
+function verKML(){
+  window.open(BASE + "/files/ruta.kml");
 }
 
-// Cargar automáticamente al abrir
-actualizarPosicion();
+function verCSV(){
+  window.open(BASE + "/files/gps_log.csv");
+}
 
-// Actualizar cada 30 segundos
-setInterval(actualizarPosicion, 30000);
+function status(){
+  fetch(BASE + "/health")
+  .then(r => r.json())
+  .then(d => alert(JSON.stringify(d, null, 2)));
+}
+
+actualizar();
+setInterval(actualizar, 30000);
+
 </script>
 
 </body>
