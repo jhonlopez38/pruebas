@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Hermes GPS</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+body {
+    margin: 0;
+    background: #0b1a2a;
+    color: #cfd8dc;
+    font-family: Arial;
+}
+
+header {
+    background: #102c44;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#map {
+    height: 75vh;
+}
+
+.panel {
+    padding: 10px;
+    background: #132f4c;
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+    background: #1e4f75;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>HERMES GPS</header>
+
+<div id="map"></div>
+
+<div class="panel">
+    <button onclick="cargarKML()">Abrir KML</button>
+    <button onclick="verCSV()">Abrir CSV</button>
+    <button onclick="status()">Status</button>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+const BASE = "https://gps-backend-pqzg.onrender.com";
+
+const map = L.map('map').setView([4.823, -74.345], 15);
+
+// Mapa base
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+}).addTo(map);
+
+function cargarKML(){
+    window.open(BASE + "/files/ruta.kml");
+}
+
+function verCSV(){
+    window.open(BASE + "/files/gps_log.csv");
+}
+
+function status(){
+    fetch(BASE + "/health")
+    .then(r => r.json())
+    .then(d => alert(JSON.stringify(d, null, 2)));
+}
+</script>
+
+</body>
+</html>
