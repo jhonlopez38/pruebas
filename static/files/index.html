@@ -3,81 +3,342 @@
 <head>
 <meta charset="UTF-8">
 <title>Hermes GPS</title>
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
-body {
-    margin: 0;
-    background: #0b1a2a;
-    color: #cfd8dc;
-    font-family: Arial;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#07111f;
+  color:#dbeafe;
+  font-family:Arial, sans-serif;
 }
-
-header {
-    background: #102c44;
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
+.header{
+  height:70px;
+  background:#071827;
+  border-bottom:1px solid #1e3a5f;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
 }
-
-#map {
-    height: 75vh;
+.logo h1{margin:0;font-size:30px;letter-spacing:4px}
+.logo span{color:#60a5fa;font-size:13px}
+.top-status{
+  display:flex;
+  gap:16px;
+  font-size:14px;
 }
-
-.panel {
-    padding: 10px;
-    background: #132f4c;
+.badge{
+  background:#0b2238;
+  border:1px solid #1e40af;
+  padding:10px 16px;
+  border-radius:8px;
 }
-
-button {
-    margin: 5px;
-    padding: 10px;
-    background: #1e4f75;
-    color: white;
-    border: none;
-    cursor: pointer;
+.ok{color:#22c55e;font-weight:bold}
+.main{
+  display:grid;
+  grid-template-columns:260px 1fr 330px;
+  gap:12px;
+  padding:12px;
+}
+.card{
+  background:#081827;
+  border:1px solid #1e3a5f;
+  border-radius:8px;
+  padding:14px;
+  margin-bottom:12px;
+}
+.card h3{
+  margin:0 0 12px;
+  color:#38bdf8;
+  font-size:15px;
+}
+.row{
+  display:flex;
+  justify-content:space-between;
+  padding:6px 0;
+  font-size:14px;
+}
+#map{
+  height:620px;
+  border:1px solid #1e3a5f;
+  border-radius:8px;
+}
+.panel-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+button{
+  background:#0b3b70;
+  color:white;
+  border:1px solid #2563eb;
+  border-radius:8px;
+  padding:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{background:#1d4ed8}
+.cycles{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+.cycle{
+  background:#0f172a;
+  border:1px solid #334155;
+  text-align:center;
+  padding:12px 4px;
+  border-radius:8px;
+}
+.cycle.active{
+  background:#0b3b70;
+  border-color:#38bdf8;
+}
+.console{
+  height:210px;
+  background:#020617;
+  border:1px solid #1e3a5f;
+  border-radius:8px;
+  padding:12px;
+  font-family:monospace;
+  color:#38bdf8;
+  overflow:auto;
+}
+.info{
+  margin-top:10px;
+  color:#22c55e;
+  font-size:14px;
+}
+.footer{
+  text-align:center;
+  padding:10px;
+  color:#64748b;
+  border-top:1px solid #1e3a5f;
 }
 </style>
 </head>
 
 <body>
 
-<header>HERMES GPS</header>
+<div class="header">
+  <div class="logo">
+    <h1>HERMES</h1>
+    <span>SISTEMA GPS TÁCTICO</span>
+  </div>
 
-<div id="map"></div>
+  <div class="top-status">
+    <div class="badge">UNIDAD<br><b>HERMES-01</b></div>
+    <div class="badge">GPS<br><span class="ok">LOCK</span></div>
+    <div class="badge">ENLACE<br><span class="ok">ONLINE</span></div>
+    <div class="badge">CICLO<br><b>1 (5 min)</b></div>
+  </div>
+</div>
 
-<div class="panel">
-    <button onclick="cargarKML()">Abrir KML</button>
-    <button onclick="verCSV()">Abrir CSV</button>
-    <button onclick="status()">Status</button>
+<div class="main">
+
+  <div>
+    <div class="card">
+      <h3>ESTADO DE LA UNIDAD</h3>
+      <div class="row"><span>Dispositivo</span><b>HERMES-01</b></div>
+      <div class="row"><span>Estado</span><b class="ok">ACTIVO</b></div>
+      <div class="row"><span>Modo</span><b>AUTÓNOMO</b></div>
+      <div class="row"><span>Backend</span><b class="ok">CONECTADO</b></div>
+    </div>
+
+    <div class="card">
+      <h3>POSICIÓN ACTUAL</h3>
+      <div class="row"><span>Latitud</span><b id="latTxt">--</b></div>
+      <div class="row"><span>Longitud</span><b id="lonTxt">--</b></div>
+      <div class="row"><span>Fecha</span><b id="fechaTxt">--</b></div>
+      <div class="row"><span>Hora</span><b id="horaTxt">--</b></div>
+    </div>
+
+    <div class="card">
+      <h3>RESUMEN</h3>
+      <div class="row"><span>Puntos</span><b id="puntosTxt">--</b></div>
+      <div class="row"><span>Archivo</span><b>CSV/KML</b></div>
+    </div>
+  </div>
+
+  <div>
+    <div id="map"></div>
+
+    <div class="console" id="console">
+      >> SYSTEM ONLINE<br>
+      >> BACKEND LINK STABLE<br>
+      >> WAITING GPS DATA...<br>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h3>COMANDOS RÁPIDOS</h3>
+      <div class="panel-buttons">
+        <button onclick="status()">STATUS</button>
+        <button onclick="cargarRutaEnMapa()">KML</button>
+        <button onclick="abrirCSV()">CSV</button>
+        <button onclick="actualizarPosicion()">ACTUALIZAR</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>CICLOS DE OPERACIÓN</h3>
+      <div class="cycles">
+        <div class="cycle active">1<br><small>5 min</small></div>
+        <div class="cycle">2<br><small>10 min</small></div>
+        <div class="cycle">3<br><small>15 min</small></div>
+        <div class="cycle">4<br><small>30 min</small></div>
+        <div class="cycle">5<br><small>60 min</small></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>ARCHIVOS DISPONIBLES</h3>
+      <button onclick="abrirKML()">Abrir ruta.kml</button>
+      <br><br>
+      <button onclick="abrirCSV()">Abrir gps_log.csv</button>
+      <div class="info" id="info">Sistema listo.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  HERMES GPS SYSTEM · OPERATIVO
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-omnivore/leaflet-omnivore.min.js"></script>
 
 <script>
 const BASE = "https://gps-backend-pqzg.onrender.com";
 
-const map = L.map('map').setView([4.823, -74.345], 15);
+let map = L.map('map').setView([4.823, -74.345], 12);
+let marker = null;
+let rutaLayer = null;
 
-// Mapa base
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19
+  maxZoom: 19,
+  attribution: 'Hermes GPS'
 }).addTo(map);
 
-function cargarKML(){
-    window.open(BASE + "/files/ruta.kml");
+function log(msg){
+  const c = document.getElementById("console");
+  c.innerHTML += ">> " + msg + "<br>";
+  c.scrollTop = c.scrollHeight;
 }
 
-function verCSV(){
-    window.open(BASE + "/files/gps_log.csv");
+function setInfo(msg){
+  document.getElementById("info").innerText = msg;
+}
+
+function abrirKML(){
+  window.open(BASE + "/files/ruta.kml", "_blank");
+}
+
+function abrirCSV(){
+  window.open(BASE + "/files/gps_log.csv", "_blank");
 }
 
 function status(){
-    fetch(BASE + "/health")
+  fetch(BASE + "/health")
     .then(r => r.json())
     .then(d => alert(JSON.stringify(d, null, 2)));
 }
+
+function cargarRutaEnMapa(){
+  const kmlUrl = BASE + "/files/ruta.kml?t=" + Date.now();
+
+  if(rutaLayer){
+    map.removeLayer(rutaLayer);
+  }
+
+  rutaLayer = omnivore.kml(kmlUrl)
+    .on("ready", function(){
+      map.fitBounds(this.getBounds());
+      log("KML ROUTE LOADED");
+      setInfo("Ruta KML cargada.");
+    })
+    .on("error", function(){
+      log("ERROR LOADING KML");
+      setInfo("Error cargando KML.");
+    })
+    .addTo(map);
+}
+
+function actualizarPosicion(){
+  fetch(BASE + "/files/gps_log.csv?t=" + Date.now())
+    .then(r => r.text())
+    .then(data => {
+      const lineas = data.trim().split("\\n");
+
+      if(lineas.length < 2){
+        setInfo("CSV sin coordenadas.");
+        return;
+      }
+
+      let ultima = null;
+
+      for(let i=lineas.length-1; i>=1; i--){
+        const p = lineas[i].split(",");
+        if(p.length >= 6){
+          const lat = parseFloat(p[4]);
+          const lon = parseFloat(p[5]);
+          if(!isNaN(lat) && !isNaN(lon)){
+            ultima = {
+              id:p[0],
+              fecha:p[2],
+              hora:p[3],
+              lat:lat,
+              lon:lon
+            };
+            break;
+          }
+        }
+      }
+
+      if(!ultima){
+        setInfo("No hay coordenada válida.");
+        return;
+      }
+
+      const punto = [ultima.lat, ultima.lon];
+
+      if(marker){
+        marker.setLatLng(punto);
+      } else {
+        marker = L.marker(punto).addTo(map);
+      }
+
+      marker.bindPopup(
+        "<b>HERMES-01</b><br>" +
+        "Fecha: " + ultima.fecha + "<br>" +
+        "Hora: " + ultima.hora + "<br>" +
+        "Lat: " + ultima.lat.toFixed(6) + "<br>" +
+        "Lon: " + ultima.lon.toFixed(6)
+      ).openPopup();
+
+      map.setView(punto, 16);
+
+      document.getElementById("latTxt").innerText = ultima.lat.toFixed(6);
+      document.getElementById("lonTxt").innerText = ultima.lon.toFixed(6);
+      document.getElementById("fechaTxt").innerText = ultima.fecha;
+      document.getElementById("horaTxt").innerText = ultima.hora;
+      document.getElementById("puntosTxt").innerText = lineas.length - 1;
+
+      log("POSITION UPDATED: " + ultima.lat.toFixed(6) + ", " + ultima.lon.toFixed(6));
+      setInfo("Última posición actualizada.");
+    })
+    .catch(() => {
+      log("ERROR READING CSV");
+      setInfo("Error leyendo gps_log.csv");
+    });
+}
+
+actualizarPosicion();
+setInterval(actualizarPosicion, 30000);
 </script>
 
 </body>
