@@ -39,6 +39,7 @@ def save_json(path, data):
 def load_json(path, default):
     if not os.path.exists(path):
         return default
+
     try:
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -49,12 +50,14 @@ def load_json(path, default):
 @app.get("/")
 def home():
     index_path = os.path.join(STATIC_FOLDER, "index.html")
+
     if os.path.isfile(index_path):
         return FileResponse(index_path, media_type="text/html")
 
     return {
-        "status": "Servidor Hermes GPS activo",
-        "message": "No se encontró static/index.html"
+        "status": "ok",
+        "message": "Servidor Hermes GPS activo",
+        "error": "No se encontró static/index.html"
     }
 
 
@@ -64,7 +67,37 @@ def health():
         "status": "ok",
         "service": "Hermes GPS Backend",
         "web": BASE_URL,
-        "index_exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html"))
+        "index_exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html")),
+        "files_folder_exists": os.path.isdir(FILES_FOLDER)
+    }
+
+
+@app.get("/links")
+def links():
+    return {
+        "web": BASE_URL,
+        "health": f"{BASE_URL}/health",
+        "command": f"{BASE_URL}/command",
+        "device_status": f"{BASE_URL}/device-status",
+        "kml": f"{BASE_URL}/files/ruta.kml",
+        "csv": f"{BASE_URL}/files/gps_log.csv"
+    }
+
+
+@app.get("/last")
+def last_files():
+    kml_path = os.path.join(FILES_FOLDER, "ruta.kml")
+    csv_path = os.path.join(FILES_FOLDER, "gps_log.csv")
+
+    return {
+        "kml": {
+            "exists": os.path.isfile(kml_path),
+            "url": f"{BASE_URL}/files/ruta.kml"
+        },
+        "csv": {
+            "exists": os.path.isfile(csv_path),
+            "url": f"{BASE_URL}/files/gps_log.csv"
+        }
     }
 
 
@@ -78,7 +111,10 @@ async def upload_file(filename: str, request: Request):
     if not data:
         return JSONResponse(
             status_code=400,
-            content={"status": "error", "message": "Archivo vacío"}
+            content={
+                "status": "error",
+                "message": "Archivo vacío"
+            }
         )
 
     with open(file_path, "wb") as f:
@@ -110,6 +146,8 @@ async def set_command(request: Request):
     return {
         "status": "ok",
         "message": "Comando guardado",
+        "device": device,
+        "cmd": cmd,
         "command": payload
     }
 
@@ -127,6 +165,8 @@ def get_command(device: str = "HERMES-01", clear: bool = False):
     if data.get("device", device) != device:
         return default
 
+    response = data
+
     if clear and data.get("cmd", "none") != "none":
         save_json(COMMAND_FILE, {
             "status": "none",
@@ -135,7 +175,17 @@ def get_command(device: str = "HERMES-01", clear: bool = False):
             "cleared_at": datetime.utcnow().isoformat() + "Z"
         })
 
-    return data
+    return response
+
+
+@app.get("/cmd")
+def legacy_get_cmd(device: str = "HERMES-01", clear: bool = False):
+    return get_command(device=device, clear=clear)
+
+
+@app.post("/cmd")
+async def legacy_set_cmd(request: Request):
+    return await set_command(request)
 
 
 @app.post("/device-status")
@@ -157,15 +207,3 @@ def get_device_status():
         "status": "no_data",
         "message": "El ESP32 aún no ha enviado estado"
     })
-
-
-@app.get("/links")
-def links():
-    return {
-        "web": BASE_URL,
-        "health": f"{BASE_URL}/health",
-        "command": f"{BASE_URL}/command",
-        "device_status": f"{BASE_URL}/device-status",
-        "kml": f"{BASE_URL}/files/ruta.kml",
-        "csv": f"{BASE_URL}/files/gps_log.csv"
-    }
