@@ -19,14 +19,14 @@ body{
   padding:15px;
   text-align:center;
   font-weight:bold;
-  font-size:20px;
-  letter-spacing:2px;
+  font-size:22px;
+  letter-spacing:3px;
   border-bottom:1px solid #1e3a5f;
 }
 
 .container{
   display:grid;
-  grid-template-columns:260px 1fr 320px;
+  grid-template-columns:260px 1fr 330px;
   gap:12px;
   padding:12px;
 }
@@ -34,7 +34,7 @@ body{
 .card{
   background:#081827;
   border:1px solid #1e3a5f;
-  border-radius:10px;
+  border-radius:12px;
   padding:12px;
   margin-bottom:12px;
   box-shadow:0 0 18px rgba(56,189,248,0.08);
@@ -58,24 +58,13 @@ body{
   text-align:right;
 }
 
-.ok{
-  color:#22c55e;
-  font-weight:bold;
-}
-
-.warn{
-  color:#f59e0b;
-  font-weight:bold;
-}
-
-.err{
-  color:#ef4444;
-  font-weight:bold;
-}
+.ok{color:#22c55e;font-weight:bold}
+.warn{color:#f59e0b;font-weight:bold}
+.err{color:#ef4444;font-weight:bold}
 
 #map{
   height:620px;
-  border-radius:10px;
+  border-radius:12px;
   border:1px solid #1e3a5f;
 }
 
@@ -114,26 +103,6 @@ button:hover{
   font-size:13px;
 }
 
-.cycles{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px;
-}
-
-.cycle{
-  background:#0f172a;
-  border:1px solid #334155;
-  border-radius:6px;
-  padding:8px 2px;
-  text-align:center;
-  font-size:13px;
-}
-
-.cycle.active{
-  background:#0b3b70;
-  border-color:#38bdf8;
-}
-
 .footer{
   text-align:center;
   padding:10px;
@@ -155,9 +124,7 @@ button:hover{
 
 <body>
 
-<div class="header">
-  HERMES GPS
-</div>
+<div class="header">HERMES GPS</div>
 
 <div class="container">
 
@@ -186,7 +153,7 @@ button:hover{
       <div class="row"><span>Despertar</span><b id="despertarTxt">--</b></div>
       <div class="row"><span>Ciclo</span><b id="cicloTxt">--</b></div>
       <div class="row"><span>KML auto</span><b id="kmlAutoTxt">--</b></div>
-      <div class="row"><span>Última actualización</span><b id="actualizacion">--</b></div>
+      <div class="row"><span>Actualización</span><b id="actualizacion">--</b></div>
     </div>
   </div>
 
@@ -216,6 +183,7 @@ button:hover{
 
     <div class="card">
       <h3>ENVIAR COMANDOS AL ESP32</h3>
+
       <div class="command-grid">
         <button onclick="enviarComando('ciclo 0')">CICLO 0</button>
         <button onclick="enviarComando('ciclo 1')">CICLO 1</button>
@@ -228,28 +196,15 @@ button:hover{
         <button onclick="enviarComando('status')">STATUS</button>
         <button onclick="enviarComando('stopkml')">STOP KML</button>
       </div>
-      <button onclick="enviarKmlCada()">KML CADA...</button>
-    </div>
 
-    <div class="card">
-      <h3>CICLOS DE OPERACIÓN</h3>
-      <div class="cycles">
-        <div class="cycle">0<br><small>7 min</small></div>
-        <div class="cycle active">1<br><small>5 min</small></div>
-        <div class="cycle">2<br><small>10 min</small></div>
-        <div class="cycle">3<br><small>15 min</small></div>
-        <div class="cycle">4<br><small>30 min</small></div>
-      </div>
-      <br>
-      <div class="cycle">5<br><small>60 min</small></div>
+      <button onclick="enviarKmlCada()">KML CADA...</button>
+      <button onclick="verComandoPendiente()">VER COMANDO PENDIENTE</button>
     </div>
   </div>
 
 </div>
 
-<div class="footer">
-  HERMES GPS SYSTEM · OPERATIVO
-</div>
+<div class="footer">HERMES GPS SYSTEM · OPERATIVO</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -285,8 +240,7 @@ function calcularDistancia(lat1, lon1, lat2, lon2){
     Math.sin(dLon/2) *
     Math.sin(dLon/2);
 
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
 function dibujarRuta(coords, punto){
@@ -298,25 +252,21 @@ function dibujarRuta(coords, punto){
 
   if(puntosRuta.length >= 2){
     polyline = L.polyline(puntosRuta, {
-      color: "#00aaff",
-      weight: 5,
-      opacity: 0.95
+      color:"#00aaff",
+      weight:5,
+      opacity:0.95
     }).addTo(map);
 
-    map.fitBounds(polyline.getBounds(), {
-      padding: [40, 40]
-    });
+    map.fitBounds(polyline.getBounds(), {padding:[40,40]});
   } else {
-    map.setView(punto, 17);
+    map.setView(punto,17);
   }
 }
 
 function actualizar(){
   fetch(BASE + "/files/gps_log.csv?t=" + Date.now())
   .then(r => {
-    if(!r.ok){
-      throw new Error("CSV no disponible");
-    }
+    if(!r.ok) throw new Error("CSV no disponible");
     return r.text();
   })
   .then(data => {
@@ -330,7 +280,7 @@ function actualizar(){
     let coords = [];
     let distanciaTotal = 0;
 
-    for(let i = 1; i < lineas.length; i++){
+    for(let i=1; i<lineas.length; i++){
       let p = lineas[i].trim().split(",");
 
       if(p.length >= 6){
@@ -355,7 +305,7 @@ function actualizar(){
       return;
     }
 
-    for(let i = 1; i < coords.length; i++){
+    for(let i=1; i<coords.length; i++){
       distanciaTotal += calcularDistancia(
         coords[i-1].lat,
         coords[i-1].lon,
@@ -369,7 +319,7 @@ function actualizar(){
 
     if(marker){
       marker.setLatLng(punto);
-    }else{
+    } else {
       marker = L.marker(punto).addTo(map);
     }
 
@@ -399,12 +349,8 @@ function actualizar(){
       new Date().toLocaleTimeString();
 
     log("POSITION UPDATED: " + ultima.lat.toFixed(6) + ", " + ultima.lon.toFixed(6));
-    log("ROUTE POINTS: " + coords.length);
-    log("DISTANCE: " + document.getElementById("distancia").innerText);
   })
-  .catch(() => {
-    log("ERROR READING gps_log.csv");
-  });
+  .catch(() => log("ERROR READING gps_log.csv"));
 }
 
 function verRuta(){
@@ -421,10 +367,10 @@ function verCSV(){
 }
 
 function statusBackend(){
-  fetch(BASE + "/health")
+  fetch(BASE + "/health?t=" + Date.now())
   .then(r => r.json())
   .then(d => alert(JSON.stringify(d, null, 2)))
-  .catch(() => alert("No se pudo consultar status backend"));
+  .catch(() => alert("No se pudo consultar backend"));
 }
 
 function statusDispositivo(){
@@ -436,9 +382,12 @@ function statusDispositivo(){
     document.getElementById("wifiTxt").innerText = d.wifi || "--";
     document.getElementById("despertarTxt").innerText = d.despertar || "--";
     document.getElementById("cicloTxt").innerText = d.ciclo_min ? d.ciclo_min + " min" : "--";
-    document.getElementById("kmlAutoTxt").innerText = d.kml_auto_min && d.kml_auto_min > 0 ? d.kml_auto_min + " min" : "OFF";
+    document.getElementById("kmlAutoTxt").innerText =
+      d.kml_auto_min && d.kml_auto_min > 0 ? d.kml_auto_min + " min" : "OFF";
 
-    if((d.estado || "").includes("FIX")){
+    let estado = (d.estado || "").toUpperCase();
+
+    if(estado.includes("FIX")){
       document.getElementById("gpsTxt").innerText = "LOCK";
       document.getElementById("gpsTxt").className = "ok";
       document.getElementById("estadoTxt").className = "ok";
@@ -455,11 +404,11 @@ function statusDispositivo(){
 
 function enviarComando(cmd){
   fetch(BASE + "/command", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      device: DEVICE,
-      cmd: cmd
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      device:DEVICE,
+      cmd:cmd
     })
   })
   .then(r => r.json())
@@ -470,12 +419,17 @@ function enviarComando(cmd){
   .catch(() => alert("Error enviando comando"));
 }
 
+function verComandoPendiente(){
+  fetch(BASE + "/command?device=" + DEVICE + "&clear=false&t=" + Date.now())
+  .then(r => r.json())
+  .then(d => alert(JSON.stringify(d, null, 2)))
+  .catch(() => alert("No se pudo consultar comando"));
+}
+
 function enviarKmlCada(){
   let minutos = prompt("Enviar KML cada cuántos minutos?", "240");
 
-  if(!minutos){
-    return;
-  }
+  if(!minutos) return;
 
   minutos = minutos.trim();
 
