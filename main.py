@@ -1,40 +1,4 @@
-#include <WiFi.h>
-#include <HTTPClient.h>
-#include <WiFiClientSecure.h>
-#include <TinyGPSPlus.h>
-#include <HardwareSerial.h>
-#include <Preferences.h>
-#include <esp_sleep.h>
-#include <LittleFS.h>
-#include <time.h>
-
-// WIFI
-const char* ssid = "POCO F6";
-const char* password = "123456780";
-
-// TELEGRAM
-String botToken = "PEGA_AQUI_TU_TOKEN";
-String chatID = "866739056";
-
-// BACKEND
-String backendBaseURL = "https://gps-backend-pqzg.onrender.com";
-
-// GPS
-TinyGPSPlus gps;
-HardwareSerial gpsSerial(2);
-const int GPS_RX = 16;
-const int GPS_TX = 17;
-
-// BATERIA
-#define ENABLE_BATTERY_READING false
-const int BATTERY_ADC_PIN = 34;
-const float ADC_REF = 3.3;
-const int ADC_RESOLUTION = 4095;
-const float VOLTAGE_DIVIDER_RATIO = 2.0;
-
-// TIEMPOS
-const unsigned long GPS_TIM…
-[3:29 p.m., 24/4/2026] J.J: from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -85,20 +49,13 @@ def load_json(path, default):
 @app.get("/")
 def home():
     index_path = os.path.join(STATIC_FOLDER, "index.html")
-
     if os.path.isfile(index_path):
         return FileResponse(index_path, media_type="text/html")
 
-    return JSONResponse({
+    return {
         "status": "Servidor Hermes GPS activo",
-        "message": "No se encontró static/index.html",
-        "expected_file": "static/index.html",
-        "health": f"{BASE_URL}/health",
-        "files": {
-            "kml": f"{BASE_URL}/files/ruta.kml",
-            "csv": f"{BASE_URL}/files/gps_log.csv"
-        }
-    })
+        "message": "No se encontró static/index.html"
+    }
 
 
 @app.get("/health")
@@ -107,37 +64,7 @@ def health():
         "status": "ok",
         "service": "Hermes GPS Backend",
         "web": BASE_URL,
-        "index_exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html")),
-        "files_folder_exists": os.path.isdir(FILES_FOLDER)
-    }
-
-
-@app.get("/links")
-def links():
-    return {
-        "web": BASE_URL,
-        "health": f"{BASE_URL}/health",
-        "kml": f"{BASE_URL}/files/ruta.kml",
-        "csv": f"{BASE_URL}/files/gps_log.csv",
-        "command": f"{BASE_URL}/command",
-        "device_status": f"{BASE_URL}/device-status"
-    }
-
-
-@app.get("/last")
-def last_files():
-    kml_path = os.path.join(FILES_FOLDER, "ruta.kml")
-    csv_path = os.path.join(FILES_FOLDER, "gps_log.csv")
-
-    return {
-        "kml": {
-            "exists": os.path.isfile(kml_path),
-            "url": f"{BASE_URL}/files/ruta.kml"
-        },
-        "csv": {
-            "exists": os.path.isfile(csv_path),
-            "url": f"{BASE_URL}/files/gps_log.csv"
-        }
+        "index_exists": os.path.isfile(os.path.join(STATIC_FOLDER, "index.html"))
     }
 
 
@@ -188,7 +115,7 @@ async def set_command(request: Request):
 
 
 @app.get("/command")
-def get_command(device: str = "HERMES-01", clear: bool = True):
+def get_command(device: str = "HERMES-01", clear: bool = False):
     default = {
         "status": "none",
         "device": device,
@@ -230,3 +157,15 @@ def get_device_status():
         "status": "no_data",
         "message": "El ESP32 aún no ha enviado estado"
     })
+
+
+@app.get("/links")
+def links():
+    return {
+        "web": BASE_URL,
+        "health": f"{BASE_URL}/health",
+        "command": f"{BASE_URL}/command",
+        "device_status": f"{BASE_URL}/device-status",
+        "kml": f"{BASE_URL}/files/ruta.kml",
+        "csv": f"{BASE_URL}/files/gps_log.csv"
+    }
