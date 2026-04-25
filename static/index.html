@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes GPS</title>
+<link rel="stylesheet" href="https://gps-backend-pqzg.onrender.com"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#07111f;color:#e5e7eb;font-family:Arial,sans-serif;min-height:100vh}
+.header{background:#081827;padding:14px 20px;text-align:center;font-weight:bold;font-size:20px;letter-spacing:3px;border-bottom:1px solid #1e3a5f;color:#38bdf8}
+.container{display:grid;grid-template-columns:260px 1fr 300px;gap:12px;padding:12px}
+.card{background:#081827;border:1px solid #1e3a5f;border-radius:10px;padding:12px;margin-bottom:12px;box-shadow:0 0 14px rgba(56,189,248,0.07)}
+.card h3{margin:0 0 10px;color:#38bdf8;font-size:14px;letter-spacing:1px;text-transform:uppercase}
+.row{display:flex;justify-content:space-between;align-items:center;margin:6px 0;font-size:13px}
+.row b{text-align:right;max-width:55%}
+.ok{color:#22c55e;font-weight:bold}
+.warn{color:#f59e0b;font-weight:bold}
+.err{color:#ef4444;font-weight:bold}
+#map{height:580px;border-radius:10px;border:1px solid #1e3a5f}
+button{width:100%;margin:5px 0;padding:11px;border:none;border-radius:8px;background:#0b3b70;color:white;font-weight:bold;cursor:pointer;font-size:13px;transition:.2s}
+button:hover{background:#1d4ed8;transform:translateY(-1px)}
+.cmd-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.console{background:#020617;color:#22c55e;font-family:monospace;height:160px;overflow:auto;padding:10px;border-radius:8px;font-size:12px}
+.cycles{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:4px}
+.cyc{background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 2px;text-align:center;font-size:12px;cursor:pointer;transition:.2s}
+.cyc:hover{border-color:#38bdf8}
+.cyc.active{background:#0b3b70;border-color:#38bdf8;color:#38bdf8;font-weight:bold}
+.footer{text-align:center;padding:10px;color:#334155;font-size:12px;border-top:1px solid #1e3a5f}
+@media(max-width:1100px){.container{grid-template-columns:1fr}#map{height:420px}}
+</style>
+</head>
+<body>
+
+<div class="header">🛰️ HERMES GPS SYSTEM</div>
+
+<div class="container">
+
+  <div>
+    <div class="card">
+      <h3>Estado del Dispositivo</h3>
+      <div class="row"><span>Unidad</span><b id="deviceTxt">HERMES-01</b></div>
+      <div class="row"><span>Estado GPS</span><b id="estadoTxt" class="warn">ESPERANDO</b></div>
+      <div class="row"><span>Lock GPS</span><b id="gpsTxt" class="warn">SIN DATOS</b></div>
+      <div class="row"><span>Backend</span><b class="ok">CONECTADO</b></div>
+      <div class="row"><span>WiFi ESP32</span><b id="wifiTxt">--</b></div>
+      <div class="row"><span>Fallos GPS</span><b id="fallosTxt">--</b></div>
+    </div>
+    <div class="card">
+      <h3>Posición Actual</h3>
+      <div class="row"><span>Latitud</span><b id="lat">--</b></div>
+      <div class="row"><span>Longitud</span><b id="lon">--</b></div>
+      <div class="row"><span>Fecha</span><b id="fecha">--</b></div>
+      <div class="row"><span>Hora GPS</span><b id="hora">--</b></div>
+    </div>
+    <div class="card">
+      <h3>Resumen</h3>
+      <div class="row"><span>Puntos registrados</span><b id="puntos">--</b></div>
+      <div class="row"><span>Distancia total</span><b id="distancia">--</b></div>
+      <div class="row"><span>Despertar #</span><b id="despertarTxt">--</b></div>
+      <div class="row"><span>Ciclo sleep</span><b id="cicloTxt">--</b></div>
+      <div class="row"><span>Última actualización</span><b id="actualizacion">--</b></div>
+    </div>
+  </div>
+
+  <div>
+    <div id="map"></div>
+    <div class="card" style="margin-top:12px">
+      <h3>Consola del sistema</h3>
+      <div class="console" id="console">
+        &gt;&gt; SYSTEM ONLINE<br>
+        &gt;&gt; BACKEND LINK STABLE<br>
+        &gt;&gt; WAITING GPS DATA...<br>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h3>Acciones</h3>
+      <button onclick="actualizar()">🔄 ACTUALIZAR MAPA</button>
+      <button onclick="verRuta()">🗺️ VER RUTA COMPLETA</button>
+      <button onclick="verKML()">📍 ABRIR KML</button>
+      <button onclick="verCSV()">📊 DESCARGAR CSV</button>
+      <button onclick="statusBackend()">🖥️ STATUS BACKEND</button>
+      <button onclick="statusDispositivo()">📡 STATUS DISPOSITIVO</button>
+    </div>
+    <div class="card">
+      <h3>Enviar Comandos al ESP32</h3>
+      <p style="font-size:11px;color:#64748b;margin-bottom:8px">El ESP32 los ejecuta al despertar</p>
+      <div class="cmd-grid">
+        <button onclick="enviarComando('kml')">📁 KML</button>
+        <button onclick="enviarComando('csv')">📋 CSV</button>
+        <button onclick="enviarComando('status')">📶 STATUS</button>
+        <button onclick="enviarComando('reset')">🔁 RESET</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Ciclos de Operación</h3>
+      <p style="font-size:11px;color:#64748b;margin-bottom:8px">El ESP32 avanza automáticamente</p>
+      <div class="cycles">
+        <div class="cyc" id="cyc0">1°<br><small>5 min</small></div>
+        <div class="cyc" id="cyc1">2°<br><small>10 min</small></div>
+        <div class="cyc" id="cyc2">3°<br><small>15 min</small></div>
+        <div class="cyc" id="cyc3">4°<br><small>30 min</small></div>
+        <div class="cyc" id="cyc4">5°+<br><small>60 min</small></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Historial de Posiciones</h3>
+      <div id="historial" style="font-size:12px;max-height:200px;overflow:auto"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">HERMES GPS SYSTEM · <span id="clock"></span></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ⚠️ CAMBIA ESTA LÍNEA por tu URL de Render
+const BASE   = "https://gps-backend-pqzg.onrender.com";
+const DEVICE = "HERMES-01";
+const CICLOS = [5, 10, 15, 30, 60];
+
+let map      = L.map('map').setView([4.82, -74.34], 13);
+let marker   = null;
+let polyline = null;
+let markers  = [];
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19, attribution: "Hermes GPS | OpenStreetMap"
+}).addTo(map);
+
+function log(msg) {
+  const c = document.getElementById("console");
+  c.innerHTML += `[${new Date().toLocaleTimeString()}] ${msg}<br>`;
+  c.scrollTop = c.scrollHeight;
+}
+
+function haversine(lat1, lon1, lat2, lon2) {
+  const R = 6371000;
+  const dLat = (lat2-lat1)*Math.PI/180;
+  const dLon = (lon2-lon1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function actualizar() {
+  fetch(BASE + "/files/gps_log.csv?t=" + Date.now())
+    .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+    .then(data => {
+      const lineas = data.trim().split("\n");
+      if (lineas.length < 2) { log("CSV sin datos GPS todavía"); return; }
+      let coords = [], distTotal = 0;
+      for (let i = 1; i < lineas.length; i++) {
+        const p = lineas[i].trim().split(",");
+        if (p.length >= 6) {
+          const lat = parseFloat(p[4]), lon = parseFloat(p[5]);
+          if (!isNaN(lat) && !isNaN(lon))
+            coords.push({ id:p[0], despertar:p[1], fecha:p[2], hora:p[3], lat, lon });
+        }
+      }
+      if (coords.length === 0) { log("No hay coordenadas válidas"); return; }
+      for (let i = 1; i < coords.length; i++)
+        distTotal += haversine(coords[i-1].lat, coords[i-1].lon, coords[i].lat, coords[i].lon);
+      markers.forEach(m => map.removeLayer(m)); markers = [];
+      if (polyline) map.removeLayer(polyline);
+      const puntos = coords.map(c => [c.lat, c.lon]);
+      if (puntos.length >= 2) {
+        polyline = L.polyline(puntos, { color:"#00aaff", weight:4, opacity:0.9 }).addTo(map);
+        map.fitBounds(polyline.getBounds(), { padding:[40,40] });
+      }
+      coords.slice(0,-1).forEach(c => {
+        const m = L.circleMarker([c.lat,c.lon], { radius:4, color:"#38bdf8", fillOpacity:0.7 })
+          .bindPopup(`<b>#${c.id}</b><br>${c.fecha} ${c.hora}<br>${c.lat.toFixed(6)}, ${c.lon.toFixed(6)}`).addTo(map);
+        markers.push(m);
+      });
+      const u = coords[coords.length-1];
+      if (marker) marker.setLatLng([u.lat,u.lon]);
+      else marker = L.marker([u.lat,u.lon]).addTo(map);
+      marker.bindPopup(`<b>${DEVICE}</b><br>Despertar #${u.despertar}<br>${u.fecha} ${u.hora}<br>Lat: ${u.lat.toFixed(6)}<br>Lon: ${u.lon.toFixed(6)}`).openPopup();
+      map.setView([u.lat,u.lon], map.getZoom());
+      document.getElementById("lat").innerText          = u.lat.toFixed(6);
+      document.getElementById("lon").innerText          = u.lon.toFixed(6);
+      document.getElementById("fecha").innerText        = u.fecha;
+      document.getElementById("hora").innerText         = u.hora;
+      document.getElementById("puntos").innerText       = coords.length;
+      document.getElementById("despertarTxt").innerText = u.despertar;
+      document.getElementById("distancia").innerText    = distTotal >= 1000 ? (distTotal/1000).toFixed(2)+" km" : distTotal.toFixed(1)+" m";
+      document.getElementById("actualizacion").innerText = new Date().toLocaleTimeString();
+      let hist = "<table style='width:100%;border-collapse:collapse'><tr style='color:#38bdf8'><td>#</td><td>Hora</td><td>Lat</td><td>Lon</td></tr>";
+      coords.slice(-8).reverse().forEach(c => {
+        hist += `<tr style='border-top:1px solid #1e3a5f'><td>${c.despertar}</td><td>${c.hora}</td><td>${c.lat.toFixed(4)}</td><td>${c.lon.toFixed(4)}</td></tr>`;
+      });
+      document.getElementById("historial").innerHTML = hist + "</table>";
+      log(`POSICIÓN: ${u.lat.toFixed(6)}, ${u.lon.toFixed(6)} | PUNTOS: ${coords.length}`);
+    })
+    .catch(() => log("⚠️ CSV no disponible todavía"));
+}
+
+function verRuta()  { actualizar(); }
+function verKML()   { window.open(BASE + "/files/ruta.kml", "_blank"); }
+function verCSV()   { window.open(BASE + "/files/gps_log.csv", "_blank"); }
+
+function statusBackend() {
+  fetch(BASE + "/health").then(r => r.json()).then(d => { alert(JSON.stringify(d,null,2)); log("BACKEND OK"); })
+  .catch(() => log("ERROR BACKEND"));
+}
+
+function statusDispositivo() {
+  fetch(BASE + "/device-status?t=" + Date.now()).then(r => r.json()).then(d => {
+    document.getElementById("deviceTxt").innerText    = d.device || "HERMES-01";
+    document.getElementById("wifiTxt").innerText      = d.wifi   || "--";
+    document.getElementById("fallosTxt").innerText    = d.fallos_gps ?? "--";
+    document.getElementById("despertarTxt").innerText = d.despertar || "--";
+    const cicloMin = d.ciclo_min || 0;
+    document.getElementById("cicloTxt").innerText = cicloMin ? cicloMin+" min" : "--";
+    CICLOS.forEach((c,i) => document.getElementById("cyc"+i).classList.toggle("active", c===cicloMin));
+    const estado = (d.estado||"").toUpperCase();
+    document.getElementById("estadoTxt").innerText = estado || "SIN DATOS";
+    if (estado.includes("NUEVA")||estado.includes("FIX")) {
+      document.getElementById("gpsTxt").innerText = "LOCK ✅";
+      document.getElementById("gpsTxt").className = "ok";
+      document.getElementById("estadoTxt").className = "ok";
+    } else if (estado.includes("REENV")||estado.includes("LTIMA")) {
+      document.getElementById("gpsTxt").innerText = "ÚLTIMA VÁLIDA ⚠️";
+      document.getElementById("gpsTxt").className = "warn";
+      document.getElementById("estadoTxt").className = "warn";
+    } else {
+      document.getElementById("gpsTxt").innerText = "SIN FIX ❌";
+      document.getElementById("gpsTxt").className = "err";
+      document.getElementById("estadoTxt").className = "err";
+    }
+    log("DEVICE STATUS ACTUALIZADO");
+  }).catch(() => log("⚠️ Sin respuesta del dispositivo todavía"));
+}
+
+function enviarComando(cmd) {
+  fetch(BASE + "/command", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({device:DEVICE, cmd:cmd}) })
+  .then(r => r.json()).then(() => { log("COMANDO: "+cmd.toUpperCase()); alert(`Comando "${cmd}" enviado.\nEl ESP32 lo ejecutará al despertar.`); })
+  .catch(() => log("ERROR COMANDO"));
+}
+
+function actualizarReloj() { document.getElementById("clock").innerText = new Date().toLocaleString(); }
+
+actualizar();
+statusDispositivo();
+actualizarReloj();
+setInterval(actualizar, 30000);
+setInterval(statusDispositivo, 30000);
+setInterval(actualizarReloj, 1000);
+</script>
+
+</body>
+</html>
