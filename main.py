@@ -8,14 +8,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-
 from pydantic import BaseModel
-from jose import jwt
+from jose import jwt, JWTError
 from passlib.context import CryptContext
 
 BASE_URL = "https://gps-backend-pqzg.onrender.com"
 SECRET = os.getenv("SECRET", "HERMES_SECRET_2025")
-DEVICE_API_KEY = os.getenv("DEVICE_API_KEY", "HERMES_DEVICE_KEY_123")
 
 STATIC_DIR = "static"
 FILES_DIR = "static/files"
@@ -70,11 +68,6 @@ class DeviceModel(BaseModel):
     name: str = ""
 
 
-class CommandModel(BaseModel):
-    device: str = "HERMES-01"
-    cmd: str = "none"
-
-
 def now():
     return datetime.utcnow().isoformat() + "Z"
 
@@ -82,6 +75,7 @@ def now():
 def read_json(path, default):
     if not os.path.exists(path):
         return default
+
     try:
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -108,6 +102,7 @@ def create_token(user):
         "name": user["name"],
         "role": user["role"],
     }
+
     return jwt.encode(payload, SECRET, algorithm="HS256")
 
 
@@ -117,10 +112,11 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
 
     try:
         payload = jwt.decode(credentials.credentials, SECRET, algorithms=["HS256"])
-    except Exception:
+    except JWTError:
         raise HTTPException(status_code=401, detail="Token inválido")
 
     users = read_json(USERS_FILE, [])
+
     for user in users:
         if user["email"] == payload["email"]:
             return user
@@ -131,6 +127,7 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
 def require_admin(user=Depends(get_current_user)):
     if user["role"] != "admin":
         raise HTTPException(status_code=403, detail="Solo administrador")
+
     return user
 
 
@@ -148,6 +145,7 @@ def init_admin():
             "active": True,
             "created_at": now()
         })
+
         write_json(USERS_FILE, users)
 
 
@@ -161,10 +159,23 @@ def home():
     if os.path.isfile(index_path):
         return FileResponse(index_path, media_type="text/html")
 
-    return {
-        "status": "HERMES GPS ONLINE",
-        "message": "Sube static/index.html para ver la web app"
-    }
+    return {"status": "HERMES GPS ONLINE"}
+
+
+@app.get("/manifest.json")
+def manifest():
+    return FileResponse(
+        os.path.join(STATIC_DIR, "manifest.json"),
+        media_type="application/manifest+json"
+    )
+
+
+@app.get("/sw.js")
+def service_worker():
+    return FileResponse(
+        os.path.join(STATIC_DIR, "sw.js"),
+        media_type="application/javascript"
+    )
 
 
 @app.get("/health")
@@ -178,20 +189,6 @@ def health():
     }
 
 
-@app.get("/links")
-def links():
-    return {
-        "status": "ok",
-        "service": "Hermes GPS Backend",
-        "web": BASE_URL,
-        "health": f"{BASE_URL}/health",
-        "device_status": f"{BASE_URL}/device-status",
-        "command": f"{BASE_URL}/command",
-        "csv": f"{BASE_URL}/files/gps_log.csv",
-        "kml": f"{BASE_URL}/files/ruta.kml",
-    }
-
-
 @app.post("/register")
 def register(data: RegisterModel):
     users = read_json(USERS_FILE, [])
@@ -200,16 +197,15 @@ def register(data: RegisterModel):
         if user["email"].lower() == data.email.lower():
             raise HTTPException(status_code=400, detail="Usuario ya existe")
 
-    user = {
+    users.append({
         "name": data.name,
         "email": data.email.lower(),
         "password": hash_password(data.password),
         "role": "user",
         "active": True,
         "created_at": now()
-    }
+    })
 
-    users.append(user)
     write_json(USERS_FILE, users)
 
     return {"status": "ok", "message": "Usuario registrado"}
@@ -251,17 +247,16 @@ def me(user=Depends(get_current_user)):
 def admin_users(user=Depends(require_admin)):
     users = read_json(USERS_FILE, [])
 
-    clean = []
-    for u in users:
-        clean.append({
+    return [
+        {
             "name": u["name"],
             "email": u["email"],
             "role": u["role"],
             "active": u.get("active", True),
             "created_at": u.get("created_at", "")
-        })
-
-    return clean
+        }
+        for u in users
+    ]
 
 
 @app.post("/admin/device")
@@ -277,6 +272,7 @@ def admin_add_device(data: DeviceModel, user=Depends(require_admin)):
             "created_at": now(),
             "active": True
         })
+
         write_json(DEVICES_FILE, devices)
 
     return {"status": "ok", "device": data.device}
@@ -302,6 +298,7 @@ def admin_assign(data: AssignModel, user=Depends(require_admin)):
             "device": data.device,
             "created_at": now()
         })
+
         write_json(ASSIGN_FILE, assignments)
 
     return {"status": "ok", "message": "Equipo asignado"}
@@ -458,6 +455,7 @@ async def set_device_status(request: Request):
             "created_at": now(),
             "active": True
         })
+
         write_json(DEVICES_FILE, devices)
 
     return {
@@ -504,7 +502,11 @@ def get_ruta_kml():
     path = os.path.join(FILES_DIR, "ruta.kml")
 
     if os.path.isfile(path):
-        return FileResponse(path, media_type="application/vnd.google-earth.kml+xml", filename="ruta.kml")
+        return FileResponse(
+            path,
+            media_type="application/vnd.google-earth.kml+xml",
+            filename="ruta.kml"
+        )
 
     return JSONResponse(
         status_code=404,
