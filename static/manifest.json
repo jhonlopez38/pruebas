@@ -1,0 +1,26 @@
+{
+  "name": "Hermes GPS",
+  "short_name": "Hermes",
+  "description": "Sistema GPS táctico Hermes",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#06101f",
+  "theme_color": "#00c8ff",
+  "categories": ["navigation", "utilities"],
+  "icons": [
+    {
+      "src": "/static/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
