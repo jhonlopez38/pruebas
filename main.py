@@ -1,209 +1,189 @@
-# ================================================================
-#  HERMES GPS — BACKEND (main.py)
-#  Plataforma: Render.com
-#  Start command: uvicorn main:app --host 0.0.0.0 --port 10000
-#  Build command: pip install -r requirements.txt
-# ================================================================
-
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, UploadFile, File, Depends
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from pydantic import BaseModel
+from jose import jwt
+from passlib.context import CryptContext
+from sqlalchemy import create_engine, Column, Integer, String, Float
+from sqlalchemy.orm import declarative_base, sessionmaker
 import os
-import json
-from datetime import datetime
+import shutil
 
-app = FastAPI(title="Hermes GPS Backend")
+SECRET = "HERMES_SECRET_2025"
 
-# ── Cambia esta URL por la tuya de Render ──────────────────────
-BASE_URL = "https://gps-backend-pqzg.onrender.com"
-# ──────────────────────────────────────────────────────────────
+app = FastAPI()
 
-STATIC_DIR   = "static"
-FILES_DIR    = "static/files"
-COMMAND_FILE = os.path.join(FILES_DIR, "command.json")
-STATUS_FILE  = os.path.join(FILES_DIR, "status.json")
+UPLOAD_FOLDER = "static/files"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Crear carpetas si no existen
-os.makedirs(STATIC_DIR, exist_ok=True)
-os.makedirs(FILES_DIR,  exist_ok=True)
+app.mount("/files", StaticFiles(directory=UPLOAD_FOLDER), name="files")
 
-# CORS abierto para que la web app pueda hacer fetch
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+engine = create_engine("sqlite:///gps.db")
+Session = sessionmaker(bind=engine)
+Base = declarative_base()
 
-# Servir archivos estáticos (web app)
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-# Servir archivos generados por el ESP32 (CSV, KML)
-app.mount("/files",  StaticFiles(directory=FILES_DIR),  name="files")
+pwd = CryptContext(schemes=["bcrypt"])
 
+security = HTTPBearer()
 
-# ── Helpers ────────────────────────────────────────────────────
+class User(Base):
+    __tablename__ = "users"
 
-def guardar_json(path: str, data: dict):
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    password = Column(String)
+    role = Column(String)
 
-def leer_json(path: str, default: dict) -> dict:
-    if not os.path.exists(path):
-        return default
+class Device(Base):
+    __tablename__ = "devices"
+
+    id = Column(Integer, primary_key=True)
+    device_id = Column(String, unique=True)
+    user_id = Column(Integer)
+
+class GPSData(Base):
+    __tablename__ = "gps"
+
+    id = Column(Integer, primary_key=True)
+    device_id = Column(String)
+    estado = Column(String)
+    lat = Column(Float)
+    lon = Column(Float)
+    bateria = Column(Float)
+
+Base.metadata.create_all(engine)
+
+class RegisterModel(BaseModel):
+    name: str
+    email: str
+    password: str
+
+class LoginModel(BaseModel):
+    email: str
+    password: str
+
+class GPSModel(BaseModel):
+    device: str
+    estado: str
+    lat: float
+    lon: float
+    bateria_v: float
+
+def create_token(data):
+    return jwt.encode(data, SECRET, algorithm="HS256")
+
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return default
-
-
-# ── Rutas principales ──────────────────────────────────────────
+        token = credentials.credentials
+        return jwt.decode(token, SECRET, algorithms=["HS256"])
+    except:
+        raise HTTPException(401, "Token inválido")
 
 @app.get("/")
-def home():
-    """Sirve la web app (index.html en static/)"""
-    idx = os.path.join(STATIC_DIR, "index.html")
-    if os.path.isfile(idx):
-        return FileResponse(idx, media_type="text/html")
-    return JSONResponse({
-        "status":  "Servidor Hermes GPS activo",
-        "message": "Sube static/index.html para activar la web app"
+def root():
+    return {"status": "HERMES GPS ONLINE"}
+
+@app.post("/register")
+def register(data: RegisterModel):
+    db = Session()
+
+    exists = db.query(User).filter(User.email == data.email).first()
+
+    if exists:
+        raise HTTPException(400, "Usuario ya existe")
+
+    user = User(
+        name=data.name,
+        email=data.email,
+        password=pwd.hash(data.password),
+        role="user"
+    )
+
+    db.add(user)
+    db.commit()
+
+    return {"ok": True}
+
+@app.post("/login")
+def login(data: LoginModel):
+    db = Session()
+
+    user = db.query(User).filter(User.email == data.email).first()
+
+    if not user:
+        raise HTTPException(401, "Credenciales inválidas")
+
+    if not pwd.verify(data.password, user.password):
+        raise HTTPException(401, "Credenciales inválidas")
+
+    token = create_token({
+        "id": user.id,
+        "email": user.email,
+        "role": user.role
     })
 
-
-@app.get("/health")
-def health():
-    """Verificar estado del backend"""
     return {
-        "status":        "ok",
-        "service":       "Hermes GPS Backend",
-        "version":       "2.0",
-        "web":           BASE_URL,
-        "index_existe":  os.path.isfile(os.path.join(STATIC_DIR, "index.html")),
-        "timestamp_utc": datetime.utcnow().isoformat() + "Z"
+        "token": token,
+        "role": user.role
     }
-
-
-# ── Subir archivos desde el ESP32 ─────────────────────────────
-
-@app.post("/upload/{filename}")
-async def upload_file(filename: str, request: Request):
-    """
-    El ESP32 hace POST /upload/gps_log.csv con el cuerpo binario del archivo.
-    También acepta /upload/ruta.kml, /upload/pending.csv, etc.
-    """
-    safe_name = os.path.basename(filename)   # evitar path traversal
-    file_path = os.path.join(FILES_DIR, safe_name)
-    body = await request.body()
-
-    if not body:
-        return JSONResponse(
-            status_code=400,
-            content={"status": "error", "message": "Cuerpo vacío"}
-        )
-
-    with open(file_path, "wb") as f:
-        f.write(body)
-
-    return {
-        "status":   "ok",
-        "filename": safe_name,
-        "bytes":    len(body),
-        "url":      f"{BASE_URL}/files/{safe_name}"
-    }
-
-
-# ── Comandos: Web App → ESP32 ──────────────────────────────────
-
-@app.post("/command")
-async def set_command(request: Request):
-    """
-    La web app hace POST /command con JSON:
-    { "device": "HERMES-01", "cmd": "ciclo 10" }
-
-    Comandos válidos:
-      ciclo 5   → ciclo de 5 min
-      ciclo 10  → ciclo de 10 min
-      ciclo 15  → ciclo de 15 min
-      ciclo 30  → ciclo de 30 min
-      ciclo 60  → ciclo de 60 min
-      status    → solicitar estado
-      kml       → generar KML
-      csv       → subir CSV
-      reset     → reiniciar contadores
-    """
-    data   = await request.json()
-    cmd    = str(data.get("cmd",    "none")).strip().lower()
-    device = str(data.get("device", "HERMES-01")).strip()
-
-    payload = {
-        "status":     "pending",
-        "device":     device,
-        "cmd":        cmd,
-        "created_at": datetime.utcnow().isoformat() + "Z"
-    }
-    guardar_json(COMMAND_FILE, payload)
-    return {"status": "ok", "message": "Comando guardado", "command": payload}
-
-
-@app.get("/command")
-def get_command(device: str = "HERMES-01", clear: bool = False):
-    """
-    El ESP32 hace GET /command?device=HERMES-01&clear=true
-    El parámetro clear=true borra el comando después de leerlo.
-    """
-    default = {"status": "none", "device": device, "cmd": "none"}
-    data    = leer_json(COMMAND_FILE, default)
-
-    # Si el comando es de otro dispositivo, devolver vacío
-    if data.get("device", device) != device:
-        return default
-
-    # Limpiar comando después de leerlo
-    if clear and data.get("cmd", "none") != "none":
-        guardar_json(COMMAND_FILE, {
-            "status":     "none",
-            "device":     device,
-            "cmd":        "none",
-            "cleared_at": datetime.utcnow().isoformat() + "Z"
-        })
-
-    return data
-
-
-# ── Estado del dispositivo: ESP32 → Web App ────────────────────
 
 @app.post("/device-status")
-async def set_device_status(request: Request):
-    """
-    El ESP32 hace POST /device-status con JSON:
-    {
-      "device": "HERMES-01",
-      "estado": "NUEVA UBICACION",
-      "despertar": 5,
-      "ciclo_min": 5,
-      "fallos_gps": 0,
-      "lat": 4.825318,
-      "lon": -74.352334,
-      "fecha": "24/04/2025",
-      "hora": "15:42:10",
-      "bateria_v": 3.9,
-      "bateria_pct": 72,
-      "wifi": "conectado"
+def device_status(data: GPSModel):
+    db = Session()
+
+    gps = GPSData(
+        device_id=data.device,
+        estado=data.estado,
+        lat=data.lat,
+        lon=data.lon,
+        bateria=data.bateria_v
+    )
+
+    db.add(gps)
+    db.commit()
+
+    return {"ok": True}
+
+@app.get("/devices")
+def devices(user=Depends(verify_token)):
+    db = Session()
+
+    if user["role"] == "admin":
+        devices = db.query(GPSData).all()
+    else:
+        user_devices = db.query(Device).filter(Device.user_id == user["id"]).all()
+
+        ids = [d.device_id for d in user_devices]
+
+        devices = db.query(GPSData).filter(GPSData.device_id.in_(ids)).all()
+
+    return devices
+
+@app.post("/assign-device")
+def assign_device(device_id: str, user_id: int, user=Depends(verify_token)):
+    if user["role"] != "admin":
+        raise HTTPException(403, "Solo admin")
+
+    db = Session()
+
+    device = Device(
+        device_id=device_id,
+        user_id=user_id
+    )
+
+    db.add(device)
+    db.commit()
+
+    return {"ok": True}
+
+@app.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+    file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    return {
+        "url": f"/files/{file.filename}"
     }
-    """
-    data = await request.json()
-    data["updated_at"] = datetime.utcnow().isoformat() + "Z"
-    guardar_json(STATUS_FILE, data)
-    return {"status": "ok", "device_status": data}
-
-
-@app.get("/device-status")
-def get_device_status():
-    """La web app hace GET /device-status para actualizar el panel"""
-    return leer_json(STATUS_FILE, {
-        "status":  "no_data",
-        "message": "El ESP32 aún no ha enviado estado"
-    })
