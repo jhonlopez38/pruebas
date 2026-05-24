@@ -177,7 +177,7 @@ footer{height:28px;background:var(--bg2);border-top:1px solid var(--border);padd
 <div><div id="hclock">--:--:--</div><div id="hdate">-- / -- / ----</div></div>
 </div>
 <div class="hdr-actions">
-<button id="installAppBtn" class="hdr-btn" onclick="installApp()">INSTALAR APP</button>
+<button id="installAppBtn" class="hdr-btn" onclick="installApp()" style="display:flex">INSTALAR APP</button>
 <button id="adminToggleBtn" class="hdr-btn" onclick="toggleAdmin()">ADMIN</button>
 <button id="logoutBtn" class="hdr-btn" onclick="logout()">SALIR</button>
 </div>
@@ -324,7 +324,22 @@ function reloj(){const now=new Date(),utc=now.getTime()+now.getTimezoneOffset()*
 if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js");
 let deferredPrompt=null;
 window.addEventListener("beforeinstallprompt",event=>{event.preventDefault();deferredPrompt=event;document.getElementById("installAppBtn").style.display="flex";});
-async function installApp(){if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById("installAppBtn").style.display="none";}
+async function installApp(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const r=await deferredPrompt.userChoice;
+    deferredPrompt=null;
+    if(r.outcome==="accepted"){document.getElementById("installAppBtn").style.display="none";return;}
+  }
+  const ua=navigator.userAgent;
+  if(/iPad|iPhone|iPod/.test(ua)&&!window.MSStream){
+    alert("Instalar en iPhone/iPad:\n\n1. Toca el icono Compartir (cuadrado con flecha hacia arriba)\n2. Desplaza y toca: Agregar a pantalla de inicio\n3. Toca Agregar");
+  } else if(/Android/.test(ua)){
+    alert("Instalar en Android (Chrome):\n\n1. Toca el menu de 3 puntos (arriba derecha)\n2. Toca: Agregar a pantalla de inicio\n3. Toca Instalar o Agregar");
+  } else {
+    alert("Instalar en PC (Chrome / Edge):\n\n1. Busca el icono de instalacion en la barra de direcciones (extremo derecho)\n2. Haz clic e instala\n\nSi no aparece: Menu (3 puntos) > Instalar HERMES GPS");
+  }
+}
 checkSession();actualizar();statusDisp();reloj();
 setInterval(actualizar,30000);setInterval(statusDisp,30000);setInterval(reloj,1000);
 </script>
