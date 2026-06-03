@@ -1,8 +1,10 @@
 fastapi
-uvicorn
+uvicorn[standard]
 python-multipart
 python-jose[cryptography]
 passlib[bcrypt]
 bcrypt==4.0.1
 python-dotenv
 jinja2
+pydantic
+starlette
