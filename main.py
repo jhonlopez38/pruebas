@@ -5,14 +5,14 @@ from datetime import datetime, timedelta
 
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 
-BASE_URL = "https://gps-backend-pqzg.onrender.com"
+BASE_URL = os.getenv("BASE_URL", "https://gps-backend-pqzg.onrender.com")
 SECRET = os.getenv("SECRET", "HERMES_SECRET_2025")
 DEVICE_KEY = os.getenv("DEVICE_KEY", "HERMES_DEVICE_KEY_123")
 
@@ -32,7 +32,7 @@ os.makedirs(STATIC_DIR, exist_ok=True)
 os.makedirs(FILES_DIR, exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
 
-app = FastAPI(title="HERMES GPS Backend")
+app = FastAPI(title="HERMES GPS")
 
 app.add_middleware(
     CORSMiddleware,
@@ -46,7 +46,7 @@ app.mount("/files", StaticFiles(directory=FILES_DIR), name="files")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
 
 
 def read_json(path, default):
@@ -64,31 +64,6 @@ def write_json(path, data):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
-def create_token(username):
-    payload = {
-        "sub": username,
-        "exp": datetime.utcnow() + timedelta(days=30)
-    }
-    return jwt.encode(payload, SECRET, algorithm="HS256")
-
-
-def get_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    try:
-        payload = jwt.decode(credentials.credentials, SECRET, algorithms=["HS256"])
-        username = payload.get("sub")
-        if not username:
-            raise HTTPException(status_code=401, detail="Token inválido")
-        return username
-    except JWTError:
-        raise HTTPException(status_code=401, detail="Token inválido")
-
-
-def validar_device_key(request: Request):
-    key = request.headers.get("x-device-key")
-    if key != DEVICE_KEY:
-        raise HTTPException(status_code=401, detail="Device key inválida")
-
-
 def init_files():
     if not os.path.exists(USERS_FILE):
         write_json(USERS_FILE, {})
@@ -99,31 +74,92 @@ def init_files():
     if not os.path.exists(HISTORY_FILE):
         write_json(HISTORY_FILE, [])
 
-    if not os.path.exists(COMMAND_FILE):
-        write_json(COMMAND_FILE, {"cmd": "none"})
-
     if not os.path.exists(STATUS_FILE):
         write_json(STATUS_FILE, {})
+
+    if not os.path.exists(COMMAND_FILE):
+        write_json(COMMAND_FILE, {"cmd": "none"})
 
     if not os.path.exists(CSV_PATH):
         with open(CSV_PATH, "w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
             writer.writerow([
-                "id",
-                "despertar",
-                "fecha",
-                "hora",
-                "lat",
-                "lon",
-                "estado",
-                "bateria_v",
-                "bateria_pct",
-                "device",
-                "created_at"
+                "id", "despertar", "fecha", "hora", "lat", "lon",
+                "estado", "bateria_v", "bateria_pct", "device", "created_at"
             ])
 
 
 init_files()
+
+
+def create_token(username):
+    payload = {
+        "sub": username,
+        "exp": datetime.utcnow() + timedelta(days=30)
+    }
+    return jwt.encode(payload, SECRET, algorithm="HS256")
+
+
+def get_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Token requerido")
+
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET, algorithms=["HS256"])
+        username = payload.get("sub")
+        if not username:
+            raise HTTPException(status_code=401, detail="Token inválido")
+        return username
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Token inválido")
+
+
+def optional_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    if not credentials:
+        return None
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET, algorithms=["HS256"])
+        return payload.get("sub")
+    except JWTError:
+        return None
+
+
+def check_device_key(request: Request):
+    key = request.headers.get("x-device-key")
+    if key != DEVICE_KEY:
+        raise HTTPException(status_code=401, detail="Device key inválida")
+
+
+def parse_dt(value):
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", ""))
+    except Exception:
+        return None
+
+
+def in_range(created_at, start, end):
+    dt = parse_dt(created_at)
+    s = parse_dt(start)
+    e = parse_dt(end)
+
+    if not dt:
+        return True
+    if s and dt < s:
+        return False
+    if e and dt > e:
+        return False
+    return True
+
+
+def valid_point(p):
+    try:
+        lat = float(p.get("lat", 0))
+        lon = float(p.get("lon", 0))
+        return lat != 0 and lon != 0
+    except Exception:
+        return False
 
 
 class RegisterModel(BaseModel):
@@ -147,14 +183,9 @@ class CommandModel(BaseModel):
     cmd: str
 
 
-@app.get("/")
-def root():
-    return {
-        "name": "HERMES GPS Backend",
-        "status": "online",
-        "files": f"{BASE_URL}/files/gps_log.csv",
-        "kml": f"{BASE_URL}/files/ruta.kml"
-    }
+@app.get("/", response_class=HTMLResponse)
+def home():
+    return HTMLResponse(APP_HTML)
 
 
 @app.post("/register")
@@ -172,6 +203,10 @@ def register(data: RegisterModel):
 
     write_json(USERS_FILE, users)
 
+    devices = read_json(DEVICES_FILE, {})
+    devices.setdefault(data.username, {})
+    write_json(DEVICES_FILE, devices)
+
     return {"ok": True, "msg": "Usuario creado"}
 
 
@@ -186,12 +221,10 @@ def login(data: LoginModel):
     if not pwd_context.verify(data.password, user["password"]):
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
 
-    token = create_token(data.username)
-
     return {
         "ok": True,
-        "token": token,
-        "username": data.username
+        "username": data.username,
+        "token": create_token(data.username)
     }
 
 
@@ -203,9 +236,7 @@ def me(username: str = Depends(get_user)):
 @app.post("/devices")
 def add_device(data: DeviceModel, username: str = Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
-
-    if username not in devices:
-        devices[username] = {}
+    devices.setdefault(username, {})
 
     devices[username][data.device_id] = {
         "device_id": data.device_id,
@@ -259,7 +290,7 @@ def delete_device(device_id: str, username: str = Depends(get_user)):
 
 @app.post("/device-status")
 async def device_status(request: Request):
-    validar_device_key(request)
+    check_device_key(request)
 
     data = await request.json()
 
@@ -268,10 +299,13 @@ async def device_status(request: Request):
     despertar = data.get("despertar", data.get("wake", 0))
     ciclo_min = data.get("ciclo_min", data.get("ciclo", 0))
     fallos_gps = data.get("fallos_gps", data.get("fallos", 0))
+
     lat = float(data.get("lat", 0) or 0)
     lon = float(data.get("lon", 0) or 0)
+
     fecha = data.get("fecha", "")
     hora = data.get("hora", "")
+
     bateria_v = data.get("bateria_v", data.get("bat_v", 0))
     bateria_pct = data.get("bateria_pct", data.get("bat_pct", 0))
 
@@ -303,17 +337,8 @@ async def device_status(request: Request):
     with open(CSV_PATH, "a", encoding="utf-8", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([
-            len(history),
-            despertar,
-            fecha,
-            hora,
-            lat,
-            lon,
-            estado,
-            bateria_v,
-            bateria_pct,
-            device,
-            now
+            len(history), despertar, fecha, hora, lat, lon,
+            estado, bateria_v, bateria_pct, device, now
         ])
 
     return {"ok": True, "status": status}
@@ -327,20 +352,17 @@ def get_all_status():
 @app.get("/status/{device_id}")
 def get_status(device_id: str):
     status = read_json(STATUS_FILE, {})
-
     if device_id not in status:
         raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
-
     return status[device_id]
 
 
 @app.get("/latest/{device_id}")
 def latest(device_id: str):
     history = read_json(HISTORY_FILE, [])
-
     registros = [
         h for h in history
-        if h.get("device") == device_id and float(h.get("lat", 0)) != 0 and float(h.get("lon", 0)) != 0
+        if h.get("device") == device_id and valid_point(h)
     ]
 
     if not registros:
@@ -349,29 +371,30 @@ def latest(device_id: str):
     return registros[-1]
 
 
-@app.get("/history")
-def history(
-    device: str = None,
-    start: str = None,
-    end: str = None
-):
-    data = read_json(HISTORY_FILE, [])
+@app.get("/fleet/latest")
+def fleet_latest(devices: str = None):
+    status = read_json(STATUS_FILE, {})
 
+    if not devices:
+        return status
+
+    selected = [d.strip() for d in devices.split(",") if d.strip()]
+    return {d: status.get(d) for d in selected if d in status}
+
+
+@app.get("/history")
+def history(device: str = None, start: str = None, end: str = None):
+    data = read_json(HISTORY_FILE, [])
     result = []
 
     for h in data:
         if device and h.get("device") != device:
             continue
 
-        created_at = h.get("created_at", "")
-
-        if start and created_at < start:
+        if not in_range(h.get("created_at", ""), start, end):
             continue
 
-        if end and created_at > end:
-            continue
-
-        if float(h.get("lat", 0)) == 0 and float(h.get("lon", 0)) == 0:
+        if not valid_point(h):
             continue
 
         result.append(h)
@@ -380,18 +403,11 @@ def history(
 
 
 @app.get("/history/multiple")
-def history_multiple(
-    devices: str,
-    start: str = None,
-    end: str = None
-):
+def history_multiple(devices: str, start: str = None, end: str = None):
     selected = [d.strip() for d in devices.split(",") if d.strip()]
     data = read_json(HISTORY_FILE, [])
 
-    result = {}
-
-    for dev in selected:
-        result[dev] = []
+    result = {dev: [] for dev in selected}
 
     for h in data:
         dev = h.get("device")
@@ -399,15 +415,10 @@ def history_multiple(
         if dev not in selected:
             continue
 
-        created_at = h.get("created_at", "")
-
-        if start and created_at < start:
+        if not in_range(h.get("created_at", ""), start, end):
             continue
 
-        if end and created_at > end:
-            continue
-
-        if float(h.get("lat", 0)) == 0 and float(h.get("lon", 0)) == 0:
+        if not valid_point(h):
             continue
 
         result[dev].append(h)
@@ -459,7 +470,6 @@ def generar_kml(device: str = None, start: str = None, end: str = None):
     for p in data:
         lat = float(p.get("lat", 0))
         lon = float(p.get("lon", 0))
-
         if lat != 0 and lon != 0:
             coords += f"{lon},{lat},0\n"
 
@@ -503,7 +513,503 @@ def export_kml(device: str = None, start: str = None, end: str = None):
 
 @app.get("/health")
 def health():
-    return {
-        "ok": True,
-        "time": datetime.utcnow().isoformat()
+    return {"ok": True, "time": datetime.utcnow().isoformat()}
+
+
+APP_HTML = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>HERMES GPS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="/static/manifest.json">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+<style>
+body{margin:0;font-family:Arial;background:#0b0f19;color:white}
+header{padding:12px;background:#111827;display:flex;justify-content:space-between;align-items:center}
+button,input,select{padding:9px;border-radius:8px;border:1px solid #374151;margin:4px}
+button{background:#2563eb;color:white;cursor:pointer}
+button:hover{background:#1d4ed8}
+.panel{display:flex;height:calc(100vh - 55px)}
+.sidebar{width:360px;background:#111827;padding:12px;overflow:auto}
+.map{flex:1}
+#map{height:100%;width:100%}
+.card{background:#1f2937;margin:8px 0;padding:10px;border-radius:10px}
+.hidden{display:none}
+.row{display:flex;gap:5px;flex-wrap:wrap}
+.small{font-size:12px;color:#9ca3af}
+.deviceItem{padding:8px;background:#374151;border-radius:8px;margin:4px 0}
+.tabs button{background:#374151}
+.tabs button.active{background:#10b981}
+.progress{width:100%}
+</style>
+</head>
+
+<body>
+
+<header>
+  <b>🛰 HERMES GPS</b>
+  <div>
+    <span id="userLabel"></span>
+    <button onclick="logout()">Salir</button>
+  </div>
+</header>
+
+<div id="authView" class="sidebar" style="width:auto;height:100vh">
+  <h2>Ingreso HERMES</h2>
+  <input id="loginUser" placeholder="Usuario">
+  <input id="loginPass" placeholder="Contraseña" type="password">
+  <button onclick="login()">Ingresar</button>
+  <button onclick="register()">Crear usuario</button>
+  <p id="authMsg"></p>
+</div>
+
+<div id="appView" class="panel hidden">
+  <div class="sidebar">
+
+    <div class="tabs">
+      <button class="active" onclick="showTab('live')">Mapa</button>
+      <button onclick="showTab('history')">Historial</button>
+      <button onclick="showTab('devices')">Equipos</button>
+    </div>
+
+    <div id="tab_live">
+      <h3>Mapa en vivo</h3>
+      <div id="deviceCheckboxes"></div>
+      <button onclick="loadSelectedLatest()">Mostrar seleccionados</button>
+      <button onclick="centerAll()">Centrar todos</button>
+      <div id="liveInfo"></div>
+    </div>
+
+    <div id="tab_history" class="hidden">
+      <h3>Recorrido tipo Strava</h3>
+
+      <label>Equipo</label>
+      <select id="historyDevice"></select>
+
+      <label>Desde</label>
+      <input id="startDate" type="datetime-local">
+
+      <label>Hasta</label>
+      <input id="endDate" type="datetime-local">
+
+      <button onclick="loadHistory()">Consultar recorrido</button>
+      <button onclick="playRoute()">▶ Play</button>
+      <button onclick="pauseRoute()">⏸ Pausa</button>
+      <button onclick="resetRoute()">⏮ Reiniciar</button>
+
+      <label>Velocidad</label>
+      <select id="playSpeed">
+        <option value="1000">1x</option>
+        <option value="500">2x</option>
+        <option value="250">4x</option>
+        <option value="100">10x</option>
+      </select>
+
+      <input id="routeProgress" class="progress" type="range" min="0" max="0" value="0" oninput="jumpRoute(this.value)">
+
+      <button onclick="downloadKML()">Descargar KML</button>
+
+      <div id="historyStats" class="card"></div>
+    </div>
+
+    <div id="tab_devices" class="hidden">
+      <h3>Administrar equipos</h3>
+
+      <input id="devId" placeholder="DEVICE_ID ejemplo HERMES-01">
+      <input id="devName" placeholder="Nombre del equipo">
+
+      <select id="devIcon">
+        <option value="car">🚗 Carro</option>
+        <option value="motorcycle">🏍️ Moto</option>
+        <option value="truck">🚚 Camión</option>
+        <option value="bus">🚌 Bus</option>
+        <option value="person">🚶 Persona</option>
+        <option value="box">📦 Activo</option>
+        <option value="boat">🛥️ Lancha</option>
+      </select>
+
+      <input id="devColor" type="color" value="#007bff">
+
+      <button onclick="saveDevice()">Guardar / Editar</button>
+
+      <div id="deviceList"></div>
+    </div>
+
+  </div>
+
+  <div class="map">
+    <div id="map"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+let token = localStorage.getItem("token") || "";
+let username = localStorage.getItem("username") || "";
+let devices = [];
+let map;
+let markers = {};
+let routeLine = null;
+let routeMarker = null;
+let routePoints = [];
+let playIndex = 0;
+let playTimer = null;
+
+const iconEmoji = {
+  car:"🚗",
+  motorcycle:"🏍️",
+  truck:"🚚",
+  bus:"🚌",
+  person:"🚶",
+  box:"📦",
+  boat:"🛥️"
+};
+
+function authHeaders(){
+  return {"Authorization":"Bearer " + token, "Content-Type":"application/json"};
+}
+
+async function login(){
+  const r = await fetch("/login", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      username:loginUser.value,
+      password:loginPass.value
+    })
+  });
+
+  const j = await r.json();
+
+  if(j.ok){
+    token = j.token;
+    username = j.username;
+    localStorage.setItem("token", token);
+    localStorage.setItem("username", username);
+    startApp();
+  }else{
+    authMsg.innerText = j.detail || "Error";
+  }
+}
+
+async function register(){
+  const r = await fetch("/register", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      username:loginUser.value,
+      password:loginPass.value
+    })
+  });
+
+  const j = await r.json();
+  authMsg.innerText = j.ok ? "Usuario creado, ahora ingresa" : (j.detail || "Error");
+}
+
+function logout(){
+  localStorage.clear();
+  location.reload();
+}
+
+function initMap(){
+  map = L.map("map").setView([4.65,-74.1], 12);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+    attribution:"OpenStreetMap"
+  }).addTo(map);
+}
+
+function showTab(name){
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+
+  ["live","history","devices"].forEach(t=>{
+    document.getElementById("tab_"+t).classList.add("hidden");
+  });
+
+  document.getElementById("tab_"+name).classList.remove("hidden");
+}
+
+async function loadDevices(){
+  const r = await fetch("/devices", {headers:authHeaders()});
+  devices = await r.json();
+
+  renderDeviceSelectors();
+  renderDeviceList();
+}
+
+function renderDeviceSelectors(){
+  deviceCheckboxes.innerHTML = "";
+  historyDevice.innerHTML = "";
+
+  devices.forEach(d=>{
+    const emoji = iconEmoji[d.icono] || "📍";
+
+    deviceCheckboxes.innerHTML += `
+      <div class="deviceItem">
+        <label>
+          <input type="checkbox" class="devCheck" value="${d.device_id}" checked>
+          ${emoji} ${d.nombre} <span class="small">${d.device_id}</span>
+        </label>
+      </div>
+    `;
+
+    historyDevice.innerHTML += `<option value="${d.device_id}">${emoji} ${d.nombre}</option>`;
+  });
+}
+
+function renderDeviceList(){
+  deviceList.innerHTML = "";
+
+  devices.forEach(d=>{
+    const emoji = iconEmoji[d.icono] || "📍";
+
+    deviceList.innerHTML += `
+      <div class="card">
+        <b>${emoji} ${d.nombre}</b><br>
+        <span class="small">${d.device_id}</span><br>
+        <button onclick="editDevice('${d.device_id}')">Editar</button>
+        <button onclick="deleteDevice('${d.device_id}')">Eliminar</button>
+      </div>
+    `;
+  });
+}
+
+function editDevice(id){
+  const d = devices.find(x=>x.device_id===id);
+  if(!d) return;
+
+  devId.value = d.device_id;
+  devName.value = d.nombre;
+  devIcon.value = d.icono;
+  devColor.value = d.color;
+}
+
+async function saveDevice(){
+  const payload = {
+    device_id:devId.value,
+    nombre:devName.value,
+    icono:devIcon.value,
+    color:devColor.value
+  };
+
+  const exists = devices.find(d=>d.device_id===payload.device_id);
+
+  const url = exists ? "/devices/" + payload.device_id : "/devices";
+  const method = exists ? "PUT" : "POST";
+
+  await fetch(url, {
+    method,
+    headers:authHeaders(),
+    body:JSON.stringify(payload)
+  });
+
+  await loadDevices();
+}
+
+async function deleteDevice(id){
+  await fetch("/devices/" + id, {
+    method:"DELETE",
+    headers:authHeaders()
+  });
+
+  await loadDevices();
+}
+
+function makeIcon(d){
+  const emoji = iconEmoji[d.icono] || "📍";
+  return L.divIcon({
+    html:`<div style="font-size:28px">${emoji}</div>`,
+    className:"",
+    iconSize:[30,30]
+  });
+}
+
+async function loadSelectedLatest(){
+  const selected = [...document.querySelectorAll(".devCheck:checked")].map(x=>x.value);
+
+  if(selected.length === 0) return;
+
+  const r = await fetch("/fleet/latest?devices=" + selected.join(","));
+  const data = await r.json();
+
+  liveInfo.innerHTML = "";
+
+  for(const id of selected){
+    const p = data[id];
+    const d = devices.find(x=>x.device_id===id) || {icono:"car", nombre:id};
+
+    if(!p || !p.lat || !p.lon) continue;
+
+    const latlng = [p.lat, p.lon];
+
+    if(markers[id]){
+      markers[id].setLatLng(latlng);
+    }else{
+      markers[id] = L.marker(latlng, {icon:makeIcon(d)}).addTo(map);
     }
+
+    markers[id].bindPopup(`
+      <b>${d.nombre}</b><br>
+      ${id}<br>
+      ${p.estado}<br>
+      Batería: ${p.bateria_pct}%<br>
+      ${p.fecha} ${p.hora}
+    `);
+
+    liveInfo.innerHTML += `
+      <div class="card">
+        <b>${iconEmoji[d.icono] || "📍"} ${d.nombre}</b><br>
+        Estado: ${p.estado}<br>
+        Batería: ${p.bateria_pct}%<br>
+        Última: ${p.fecha} ${p.hora}
+      </div>
+    `;
+  }
+
+  centerAll();
+}
+
+function centerAll(){
+  const arr = Object.values(markers);
+  if(arr.length === 0) return;
+
+  const group = L.featureGroup(arr);
+  map.fitBounds(group.getBounds().pad(0.2));
+}
+
+async function loadHistory(){
+  clearRoute();
+
+  const dev = historyDevice.value;
+  const start = startDate.value ? new Date(startDate.value).toISOString() : "";
+  const end = endDate.value ? new Date(endDate.value).toISOString() : "";
+
+  const url = `/history?device=${dev}&start=${start}&end=${end}`;
+  const r = await fetch(url);
+  routePoints = await r.json();
+
+  if(routePoints.length === 0){
+    historyStats.innerHTML = "Sin puntos en ese rango.";
+    return;
+  }
+
+  const latlngs = routePoints.map(p=>[p.lat,p.lon]);
+
+  routeLine = L.polyline(latlngs, {weight:5}).addTo(map);
+
+  L.marker(latlngs[0]).addTo(map).bindPopup("Inicio");
+  L.marker(latlngs[latlngs.length-1]).addTo(map).bindPopup("Fin");
+
+  routeMarker = L.marker(latlngs[0]).addTo(map);
+
+  map.fitBounds(routeLine.getBounds().pad(0.2));
+
+  routeProgress.max = routePoints.length - 1;
+  routeProgress.value = 0;
+
+  historyStats.innerHTML = `
+    <b>Puntos:</b> ${routePoints.length}<br>
+    <b>Inicio:</b> ${routePoints[0].fecha} ${routePoints[0].hora}<br>
+    <b>Fin:</b> ${routePoints[routePoints.length-1].fecha} ${routePoints[routePoints.length-1].hora}
+  `;
+}
+
+function playRoute(){
+  if(routePoints.length === 0) return;
+
+  pauseRoute();
+
+  const speed = parseInt(playSpeed.value);
+
+  playTimer = setInterval(()=>{
+    if(playIndex >= routePoints.length){
+      pauseRoute();
+      return;
+    }
+
+    const p = routePoints[playIndex];
+    routeMarker.setLatLng([p.lat,p.lon]);
+    routeProgress.value = playIndex;
+
+    routeMarker.bindPopup(`
+      ${p.fecha} ${p.hora}<br>
+      ${p.lat}, ${p.lon}
+    `);
+
+    playIndex++;
+  }, speed);
+}
+
+function pauseRoute(){
+  if(playTimer){
+    clearInterval(playTimer);
+    playTimer = null;
+  }
+}
+
+function resetRoute(){
+  pauseRoute();
+  playIndex = 0;
+  routeProgress.value = 0;
+
+  if(routePoints.length && routeMarker){
+    const p = routePoints[0];
+    routeMarker.setLatLng([p.lat,p.lon]);
+  }
+}
+
+function jumpRoute(i){
+  playIndex = parseInt(i);
+  if(routePoints.length && routeMarker){
+    const p = routePoints[playIndex];
+    routeMarker.setLatLng([p.lat,p.lon]);
+  }
+}
+
+function clearRoute(){
+  pauseRoute();
+  playIndex = 0;
+
+  if(routeLine){
+    map.removeLayer(routeLine);
+    routeLine = null;
+  }
+
+  if(routeMarker){
+    map.removeLayer(routeMarker);
+    routeMarker = null;
+  }
+}
+
+function downloadKML(){
+  const dev = historyDevice.value;
+  const start = startDate.value ? new Date(startDate.value).toISOString() : "";
+  const end = endDate.value ? new Date(endDate.value).toISOString() : "";
+
+  window.open(`/files/ruta.kml?device=${dev}&start=${start}&end=${end}`, "_blank");
+}
+
+async function startApp(){
+  authView.classList.add("hidden");
+  appView.classList.remove("hidden");
+  userLabel.innerText = username;
+
+  initMap();
+  await loadDevices();
+
+  setInterval(loadSelectedLatest, 30000);
+}
+
+if(token){
+  startApp();
+}
+</script>
+
+</body>
+</html>
+"""
