@@ -105,14 +105,15 @@ init_files()
 
 users_init = read_json(USERS_FILE, {})
 
-if ADMIN_USER not in users_init:
-    users_init[ADMIN_USER] = {
-        "username": ADMIN_USER,
-        "password": pwd_context.hash(ADMIN_PASS),
-        "role": "admin",
-        "created_at": datetime.utcnow().isoformat()
-    }
-    write_json(USERS_FILE, users_init)
+users_init[ADMIN_USER] = {
+    "username": ADMIN_USER,
+    "password": pwd_context.hash(ADMIN_PASS),
+    "role": "admin",
+    "created_at": users_init.get(ADMIN_USER, {}).get("created_at", datetime.utcnow().isoformat()),
+    "updated_at": datetime.utcnow().isoformat()
+}
+
+write_json(USERS_FILE, users_init)
 
 
 def create_token(username, role):
@@ -213,8 +214,8 @@ class UserCreateModel(BaseModel):
 class DeviceModel(BaseModel):
     device_id: str
     nombre: str = "Sin nombre"
-    icono: str = "car"
-    color: str = "#007bff"
+    icono: str = "antenna"
+    color: str = "#00cfff"
     owner: str = ""
 
 
@@ -264,10 +265,7 @@ def register(data: RegisterModel):
     devices.setdefault(data.username, {})
     write_json(DEVICES_FILE, devices)
 
-    return {
-        "ok": True,
-        "msg": "Usuario creado"
-    }
+    return {"ok": True, "msg": "Usuario creado"}
 
 
 @app.post("/login")
@@ -334,10 +332,7 @@ def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
     devices.setdefault(data.username, {})
     write_json(DEVICES_FILE, devices)
 
-    return {
-        "ok": True,
-        "msg": "Usuario creado"
-    }
+    return {"ok": True, "msg": "Usuario creado"}
 
 
 @app.delete("/admin/users/{username}")
@@ -356,15 +351,12 @@ def admin_delete_user(username: str, admin=Depends(require_admin)):
         del devices[username]
         write_json(DEVICES_FILE, devices)
 
-    return {
-        "ok": True
-    }
+    return {"ok": True}
 
 
 @app.post("/devices")
 def add_device(data: DeviceModel, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
-
     owner = data.owner if user["role"] == "admin" and data.owner else user["username"]
 
     devices.setdefault(owner, {})
@@ -380,10 +372,7 @@ def add_device(data: DeviceModel, user=Depends(get_user)):
 
     write_json(DEVICES_FILE, devices)
 
-    return {
-        "ok": True,
-        "device": devices[owner][data.device_id]
-    }
+    return {"ok": True, "device": devices[owner][data.device_id]}
 
 
 @app.get("/devices")
@@ -392,12 +381,10 @@ def list_devices(user=Depends(get_user)):
 
     if user["role"] == "admin":
         result = []
-
         for owner, devs in devices.items():
             for d in devs.values():
                 d["owner"] = owner
                 result.append(d)
-
         return result
 
     return list(devices.get(user["username"], {}).values())
@@ -411,7 +398,6 @@ def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
         for owner in list(devices.keys()):
             if device_id in devices[owner]:
                 new_owner = data.owner if data.owner else owner
-
                 dev_data = devices[owner][device_id]
 
                 dev_data.update({
@@ -428,11 +414,7 @@ def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
                     del devices[owner][device_id]
 
                 write_json(DEVICES_FILE, devices)
-
-                return {
-                    "ok": True,
-                    "device": dev_data
-                }
+                return {"ok": True, "device": dev_data}
 
     else:
         owner = user["username"]
@@ -446,11 +428,7 @@ def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
             })
 
             write_json(DEVICES_FILE, devices)
-
-            return {
-                "ok": True,
-                "device": devices[owner][device_id]
-            }
+            return {"ok": True, "device": devices[owner][device_id]}
 
     raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
 
@@ -464,9 +442,7 @@ def delete_device(device_id: str, user=Depends(get_user)):
             if device_id in devices[owner]:
                 del devices[owner][device_id]
                 write_json(DEVICES_FILE, devices)
-                return {
-                    "ok": True
-                }
+                return {"ok": True}
 
     else:
         owner = user["username"]
@@ -474,9 +450,7 @@ def delete_device(device_id: str, user=Depends(get_user)):
         if owner in devices and device_id in devices[owner]:
             del devices[owner][device_id]
             write_json(DEVICES_FILE, devices)
-            return {
-                "ok": True
-            }
+            return {"ok": True}
 
     raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
 
@@ -484,7 +458,6 @@ def delete_device(device_id: str, user=Depends(get_user)):
 @app.post("/device-status")
 async def device_status(request: Request):
     check_device_key(request)
-
     data = await request.json()
 
     device = data.get("device", "HERMES-01")
@@ -543,10 +516,7 @@ async def device_status(request: Request):
             now
         ])
 
-    return {
-        "ok": True,
-        "status": status
-    }
+    return {"ok": True, "status": status}
 
 
 @app.get("/status")
@@ -598,7 +568,6 @@ def fleet_latest(devices: str = None):
 @app.get("/history")
 def history(device: str = None, start: str = None, end: str = None):
     data = read_json(HISTORY_FILE, [])
-
     result = []
 
     for h in data:
@@ -619,13 +588,9 @@ def history(device: str = None, start: str = None, end: str = None):
 @app.get("/history/multiple")
 def history_multiple(devices: str, start: str = None, end: str = None):
     selected = [d.strip() for d in devices.split(",") if d.strip()]
-
     data = read_json(HISTORY_FILE, [])
 
-    result = {
-        dev: []
-        for dev in selected
-    }
+    result = {dev: [] for dev in selected}
 
     for h in data:
         dev = h.get("device")
@@ -651,10 +616,7 @@ def set_command(data: CommandModel):
         "created_at": datetime.utcnow().isoformat()
     })
 
-    return {
-        "ok": True,
-        "cmd": data.cmd
-    }
+    return {"ok": True, "cmd": data.cmd}
 
 
 @app.get("/command")
