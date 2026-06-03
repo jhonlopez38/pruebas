@@ -107,6 +107,7 @@ users_init = read_json(USERS_FILE, {})
 
 users_init[ADMIN_USER] = {
     "username": ADMIN_USER,
+    "email": ADMIN_USER,
     "password": pwd_context.hash(ADMIN_PASS),
     "role": "admin",
     "created_at": users_init.get(ADMIN_USER, {}).get("created_at", datetime.utcnow().isoformat()),
@@ -139,6 +140,7 @@ def get_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
 
         return {
             "username": username,
+            "email": username,
             "role": role
         }
 
@@ -196,31 +198,43 @@ def valid_point(p):
 
 
 class RegisterModel(BaseModel):
-    username: str
+    username: str = ""
+    email: str = ""
+    name: str = ""
     password: str
 
 
 class LoginModel(BaseModel):
-    username: str
+    username: str = ""
+    email: str = ""
     password: str
 
 
 class UserCreateModel(BaseModel):
-    username: str
+    username: str = ""
+    email: str = ""
     password: str
     role: str = "user"
 
 
 class DeviceModel(BaseModel):
-    device_id: str
+    device_id: str = ""
+    device: str = ""
     nombre: str = "Sin nombre"
+    name: str = ""
     icono: str = "antenna"
-    color: str = "#00cfff"
+    color: str = "#00c8ff"
     owner: str = ""
+
+
+class AssignModel(BaseModel):
+    user_email: str
+    device: str
 
 
 class CommandModel(BaseModel):
     cmd: str
+    device: str = "HERMES-01"
 
 
 @app.get("/")
@@ -249,11 +263,18 @@ def api_info():
 def register(data: RegisterModel):
     users = read_json(USERS_FILE, {})
 
-    if data.username in users:
+    username = data.username or data.email
+
+    if not username:
+        raise HTTPException(status_code=400, detail="Usuario requerido")
+
+    if username in users:
         raise HTTPException(status_code=400, detail="Usuario ya existe")
 
-    users[data.username] = {
-        "username": data.username,
+    users[username] = {
+        "username": username,
+        "email": username,
+        "name": data.name or username,
         "password": pwd_context.hash(data.password),
         "role": "user",
         "created_at": datetime.utcnow().isoformat()
@@ -262,7 +283,7 @@ def register(data: RegisterModel):
     write_json(USERS_FILE, users)
 
     devices = read_json(DEVICES_FILE, {})
-    devices.setdefault(data.username, {})
+    devices.setdefault(username, {})
     write_json(DEVICES_FILE, devices)
 
     return {"ok": True, "msg": "Usuario creado"}
@@ -271,7 +292,9 @@ def register(data: RegisterModel):
 @app.post("/login")
 def login(data: LoginModel):
     users = read_json(USERS_FILE, {})
-    user = users.get(data.username)
+    username = data.username or data.email
+
+    user = users.get(username)
 
     if not user:
         raise HTTPException(status_code=401, detail="Usuario no existe")
@@ -283,9 +306,15 @@ def login(data: LoginModel):
 
     return {
         "ok": True,
-        "username": data.username,
+        "username": username,
+        "email": username,
         "role": role,
-        "token": create_token(data.username, role)
+        "token": create_token(username, role),
+        "user": {
+            "username": username,
+            "email": username,
+            "role": role
+        }
     }
 
 
@@ -297,12 +326,12 @@ def me(user=Depends(get_user)):
 @app.get("/admin/users")
 def admin_users(admin=Depends(require_admin)):
     users = read_json(USERS_FILE, {})
-
     result = []
 
     for username, data in users.items():
         result.append({
             "username": username,
+            "email": data.get("email", username),
             "role": data.get("role", "user"),
             "created_at": data.get("created_at", "")
         })
@@ -314,13 +343,19 @@ def admin_users(admin=Depends(require_admin)):
 def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
     users = read_json(USERS_FILE, {})
 
-    if data.username in users:
+    username = data.username or data.email
+
+    if not username:
+        raise HTTPException(status_code=400, detail="Usuario requerido")
+
+    if username in users:
         raise HTTPException(status_code=400, detail="Usuario ya existe")
 
     role = data.role if data.role in ["admin", "user"] else "user"
 
-    users[data.username] = {
-        "username": data.username,
+    users[username] = {
+        "username": username,
+        "email": username,
         "password": pwd_context.hash(data.password),
         "role": role,
         "created_at": datetime.utcnow().isoformat()
@@ -329,7 +364,7 @@ def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
     write_json(USERS_FILE, users)
 
     devices = read_json(DEVICES_FILE, {})
-    devices.setdefault(data.username, {})
+    devices.setdefault(username, {})
     write_json(DEVICES_FILE, devices)
 
     return {"ok": True, "msg": "Usuario creado"}
@@ -357,13 +392,22 @@ def admin_delete_user(username: str, admin=Depends(require_admin)):
 @app.post("/devices")
 def add_device(data: DeviceModel, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
+
+    device_id = data.device_id or data.device
+    nombre = data.nombre if data.nombre != "Sin nombre" else (data.name or "Sin nombre")
+
+    if not device_id:
+        raise HTTPException(status_code=400, detail="device_id requerido")
+
     owner = data.owner if user["role"] == "admin" and data.owner else user["username"]
 
     devices.setdefault(owner, {})
 
-    devices[owner][data.device_id] = {
-        "device_id": data.device_id,
-        "nombre": data.nombre,
+    devices[owner][device_id] = {
+        "device_id": device_id,
+        "device": device_id,
+        "nombre": nombre,
+        "name": nombre,
         "icono": data.icono,
         "color": data.color,
         "owner": owner,
@@ -372,7 +416,54 @@ def add_device(data: DeviceModel, user=Depends(get_user)):
 
     write_json(DEVICES_FILE, devices)
 
-    return {"ok": True, "device": devices[owner][data.device_id]}
+    return {"ok": True, "device": devices[owner][device_id]}
+
+
+@app.post("/admin/device")
+def admin_add_device(data: DeviceModel, admin=Depends(require_admin)):
+    data.owner = ADMIN_USER
+    return add_device(data, admin)
+
+
+@app.post("/admin/assign")
+def admin_assign(data: AssignModel, admin=Depends(require_admin)):
+    devices = read_json(DEVICES_FILE, {})
+    users = read_json(USERS_FILE, {})
+
+    if data.user_email not in users:
+        raise HTTPException(status_code=404, detail="Usuario no existe")
+
+    found = None
+    old_owner = None
+
+    for owner, devs in devices.items():
+        if data.device in devs:
+            found = devs[data.device]
+            old_owner = owner
+            break
+
+    if not found:
+        found = {
+            "device_id": data.device,
+            "device": data.device,
+            "nombre": data.device,
+            "name": data.device,
+            "icono": "antenna",
+            "color": "#00c8ff",
+            "created_at": datetime.utcnow().isoformat()
+        }
+
+    found["owner"] = data.user_email
+
+    devices.setdefault(data.user_email, {})
+    devices[data.user_email][data.device] = found
+
+    if old_owner and old_owner != data.user_email:
+        del devices[old_owner][data.device]
+
+    write_json(DEVICES_FILE, devices)
+
+    return {"ok": True, "msg": "Equipo asignado"}
 
 
 @app.get("/devices")
@@ -381,10 +472,12 @@ def list_devices(user=Depends(get_user)):
 
     if user["role"] == "admin":
         result = []
+
         for owner, devs in devices.items():
             for d in devs.values():
                 d["owner"] = owner
                 result.append(d)
+
         return result
 
     return list(devices.get(user["username"], {}).values())
@@ -394,6 +487,8 @@ def list_devices(user=Depends(get_user)):
 def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
 
+    nombre = data.nombre if data.nombre != "Sin nombre" else (data.name or device_id)
+
     if user["role"] == "admin":
         for owner in list(devices.keys()):
             if device_id in devices[owner]:
@@ -401,7 +496,8 @@ def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
                 dev_data = devices[owner][device_id]
 
                 dev_data.update({
-                    "nombre": data.nombre,
+                    "nombre": nombre,
+                    "name": nombre,
                     "icono": data.icono,
                     "color": data.color,
                     "owner": new_owner,
@@ -414,6 +510,7 @@ def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
                     del devices[owner][device_id]
 
                 write_json(DEVICES_FILE, devices)
+
                 return {"ok": True, "device": dev_data}
 
     else:
@@ -421,13 +518,15 @@ def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
 
         if owner in devices and device_id in devices[owner]:
             devices[owner][device_id].update({
-                "nombre": data.nombre,
+                "nombre": nombre,
+                "name": nombre,
                 "icono": data.icono,
                 "color": data.color,
                 "updated_at": datetime.utcnow().isoformat()
             })
 
             write_json(DEVICES_FILE, devices)
+
             return {"ok": True, "device": devices[owner][device_id]}
 
     raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
@@ -456,8 +555,9 @@ def delete_device(device_id: str, user=Depends(get_user)):
 
 
 @app.post("/device-status")
-async def device_status(request: Request):
+async def device_status_post(request: Request):
     check_device_key(request)
+
     data = await request.json()
 
     device = data.get("device", "HERMES-01")
@@ -474,6 +574,7 @@ async def device_status(request: Request):
 
     bateria_v = data.get("bateria_v", data.get("bat_v", 0))
     bateria_pct = data.get("bateria_pct", data.get("bat_pct", 0))
+    wifi = data.get("wifi", "conectado")
 
     now = datetime.utcnow().isoformat()
 
@@ -489,6 +590,7 @@ async def device_status(request: Request):
         "hora": hora,
         "bateria_v": bateria_v,
         "bateria_pct": bateria_pct,
+        "wifi": wifi,
         "created_at": now
     }
 
@@ -517,6 +619,12 @@ async def device_status(request: Request):
         ])
 
     return {"ok": True, "status": status}
+
+
+@app.get("/device-status")
+def device_status_get(device: str = "HERMES-01"):
+    status = read_json(STATUS_FILE, {})
+    return status.get(device, {})
 
 
 @app.get("/status")
@@ -612,6 +720,7 @@ def history_multiple(devices: str, start: str = None, end: str = None):
 @app.post("/command")
 def set_command(data: CommandModel):
     write_json(COMMAND_FILE, {
+        "device": data.device,
         "cmd": data.cmd,
         "created_at": datetime.utcnow().isoformat()
     })
