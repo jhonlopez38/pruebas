@@ -16,6 +16,9 @@ BASE_URL = os.getenv("BASE_URL", "https://gps-backend-pqzg.onrender.com")
 SECRET = os.getenv("SECRET", "HERMES_SECRET_2025")
 DEVICE_KEY = os.getenv("DEVICE_KEY", "HERMES_DEVICE_KEY_123")
 
+ADMIN_USER = "Hermesadmin"
+ADMIN_PASS = "Colombia2026*"
+
 STATIC_DIR = "static"
 FILES_DIR = "static/files"
 DATA_DIR = "data"
@@ -91,10 +94,21 @@ def init_files():
 
 init_files()
 
+users_init = read_json(USERS_FILE, {})
+if ADMIN_USER not in users_init:
+    users_init[ADMIN_USER] = {
+        "username": ADMIN_USER,
+        "password": pwd_context.hash(ADMIN_PASS),
+        "role": "admin",
+        "created_at": datetime.utcnow().isoformat()
+    }
+    write_json(USERS_FILE, users_init)
 
-def create_token(username):
+
+def create_token(username, role):
     payload = {
         "sub": username,
+        "role": role,
         "exp": datetime.utcnow() + timedelta(days=30)
     }
     return jwt.encode(payload, SECRET, algorithm="HS256")
@@ -107,21 +121,21 @@ def get_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         payload = jwt.decode(credentials.credentials, SECRET, algorithms=["HS256"])
         username = payload.get("sub")
+        role = payload.get("role", "user")
+
         if not username:
             raise HTTPException(status_code=401, detail="Token inválido")
-        return username
+
+        return {"username": username, "role": role}
+
     except JWTError:
         raise HTTPException(status_code=401, detail="Token inválido")
 
 
-def optional_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    if not credentials:
-        return None
-    try:
-        payload = jwt.decode(credentials.credentials, SECRET, algorithms=["HS256"])
-        return payload.get("sub")
-    except JWTError:
-        return None
+def require_admin(user=Depends(get_user)):
+    if user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Solo administrador")
+    return user
 
 
 def check_device_key(request: Request):
@@ -172,11 +186,18 @@ class LoginModel(BaseModel):
     password: str
 
 
+class UserCreateModel(BaseModel):
+    username: str
+    password: str
+    role: str = "user"
+
+
 class DeviceModel(BaseModel):
     device_id: str
     nombre: str = "Sin nombre"
     icono: str = "car"
     color: str = "#007bff"
+    owner: str = ""
 
 
 class CommandModel(BaseModel):
@@ -198,6 +219,7 @@ def register(data: RegisterModel):
     users[data.username] = {
         "username": data.username,
         "password": pwd_context.hash(data.password),
+        "role": "user",
         "created_at": datetime.utcnow().isoformat()
     }
 
@@ -221,69 +243,175 @@ def login(data: LoginModel):
     if not pwd_context.verify(data.password, user["password"]):
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
 
+    role = user.get("role", "user")
+
     return {
         "ok": True,
         "username": data.username,
-        "token": create_token(data.username)
+        "role": role,
+        "token": create_token(data.username, role)
     }
 
 
 @app.get("/me")
-def me(username: str = Depends(get_user)):
-    return {"username": username}
+def me(user=Depends(get_user)):
+    return user
+
+
+@app.get("/admin/users")
+def admin_users(admin=Depends(require_admin)):
+    users = read_json(USERS_FILE, {})
+    result = []
+
+    for username, data in users.items():
+        result.append({
+            "username": username,
+            "role": data.get("role", "user"),
+            "created_at": data.get("created_at", "")
+        })
+
+    return result
+
+
+@app.post("/admin/users")
+def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
+    users = read_json(USERS_FILE, {})
+
+    if data.username in users:
+        raise HTTPException(status_code=400, detail="Usuario ya existe")
+
+    role = data.role if data.role in ["admin", "user"] else "user"
+
+    users[data.username] = {
+        "username": data.username,
+        "password": pwd_context.hash(data.password),
+        "role": role,
+        "created_at": datetime.utcnow().isoformat()
+    }
+
+    write_json(USERS_FILE, users)
+
+    devices = read_json(DEVICES_FILE, {})
+    devices.setdefault(data.username, {})
+    write_json(DEVICES_FILE, devices)
+
+    return {"ok": True}
+
+
+@app.delete("/admin/users/{username}")
+def admin_delete_user(username: str, admin=Depends(require_admin)):
+    if username == ADMIN_USER:
+        raise HTTPException(status_code=400, detail="No se puede eliminar el administrador principal")
+
+    users = read_json(USERS_FILE, {})
+    devices = read_json(DEVICES_FILE, {})
+
+    if username in users:
+        del users[username]
+        write_json(USERS_FILE, users)
+
+    if username in devices:
+        del devices[username]
+        write_json(DEVICES_FILE, devices)
+
+    return {"ok": True}
 
 
 @app.post("/devices")
-def add_device(data: DeviceModel, username: str = Depends(get_user)):
+def add_device(data: DeviceModel, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
-    devices.setdefault(username, {})
 
-    devices[username][data.device_id] = {
+    owner = data.owner if user["role"] == "admin" and data.owner else user["username"]
+
+    devices.setdefault(owner, {})
+
+    devices[owner][data.device_id] = {
         "device_id": data.device_id,
         "nombre": data.nombre,
         "icono": data.icono,
         "color": data.color,
+        "owner": owner,
         "created_at": datetime.utcnow().isoformat()
     }
 
     write_json(DEVICES_FILE, devices)
 
-    return {"ok": True, "device": devices[username][data.device_id]}
+    return {"ok": True, "device": devices[owner][data.device_id]}
 
 
 @app.get("/devices")
-def list_devices(username: str = Depends(get_user)):
+def list_devices(user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
-    return list(devices.get(username, {}).values())
+
+    if user["role"] == "admin":
+        result = []
+        for owner, devs in devices.items():
+            for d in devs.values():
+                d["owner"] = owner
+                result.append(d)
+        return result
+
+    return list(devices.get(user["username"], {}).values())
 
 
 @app.put("/devices/{device_id}")
-def update_device(device_id: str, data: DeviceModel, username: str = Depends(get_user)):
+def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
 
-    if username not in devices or device_id not in devices[username]:
-        raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
+    if user["role"] == "admin":
+        for owner in devices:
+            if device_id in devices[owner]:
+                new_owner = data.owner if data.owner else owner
+                dev_data = devices[owner][device_id]
+                dev_data.update({
+                    "nombre": data.nombre,
+                    "icono": data.icono,
+                    "color": data.color,
+                    "owner": new_owner,
+                    "updated_at": datetime.utcnow().isoformat()
+                })
 
-    devices[username][device_id].update({
-        "nombre": data.nombre,
-        "icono": data.icono,
-        "color": data.color,
-        "updated_at": datetime.utcnow().isoformat()
-    })
+                if new_owner != owner:
+                    devices.setdefault(new_owner, {})
+                    devices[new_owner][device_id] = dev_data
+                    del devices[owner][device_id]
 
-    write_json(DEVICES_FILE, devices)
+                write_json(DEVICES_FILE, devices)
+                return {"ok": True, "device": dev_data}
 
-    return {"ok": True, "device": devices[username][device_id]}
+    else:
+        owner = user["username"]
+        if owner in devices and device_id in devices[owner]:
+            devices[owner][device_id].update({
+                "nombre": data.nombre,
+                "icono": data.icono,
+                "color": data.color,
+                "updated_at": datetime.utcnow().isoformat()
+            })
+
+            write_json(DEVICES_FILE, devices)
+            return {"ok": True, "device": devices[owner][device_id]}
+
+    raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
 
 
 @app.delete("/devices/{device_id}")
-def delete_device(device_id: str, username: str = Depends(get_user)):
+def delete_device(device_id: str, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
 
-    if username in devices and device_id in devices[username]:
-        del devices[username][device_id]
-        write_json(DEVICES_FILE, devices)
-        return {"ok": True}
+    if user["role"] == "admin":
+        for owner in list(devices.keys()):
+            if device_id in devices[owner]:
+                del devices[owner][device_id]
+                write_json(DEVICES_FILE, devices)
+                return {"ok": True}
+
+    else:
+        owner = user["username"]
+        if owner in devices and device_id in devices[owner]:
+            del devices[owner][device_id]
+            write_json(DEVICES_FILE, devices)
+            return {"ok": True}
 
     raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
 
@@ -451,11 +579,7 @@ def download_csv():
     if not os.path.exists(CSV_PATH):
         raise HTTPException(status_code=404, detail="gps_log.csv no encontrado")
 
-    return FileResponse(
-        CSV_PATH,
-        media_type="text/csv",
-        filename="gps_log.csv"
-    )
+    return FileResponse(CSV_PATH, media_type="text/csv", filename="gps_log.csv")
 
 
 @app.get("/files/ruta.kml")
@@ -499,11 +623,7 @@ def generar_kml(device: str = None, start: str = None, end: str = None):
     with open(KML_PATH, "w", encoding="utf-8") as f:
         f.write(kml)
 
-    return FileResponse(
-        KML_PATH,
-        media_type="application/vnd.google-earth.kml+xml",
-        filename="ruta.kml"
-    )
+    return FileResponse(KML_PATH, media_type="application/vnd.google-earth.kml+xml", filename="ruta.kml")
 
 
 @app.get("/export/kml")
@@ -523,8 +643,6 @@ APP_HTML = """
 <meta charset="UTF-8">
 <title>HERMES GPS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="manifest" href="/static/manifest.json">
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 
 <style>
@@ -534,16 +652,15 @@ button,input,select{padding:9px;border-radius:8px;border:1px solid #374151;margi
 button{background:#2563eb;color:white;cursor:pointer}
 button:hover{background:#1d4ed8}
 .panel{display:flex;height:calc(100vh - 55px)}
-.sidebar{width:360px;background:#111827;padding:12px;overflow:auto}
+.sidebar{width:380px;background:#111827;padding:12px;overflow:auto}
 .map{flex:1}
 #map{height:100%;width:100%}
 .card{background:#1f2937;margin:8px 0;padding:10px;border-radius:10px}
 .hidden{display:none}
-.row{display:flex;gap:5px;flex-wrap:wrap}
-.small{font-size:12px;color:#9ca3af}
 .deviceItem{padding:8px;background:#374151;border-radius:8px;margin:4px 0}
 .tabs button{background:#374151}
 .tabs button.active{background:#10b981}
+.small{font-size:12px;color:#9ca3af}
 .progress{width:100%}
 </style>
 </head>
@@ -563,7 +680,7 @@ button:hover{background:#1d4ed8}
   <input id="loginUser" placeholder="Usuario">
   <input id="loginPass" placeholder="Contraseña" type="password">
   <button onclick="login()">Ingresar</button>
-  <button onclick="register()">Crear usuario</button>
+  <p>Admin fijo: Hermesadmin / Colombia2026*</p>
   <p id="authMsg"></p>
 </div>
 
@@ -574,6 +691,7 @@ button:hover{background:#1d4ed8}
       <button class="active" onclick="showTab('live')">Mapa</button>
       <button onclick="showTab('history')">Historial</button>
       <button onclick="showTab('devices')">Equipos</button>
+      <button id="adminTabBtn" class="hidden" onclick="showTab('admin')">Usuarios</button>
     </div>
 
     <div id="tab_live">
@@ -586,42 +704,28 @@ button:hover{background:#1d4ed8}
 
     <div id="tab_history" class="hidden">
       <h3>Recorrido tipo Strava</h3>
-
-      <label>Equipo</label>
       <select id="historyDevice"></select>
-
-      <label>Desde</label>
       <input id="startDate" type="datetime-local">
-
-      <label>Hasta</label>
       <input id="endDate" type="datetime-local">
-
-      <button onclick="loadHistory()">Consultar recorrido</button>
+      <button onclick="loadHistory()">Consultar</button>
       <button onclick="playRoute()">▶ Play</button>
       <button onclick="pauseRoute()">⏸ Pausa</button>
       <button onclick="resetRoute()">⏮ Reiniciar</button>
-
-      <label>Velocidad</label>
       <select id="playSpeed">
         <option value="1000">1x</option>
         <option value="500">2x</option>
         <option value="250">4x</option>
         <option value="100">10x</option>
       </select>
-
       <input id="routeProgress" class="progress" type="range" min="0" max="0" value="0" oninput="jumpRoute(this.value)">
-
       <button onclick="downloadKML()">Descargar KML</button>
-
       <div id="historyStats" class="card"></div>
     </div>
 
     <div id="tab_devices" class="hidden">
       <h3>Administrar equipos</h3>
-
-      <input id="devId" placeholder="DEVICE_ID ejemplo HERMES-01">
-      <input id="devName" placeholder="Nombre del equipo">
-
+      <input id="devId" placeholder="DEVICE_ID">
+      <input id="devName" placeholder="Nombre">
       <select id="devIcon">
         <option value="car">🚗 Carro</option>
         <option value="motorcycle">🏍️ Moto</option>
@@ -631,12 +735,22 @@ button:hover{background:#1d4ed8}
         <option value="box">📦 Activo</option>
         <option value="boat">🛥️ Lancha</option>
       </select>
-
       <input id="devColor" type="color" value="#007bff">
-
+      <select id="devOwner"></select>
       <button onclick="saveDevice()">Guardar / Editar</button>
-
       <div id="deviceList"></div>
+    </div>
+
+    <div id="tab_admin" class="hidden">
+      <h3>Usuarios</h3>
+      <input id="newUser" placeholder="Nuevo usuario">
+      <input id="newPass" placeholder="Contraseña" type="password">
+      <select id="newRole">
+        <option value="user">Usuario</option>
+        <option value="admin">Administrador</option>
+      </select>
+      <button onclick="createUser()">Crear usuario</button>
+      <div id="usersList"></div>
     </div>
 
   </div>
@@ -651,7 +765,9 @@ button:hover{background:#1d4ed8}
 <script>
 let token = localStorage.getItem("token") || "";
 let username = localStorage.getItem("username") || "";
+let role = localStorage.getItem("role") || "";
 let devices = [];
+let users = [];
 let map;
 let markers = {};
 let routeLine = null;
@@ -678,10 +794,7 @@ async function login(){
   const r = await fetch("/login", {
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      username:loginUser.value,
-      password:loginPass.value
-    })
+    body:JSON.stringify({username:loginUser.value,password:loginPass.value})
   });
 
   const j = await r.json();
@@ -689,26 +802,14 @@ async function login(){
   if(j.ok){
     token = j.token;
     username = j.username;
+    role = j.role;
     localStorage.setItem("token", token);
     localStorage.setItem("username", username);
+    localStorage.setItem("role", role);
     startApp();
   }else{
     authMsg.innerText = j.detail || "Error";
   }
-}
-
-async function register(){
-  const r = await fetch("/register", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      username:loginUser.value,
-      password:loginPass.value
-    })
-  });
-
-  const j = await r.json();
-  authMsg.innerText = j.ok ? "Usuario creado, ahora ingresa" : (j.detail || "Error");
 }
 
 function logout(){
@@ -724,14 +825,55 @@ function initMap(){
 }
 
 function showTab(name){
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-  event.target.classList.add("active");
-
-  ["live","history","devices"].forEach(t=>{
+  ["live","history","devices","admin"].forEach(t=>{
     document.getElementById("tab_"+t).classList.add("hidden");
   });
-
   document.getElementById("tab_"+name).classList.remove("hidden");
+}
+
+async function loadUsers(){
+  if(role !== "admin") return;
+  const r = await fetch("/admin/users",{headers:authHeaders()});
+  users = await r.json();
+
+  usersList.innerHTML = "";
+  devOwner.innerHTML = "";
+
+  users.forEach(u=>{
+    usersList.innerHTML += `
+      <div class="card">
+        <b>${u.username}</b><br>
+        Rol: ${u.role}<br>
+        <button onclick="deleteUser('${u.username}')">Eliminar</button>
+      </div>
+    `;
+
+    devOwner.innerHTML += `<option value="${u.username}">${u.username}</option>`;
+  });
+}
+
+async function createUser(){
+  await fetch("/admin/users",{
+    method:"POST",
+    headers:authHeaders(),
+    body:JSON.stringify({
+      username:newUser.value,
+      password:newPass.value,
+      role:newRole.value
+    })
+  });
+
+  newUser.value="";
+  newPass.value="";
+  await loadUsers();
+}
+
+async function deleteUser(u){
+  await fetch("/admin/users/"+u,{
+    method:"DELETE",
+    headers:authHeaders()
+  });
+  await loadUsers();
 }
 
 async function loadDevices(){
@@ -772,6 +914,7 @@ function renderDeviceList(){
       <div class="card">
         <b>${emoji} ${d.nombre}</b><br>
         <span class="small">${d.device_id}</span><br>
+        Owner: ${d.owner || username}<br>
         <button onclick="editDevice('${d.device_id}')">Editar</button>
         <button onclick="deleteDevice('${d.device_id}')">Eliminar</button>
       </div>
@@ -787,6 +930,7 @@ function editDevice(id){
   devName.value = d.nombre;
   devIcon.value = d.icono;
   devColor.value = d.color;
+  if(d.owner) devOwner.value = d.owner;
 }
 
 async function saveDevice(){
@@ -794,29 +938,20 @@ async function saveDevice(){
     device_id:devId.value,
     nombre:devName.value,
     icono:devIcon.value,
-    color:devColor.value
+    color:devColor.value,
+    owner:devOwner.value || username
   };
 
   const exists = devices.find(d=>d.device_id===payload.device_id);
-
   const url = exists ? "/devices/" + payload.device_id : "/devices";
   const method = exists ? "PUT" : "POST";
 
-  await fetch(url, {
-    method,
-    headers:authHeaders(),
-    body:JSON.stringify(payload)
-  });
-
+  await fetch(url,{method,headers:authHeaders(),body:JSON.stringify(payload)});
   await loadDevices();
 }
 
 async function deleteDevice(id){
-  await fetch("/devices/" + id, {
-    method:"DELETE",
-    headers:authHeaders()
-  });
-
+  await fetch("/devices/" + id,{method:"DELETE",headers:authHeaders()});
   await loadDevices();
 }
 
@@ -831,7 +966,6 @@ function makeIcon(d){
 
 async function loadSelectedLatest(){
   const selected = [...document.querySelectorAll(".devCheck:checked")].map(x=>x.value);
-
   if(selected.length === 0) return;
 
   const r = await fetch("/fleet/latest?devices=" + selected.join(","));
@@ -877,7 +1011,6 @@ async function loadSelectedLatest(){
 function centerAll(){
   const arr = Object.values(markers);
   if(arr.length === 0) return;
-
   const group = L.featureGroup(arr);
   map.fitBounds(group.getBounds().pad(0.2));
 }
@@ -889,8 +1022,7 @@ async function loadHistory(){
   const start = startDate.value ? new Date(startDate.value).toISOString() : "";
   const end = endDate.value ? new Date(endDate.value).toISOString() : "";
 
-  const url = `/history?device=${dev}&start=${start}&end=${end}`;
-  const r = await fetch(url);
+  const r = await fetch(`/history?device=${dev}&start=${start}&end=${end}`);
   routePoints = await r.json();
 
   if(routePoints.length === 0){
@@ -901,12 +1033,10 @@ async function loadHistory(){
   const latlngs = routePoints.map(p=>[p.lat,p.lon]);
 
   routeLine = L.polyline(latlngs, {weight:5}).addTo(map);
-
   L.marker(latlngs[0]).addTo(map).bindPopup("Inicio");
   L.marker(latlngs[latlngs.length-1]).addTo(map).bindPopup("Fin");
 
   routeMarker = L.marker(latlngs[0]).addTo(map);
-
   map.fitBounds(routeLine.getBounds().pad(0.2));
 
   routeProgress.max = routePoints.length - 1;
@@ -921,7 +1051,6 @@ async function loadHistory(){
 
 function playRoute(){
   if(routePoints.length === 0) return;
-
   pauseRoute();
 
   const speed = parseInt(playSpeed.value);
@@ -935,12 +1064,6 @@ function playRoute(){
     const p = routePoints[playIndex];
     routeMarker.setLatLng([p.lat,p.lon]);
     routeProgress.value = playIndex;
-
-    routeMarker.bindPopup(`
-      ${p.fecha} ${p.hora}<br>
-      ${p.lat}, ${p.lon}
-    `);
-
     playIndex++;
   }, speed);
 }
@@ -956,7 +1079,6 @@ function resetRoute(){
   pauseRoute();
   playIndex = 0;
   routeProgress.value = 0;
-
   if(routePoints.length && routeMarker){
     const p = routePoints[0];
     routeMarker.setLatLng([p.lat,p.lon]);
@@ -974,32 +1096,28 @@ function jumpRoute(i){
 function clearRoute(){
   pauseRoute();
   playIndex = 0;
-
-  if(routeLine){
-    map.removeLayer(routeLine);
-    routeLine = null;
-  }
-
-  if(routeMarker){
-    map.removeLayer(routeMarker);
-    routeMarker = null;
-  }
+  if(routeLine){map.removeLayer(routeLine);routeLine=null}
+  if(routeMarker){map.removeLayer(routeMarker);routeMarker=null}
 }
 
 function downloadKML(){
   const dev = historyDevice.value;
   const start = startDate.value ? new Date(startDate.value).toISOString() : "";
   const end = endDate.value ? new Date(endDate.value).toISOString() : "";
-
   window.open(`/files/ruta.kml?device=${dev}&start=${start}&end=${end}`, "_blank");
 }
 
 async function startApp(){
   authView.classList.add("hidden");
   appView.classList.remove("hidden");
-  userLabel.innerText = username;
+  userLabel.innerText = username + " (" + role + ")";
+
+  if(role === "admin"){
+    adminTabBtn.classList.remove("hidden");
+  }
 
   initMap();
+  await loadUsers();
   await loadDevices();
 
   setInterval(loadSelectedLatest, 30000);
