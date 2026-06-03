@@ -87,17 +87,8 @@ def init_files():
         with open(CSV_PATH, "w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
             writer.writerow([
-                "id",
-                "despertar",
-                "fecha",
-                "hora",
-                "lat",
-                "lon",
-                "estado",
-                "bateria_v",
-                "bateria_pct",
-                "device",
-                "created_at"
+                "id", "despertar", "fecha", "hora", "lat", "lon",
+                "estado", "bateria_v", "bateria_pct", "device", "created_at"
             ])
 
 
@@ -108,6 +99,7 @@ users_init = read_json(USERS_FILE, {})
 users_init[ADMIN_USER] = {
     "username": ADMIN_USER,
     "email": ADMIN_USER,
+    "name": "Administrador HERMES",
     "password": pwd_context.hash(ADMIN_PASS),
     "role": "admin",
     "created_at": users_init.get(ADMIN_USER, {}).get("created_at", datetime.utcnow().isoformat()),
@@ -178,10 +170,8 @@ def in_range(created_at, start, end):
 
     if not dt:
         return True
-
     if s and dt < s:
         return False
-
     if e and dt > e:
         return False
 
@@ -244,7 +234,11 @@ def home():
     if os.path.exists(index_path):
         return FileResponse(index_path)
 
-    raise HTTPException(status_code=404, detail="static/index.html no encontrado")
+    return {
+        "ok": True,
+        "msg": "Backend HERMES activo",
+        "error": "static/index.html no encontrado"
+    }
 
 
 @app.get("/api")
@@ -253,6 +247,7 @@ def api_info():
         "name": "HERMES GPS Backend",
         "status": "online",
         "admin": ADMIN_USER,
+        "admin_password": "Configurada",
         "csv": f"{BASE_URL}/files/gps_log.csv",
         "kml": f"{BASE_URL}/files/ruta.kml",
         "health": f"{BASE_URL}/health"
@@ -262,8 +257,7 @@ def api_info():
 @app.post("/register")
 def register(data: RegisterModel):
     users = read_json(USERS_FILE, {})
-
-    username = data.username or data.email
+    username = (data.username or data.email).strip()
 
     if not username:
         raise HTTPException(status_code=400, detail="Usuario requerido")
@@ -291,25 +285,47 @@ def register(data: RegisterModel):
 
 @app.post("/login")
 def login(data: LoginModel):
-    users = read_json(USERS_FILE, {})
-    username = data.username or data.email
+    username = (data.username or data.email).strip()
+    password = data.password
 
+    if username == ADMIN_USER and password == ADMIN_PASS:
+        token = create_token(ADMIN_USER, "admin")
+        return {
+            "ok": True,
+            "username": ADMIN_USER,
+            "email": ADMIN_USER,
+            "role": "admin",
+            "token": token,
+            "user": {
+                "username": ADMIN_USER,
+                "email": ADMIN_USER,
+                "role": "admin"
+            }
+        }
+
+    users = read_json(USERS_FILE, {})
     user = users.get(username)
 
     if not user:
         raise HTTPException(status_code=401, detail="Usuario no existe")
 
-    if not pwd_context.verify(data.password, user["password"]):
+    try:
+        password_ok = pwd_context.verify(password, user["password"])
+    except Exception:
+        password_ok = False
+
+    if not password_ok:
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
 
     role = user.get("role", "user")
+    token = create_token(username, role)
 
     return {
         "ok": True,
         "username": username,
         "email": username,
         "role": role,
-        "token": create_token(username, role),
+        "token": token,
         "user": {
             "username": username,
             "email": username,
@@ -342,8 +358,7 @@ def admin_users(admin=Depends(require_admin)):
 @app.post("/admin/users")
 def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
     users = read_json(USERS_FILE, {})
-
-    username = data.username or data.email
+    username = (data.username or data.email).strip()
 
     if not username:
         raise HTTPException(status_code=400, detail="Usuario requerido")
@@ -393,8 +408,8 @@ def admin_delete_user(username: str, admin=Depends(require_admin)):
 def add_device(data: DeviceModel, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
 
-    device_id = data.device_id or data.device
-    nombre = data.nombre if data.nombre != "Sin nombre" else (data.name or "Sin nombre")
+    device_id = (data.device_id or data.device).strip()
+    nombre = data.nombre if data.nombre != "Sin nombre" else (data.name or device_id)
 
     if not device_id:
         raise HTTPException(status_code=400, detail="device_id requerido")
@@ -408,8 +423,8 @@ def add_device(data: DeviceModel, user=Depends(get_user)):
         "device": device_id,
         "nombre": nombre,
         "name": nombre,
-        "icono": data.icono,
-        "color": data.color,
+        "icono": data.icono or "antenna",
+        "color": data.color or "#00c8ff",
         "owner": owner,
         "created_at": datetime.utcnow().isoformat()
     }
@@ -421,7 +436,7 @@ def add_device(data: DeviceModel, user=Depends(get_user)):
 
 @app.post("/admin/device")
 def admin_add_device(data: DeviceModel, admin=Depends(require_admin)):
-    data.owner = ADMIN_USER
+    data.owner = data.owner or ADMIN_USER
     return add_device(data, admin)
 
 
@@ -486,7 +501,6 @@ def list_devices(user=Depends(get_user)):
 @app.put("/devices/{device_id}")
 def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
-
     nombre = data.nombre if data.nombre != "Sin nombre" else (data.name or device_id)
 
     if user["role"] == "admin":
@@ -513,21 +527,20 @@ def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
 
                 return {"ok": True, "device": dev_data}
 
-    else:
-        owner = user["username"]
+    owner = user["username"]
 
-        if owner in devices and device_id in devices[owner]:
-            devices[owner][device_id].update({
-                "nombre": nombre,
-                "name": nombre,
-                "icono": data.icono,
-                "color": data.color,
-                "updated_at": datetime.utcnow().isoformat()
-            })
+    if owner in devices and device_id in devices[owner]:
+        devices[owner][device_id].update({
+            "nombre": nombre,
+            "name": nombre,
+            "icono": data.icono,
+            "color": data.color,
+            "updated_at": datetime.utcnow().isoformat()
+        })
 
-            write_json(DEVICES_FILE, devices)
+        write_json(DEVICES_FILE, devices)
 
-            return {"ok": True, "device": devices[owner][device_id]}
+        return {"ok": True, "device": devices[owner][device_id]}
 
     raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
 
@@ -543,13 +556,12 @@ def delete_device(device_id: str, user=Depends(get_user)):
                 write_json(DEVICES_FILE, devices)
                 return {"ok": True}
 
-    else:
-        owner = user["username"]
+    owner = user["username"]
 
-        if owner in devices and device_id in devices[owner]:
-            del devices[owner][device_id]
-            write_json(DEVICES_FILE, devices)
-            return {"ok": True}
+    if owner in devices and device_id in devices[owner]:
+        del devices[owner][device_id]
+        write_json(DEVICES_FILE, devices)
+        return {"ok": True}
 
     raise HTTPException(status_code=404, detail="Dispositivo no encontrado")
 
@@ -605,17 +617,8 @@ async def device_status_post(request: Request):
     with open(CSV_PATH, "a", encoding="utf-8", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([
-            len(history),
-            despertar,
-            fecha,
-            hora,
-            lat,
-            lon,
-            estado,
-            bateria_v,
-            bateria_pct,
-            device,
-            now
+            len(history), despertar, fecha, hora, lat, lon,
+            estado, bateria_v, bateria_pct, device, now
         ])
 
     return {"ok": True, "status": status}
@@ -808,5 +811,6 @@ def export_kml(device: str = None, start: str = None, end: str = None):
 def health():
     return {
         "ok": True,
-        "time": datetime.utcnow().isoformat()
+        "time": datetime.utcnow().isoformat(),
+        "admin": ADMIN_USER
     }
