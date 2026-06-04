@@ -548,7 +548,3 @@ def generar_kml(device: str = None, start: str = None, end: str = None):
 @app.get("/export/kml")
 def export_kml(device: str = None, start: str = None, end: str = None):
     return generar_kml(device=device, start=start, end=end)
-
-
-
-
