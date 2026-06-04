@@ -37,7 +37,7 @@ for d in [STATIC_DIR, FILES_DIR, DATA_DIR]:
 app = FastAPI(title="HERMES GPS Backend")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True,
                    allow_methods=["*"], allow_headers=["*"])
-app.mount("/files",  StaticFiles(directory=FILES_DIR),  name="files")
+# /files se sirve mediante endpoints explícitos (no StaticFiles) para evitar conflictos
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 pwd_ctx  = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -143,13 +143,28 @@ def in_range(created_at, start, end):
     s  = parse_dt(start)
     e  = parse_dt(end)
     if not dt:  return True
-    if s and dt < s: return False
-    if e and dt > e: return False
+    # normalizar a naive (sin zona horaria) para comparación
+    try:
+        dt = dt.replace(tzinfo=None)
+        if s:
+            s = s.replace(tzinfo=None)
+            if dt < s: return False
+        if e:
+            e = e.replace(tzinfo=None)
+            # añadir 59 segundos al fin para incluir el minuto completo
+            from datetime import timedelta
+            e = e + timedelta(seconds=59)
+            if dt > e: return False
+    except Exception:
+        pass
     return True
 
 def valid_point(p):
     try:
-        return float(p.get("lat",0)) != 0 and float(p.get("lon",0)) != 0
+        lat = float(p.get("lat", 0) or 0)
+        lon = float(p.get("lon", 0) or 0)
+        # rechazar coordenadas 0,0 o inválidas
+        return abs(lat) > 0.0001 and abs(lon) > 0.0001
     except Exception:
         return False
 
@@ -188,6 +203,37 @@ class AssignModel(BaseModel):
 class CommandModel(BaseModel):
     cmd:    str
     device: str = "HERMES-01"
+
+# ── helpers comando ───────────────────────────────────────────────────
+def read_commands() -> dict:
+    """Devuelve dict {device_id: {cmd, created_at, attempts}}"""
+    data = read_json(COMMAND_FILE, {})
+    # compatibilidad con formato antiguo (objeto plano)
+    if "cmd" in data and isinstance(data.get("cmd"), str):
+        device = data.get("device", "HERMES-01")
+        return {device: data}
+    return data
+
+def write_command(device: str, cmd: str):
+    cmds = read_commands()
+    cmds[device] = {
+        "device": device,
+        "cmd": cmd,
+        "created_at": datetime.utcnow().isoformat(),
+        "attempts": 0,
+    }
+    write_json(COMMAND_FILE, cmds)
+
+def clear_command(device: str):
+    cmds = read_commands()
+    if device in cmds:
+        cmds[device]["cmd"] = "none"
+        cmds[device]["cleared_at"] = datetime.utcnow().isoformat()
+        write_json(COMMAND_FILE, cmds)
+
+def get_cmd_for_device(device: str) -> dict:
+    cmds = read_commands()
+    return cmds.get(device, {"cmd": "none"})
 
 
 # ── Rutas publicas ────────────────────────────────────────────────────
@@ -506,45 +552,146 @@ def history(device: str = None, start: str = None, end: str = None):
 # ── Comandos ────────────────────────────────────────────────────────
 @app.post("/command")
 def set_command(data: CommandModel):
-    write_json(COMMAND_FILE, {"device": data.device, "cmd": data.cmd,
-                               "created_at": datetime.utcnow().isoformat()})
-    return {"ok": True, "cmd": data.cmd}
+    device = data.device or "HERMES-01"
+    cmd    = data.cmd.strip()
+    write_command(device, cmd)
+    return {
+        "ok":     True,
+        "device": device,
+        "cmd":    cmd,
+        "msg":    f"Comando '{cmd}' guardado para {device}. Se aplicara en el proximo despertar."
+    }
 
 @app.get("/command")
 def get_command(device: str = "HERMES-01", clear: bool = False):
-    cmd = read_json(COMMAND_FILE, {"cmd": "none"})
-    if clear: write_json(COMMAND_FILE, {"cmd": "none"})
-    return cmd
+    entry = get_cmd_for_device(device)
+    cmd   = entry.get("cmd", "none")
+
+    if clear and cmd != "none":
+        # marcar como ejecutado (no borrar inmediatamente — dar 1 intento extra)
+        cmds = read_commands()
+        if device in cmds:
+            attempts = cmds[device].get("attempts", 0) + 1
+            if attempts >= 2:
+                # ya se leyó 2 veces → limpiar
+                cmds[device]["cmd"] = "none"
+                cmds[device]["executed_at"] = datetime.utcnow().isoformat()
+            cmds[device]["attempts"] = attempts
+            write_json(COMMAND_FILE, cmds)
+
+    return {"device": device, "cmd": cmd, "created_at": entry.get("created_at","")}
+
+@app.get("/command/status")
+def command_status():
+    """Ver todos los comandos pendientes — útil para debug"""
+    return read_commands()
+
+@app.delete("/command/{device}")
+def clear_device_command(device: str):
+    """Limpiar manualmente el comando de un dispositivo"""
+    clear_command(device)
+    return {"ok": True, "device": device}
 
 
 # ── Archivos ─────────────────────────────────────────────────────────
 @app.get("/files/gps_log.csv")
 def download_csv():
     if not os.path.exists(CSV_PATH):
-        raise HTTPException(status_code=404, detail="gps_log.csv no encontrado")
-    return FileResponse(CSV_PATH, media_type="text/csv", filename="gps_log.csv")
+        # si no existe, crear uno vacío con encabezado
+        with open(CSV_PATH, "w", encoding="utf-8", newline="") as f:
+            csv.writer(f).writerow([
+                "id","despertar","fecha","hora","lat","lon",
+                "estado","bateria_v","bateria_pct","device","created_at"
+            ])
+    return FileResponse(
+        CSV_PATH,
+        media_type="text/csv",
+        filename="gps_log.csv",
+        headers={"Access-Control-Allow-Origin": "*",
+                 "Cache-Control": "no-cache"}
+    )
 
 @app.get("/files/ruta.kml")
 def generar_kml(device: str = None, start: str = None, end: str = None):
     data = history(device=device, start=start, end=end)
+
+    # si no hay datos con filtro, intentar sin filtro de puntos válidos
     if not data:
-        raise HTTPException(status_code=404, detail="No hay puntos GPS validos")
-    coords = ""
-    for p in data:
-        lat = float(p.get("lat",0)); lon = float(p.get("lon",0))
-        if lat and lon: coords += f"{lon},{lat},0\n"
+        all_h = read_json(HISTORY_FILE, [])
+        data = [h for h in all_h
+                if (not device or h.get("device") == device)
+                and in_range(h.get("created_at",""), start, end)]
+
+    coords_line = ""
+    placemarks  = ""
+
+    for i, p in enumerate(data):
+        try:
+            lat = float(p.get("lat", 0) or 0)
+            lon = float(p.get("lon", 0) or 0)
+        except Exception:
+            continue
+        if abs(lat) < 0.0001 or abs(lon) < 0.0001:
+            continue
+        coords_line += f"            {lon},{lat},0\n"
+        dev   = p.get("device","HERMES")
+        fecha = p.get("fecha","")
+        hora  = p.get("hora","")
+        bat   = p.get("bateria_pct","--")
+        est   = p.get("estado","--")
+        placemarks += f"""
+    <Placemark>
+      <name>Punto {i+1} - {dev}</name>
+      <description>{fecha} {hora} | Estado: {est} | Bat: {bat}%</description>
+      <Point><coordinates>{lon},{lat},0</coordinates></Point>
+    </Placemark>"""
+
+    if not coords_line:
+        raise HTTPException(status_code=404, detail="No hay puntos GPS validos en el rango")
+
+    device_name = device or "HERMES"
     kml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
-<Document><name>Ruta HERMES</name>
-<Placemark><name>Recorrido GPS</name>
-<Style><LineStyle><color>ff0000ff</color><width>4</width></LineStyle></Style>
-<LineString><tessellate>1</tessellate><coordinates>
-{coords}
-</coordinates></LineString></Placemark>
-</Document></kml>'''
-    with open(KML_PATH, "w", encoding="utf-8") as f: f.write(kml)
-    return FileResponse(KML_PATH, media_type="application/vnd.google-earth.kml+xml", filename="ruta.kml")
+<Document>
+  <name>Ruta {device_name}</name>
+  <Style id="lineStyle">
+    <LineStyle><color>ff00c8ff</color><width>4</width></LineStyle>
+    <PolyStyle><color>4400c8ff</color></PolyStyle>
+  </Style>
+  <Style id="pointStyle">
+    <IconStyle><color>ff00ff88</color><scale>0.6</scale></IconStyle>
+  </Style>
+  <Placemark>
+    <name>Recorrido {device_name}</name>
+    <styleUrl>#lineStyle</styleUrl>
+    <LineString>
+      <tessellate>1</tessellate>
+      <coordinates>
+{coords_line}
+      </coordinates>
+    </LineString>
+  </Placemark>
+{placemarks}
+</Document>
+</kml>'''
+
+    with open(KML_PATH, "w", encoding="utf-8") as f:
+        f.write(kml)
+
+    return FileResponse(
+        KML_PATH,
+        media_type="application/vnd.google-earth.kml+xml",
+        filename=f"ruta_{device_name}.kml",
+        headers={"Access-Control-Allow-Origin": "*",
+                 "Cache-Control": "no-cache"}
+    )
 
 @app.get("/export/kml")
 def export_kml(device: str = None, start: str = None, end: str = None):
     return generar_kml(device=device, start=start, end=end)
+
+@app.get("/csv")
+def download_csv_alt():
+    """Alias de /files/gps_log.csv"""
+    return download_csv()
+
