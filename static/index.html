@@ -61,27 +61,105 @@ body{background:var(--bg);color:var(--text);font-family:Exo 2,sans-serif;height:
 #adminToggleBtn{background:rgba(0,255,136,.08);color:#00ff88;border-color:rgba(0,255,136,.3);}
 #adminToggleBtn:hover,#adminToggleBtn.open{background:rgba(0,255,136,.2);border-color:#00ff88;}
 
-/* ── ADMIN PANEL desplegable ────────────────────────────── */
-#adminPanel{display:none;position:absolute;top:64px;right:14px;width:340px;background:#0a1628;border:1px solid #1a3a5c;border-top:2px solid #00ff88;border-radius:0 0 8px 8px;z-index:1000;box-shadow:0 12px 40px rgba(0,0,0,.8);animation:dropDown .18s ease;max-height:calc(100vh - 80px);overflow-y:auto;}
-@keyframes dropDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-.adm-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:rgba(0,255,136,.06);border-bottom:1px solid rgba(0,255,136,.15);position:sticky;top:0;z-index:1;}
-.adm-hdr h3{color:#00ff88;font-family:Rajdhani,sans-serif;letter-spacing:3px;font-size:12px;font-weight:700;}
-.adm-close{background:none;border:none;color:#6a8fa8;font-size:16px;cursor:pointer;padding:1px 5px;border-radius:3px;}.adm-close:hover{color:#ff3355;}
-.adm-tabs{display:flex;border-bottom:1px solid #1a3a5c;}
-.adm-tab{flex:1;padding:7px;text-align:center;font-family:Rajdhani,sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;cursor:pointer;color:#6a8fa8;border-bottom:2px solid transparent;transition:.2s;}
-.adm-tab.active{color:#00c8ff;border-bottom-color:#00c8ff;}
-.adm-pane{display:none;padding:12px 13px;}.adm-pane.active{display:block;}
-.adm-sec{margin-bottom:10px;}
-.adm-lbl{font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-#adminPanel input,#adminPanel select{width:100%;padding:8px 9px;margin:3px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:Share Tech Mono,monospace;font-size:11px;}
-#adminPanel input:focus,#adminPanel select:focus{border-color:#00c8ff;}
-#adminPanel input::placeholder{color:#6a8fa8;}
-.adm-row2{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-.adm-btn{width:100%;padding:8px;border:none;font-weight:700;margin-top:5px;cursor:pointer;border-radius:3px;font-family:Rajdhani,sans-serif;letter-spacing:2px;font-size:11px;transition:.2s;}
-.adm-btn-c{background:#00c8ff;color:#06101f;}.adm-btn-c:hover{background:#33d4ff;}
-.adm-btn-g{background:#00ff88;color:#06101f;}.adm-btn-g:hover{background:#33ffaa;}
-.adm-btn-r{background:rgba(255,51,85,.15);color:#ff3355;border:1px solid rgba(255,51,85,.3);}.adm-btn-r:hover{background:rgba(255,51,85,.25);}
-#adminMsg{font-size:10px;margin-top:5px;font-family:Share Tech Mono,monospace;min-height:15px;}
+/* ══ ADMIN PANEL — profesional ══════════════════════════════ */
+#adminPanel{
+  display:none;position:absolute;top:64px;right:14px;
+  width:360px;background:#080f1e;
+  border:1px solid rgba(0,200,255,.15);
+  border-top:2px solid #00ff88;
+  border-radius:0 0 12px 12px;
+  z-index:1000;
+  box-shadow:0 20px 60px rgba(0,0,0,.85),0 0 0 1px rgba(0,255,136,.05),inset 0 1px 0 rgba(255,255,255,.03);
+  animation:dropDown .2s cubic-bezier(.16,1,.3,1);
+  max-height:calc(100vh - 80px);overflow-y:auto;
+}
+@keyframes dropDown{from{opacity:0;transform:translateY(-12px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+/* Scrollbar */
+#adminPanel::-webkit-scrollbar{width:3px;}
+#adminPanel::-webkit-scrollbar-track{background:transparent;}
+#adminPanel::-webkit-scrollbar-thumb{background:rgba(0,200,255,.2);border-radius:3px;}
+
+/* Header */
+.adm-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;
+  background:linear-gradient(135deg,rgba(0,255,136,.08),rgba(0,200,255,.04));
+  border-bottom:1px solid rgba(0,255,136,.12);
+  position:sticky;top:0;z-index:2;
+  backdrop-filter:blur(10px);
+}
+.adm-hdr-left{display:flex;align-items:center;gap:8px;}
+.adm-hdr-icon{width:28px;height:28px;background:rgba(0,255,136,.12);border:1px solid rgba(0,255,136,.25);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.adm-hdr h3{color:#fff;font-family:Rajdhani,sans-serif;letter-spacing:2px;font-size:13px;font-weight:700;margin:0;}
+.adm-hdr-sub{font-family:Share Tech Mono,monospace;font-size:8px;color:#00ff88;letter-spacing:1px;}
+.adm-close{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#6a8fa8;font-size:14px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:.15s;line-height:1;}
+.adm-close:hover{background:rgba(255,51,85,.12);border-color:rgba(255,51,85,.3);color:#ff3355;}
+
+/* Tabs */
+.adm-tabs{display:flex;background:#060d18;border-bottom:1px solid rgba(0,200,255,.1);padding:0 4px;}
+.adm-tab{
+  flex:1;padding:9px 4px;text-align:center;
+  font-family:Rajdhani,sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;
+  cursor:pointer;color:#6a8fa8;
+  border-bottom:2px solid transparent;
+  transition:.2s;border-radius:4px 4px 0 0;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+}
+.adm-tab:hover{color:#c8dff0;background:rgba(255,255,255,.03);}
+.adm-tab.active{color:#00c8ff;border-bottom-color:#00c8ff;background:rgba(0,200,255,.04);}
+.adm-tab-icon{font-size:12px;}
+
+/* Panes */
+.adm-pane{display:none;padding:0;}.adm-pane.active{display:block;}
+
+/* Secciones dentro del pane */
+.adm-sec{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.04);}
+.adm-sec:last-child{border-bottom:none;}
+.adm-sec-title{
+  display:flex;align-items:center;gap:6px;
+  font-family:Share Tech Mono,monospace;font-size:8px;
+  color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.adm-sec-title::before{content:'';width:2px;height:10px;background:#00c8ff;border-radius:1px;flex-shrink:0;}
+.adm-lbl{font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;}
+
+/* Inputs */
+#adminPanel input:not([type=color]):not([type=hidden]),#adminPanel select{
+  width:100%;padding:9px 11px;margin:3px 0;
+  background:rgba(255,255,255,.04);color:#fff;
+  border:1px solid rgba(255,255,255,.08);
+  outline:none;border-radius:6px;
+  font-family:Share Tech Mono,monospace;font-size:11px;
+  transition:.2s;
+}
+#adminPanel input:not([type=color]):not([type=hidden]):focus,#adminPanel select:focus{
+  border-color:rgba(0,200,255,.5);
+  background:rgba(0,200,255,.04);
+  box-shadow:0 0 0 3px rgba(0,200,255,.08);
+}
+#adminPanel input::placeholder{color:rgba(255,255,255,.2);}
+#adminPanel select option{background:#0d1f38;}
+
+/* Botones */
+.adm-btn{
+  width:100%;padding:9px 12px;border:none;
+  font-weight:700;margin-top:8px;cursor:pointer;
+  border-radius:6px;font-family:Rajdhani,sans-serif;
+  letter-spacing:1px;font-size:12px;transition:.2s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.adm-btn-c{background:linear-gradient(135deg,#00c8ff,#0099cc);color:#06101f;box-shadow:0 4px 12px rgba(0,200,255,.25);}
+.adm-btn-c:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,200,255,.35);}
+.adm-btn-c:active{transform:translateY(0);}
+.adm-btn-g{background:linear-gradient(135deg,#00ff88,#00cc6a);color:#06101f;box-shadow:0 4px 12px rgba(0,255,136,.2);}
+.adm-btn-g:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,255,136,.3);}
+.adm-btn-r{background:rgba(255,51,85,.1);color:#ff3355;border:1px solid rgba(255,51,85,.25);}
+.adm-btn-r:hover{background:rgba(255,51,85,.2);}
+
+#adminMsg{font-size:10px;margin-top:8px;font-family:Share Tech Mono,monospace;min-height:16px;text-align:center;padding:0 4px;}
+
+/* User card profesional */
 /* user-row reemplazado por user-card */
 /* dev-row reemplazado por dev-card */
 
@@ -97,30 +175,57 @@ body{background:var(--bg);color:var(--text);font-family:Exo 2,sans-serif;height:
 .ej-cat{font-family:Share Tech Mono,monospace;font-size:7px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin:6px 0 3px;}
 
 /* ── USERS MANAGEMENT ──────────────────────────────────── */
-.user-card{background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:8px 10px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;gap:6px;}
-.user-card:hover{border-color:rgba(0,200,255,.3);}
-.uc-left{display:flex;align-items:center;gap:8px;}
-.uc-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:Rajdhani,sans-serif;flex-shrink:0;}
-.uc-av-admin{background:rgba(0,255,136,.15);color:#00ff88;border:1px solid rgba(0,255,136,.3);}
-.uc-av-user{background:rgba(0,200,255,.1);color:#00c8ff;border:1px solid rgba(0,200,255,.25);}
-.uc-name{font-family:Share Tech Mono,monospace;font-size:10px;color:#c8dff0;}
-.uc-role{font-family:Rajdhani,sans-serif;font-size:8px;letter-spacing:1px;padding:1px 5px;border-radius:2px;}
-.uc-role-admin{background:rgba(0,255,136,.12);color:#00ff88;}
-.uc-role-user{background:rgba(0,200,255,.1);color:#00c8ff;}
-.uc-actions{display:flex;gap:4px;}
-.uc-btn{background:none;border:1px solid #1a3a5c;color:#6a8fa8;cursor:pointer;font-size:10px;padding:3px 7px;border-radius:3px;font-family:Rajdhani,sans-serif;transition:.15s;}
-.uc-btn:hover{color:#ff3355;border-color:rgba(255,51,85,.4);}
+.user-card{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:10px 12px;margin-bottom:5px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  transition:.2s;
+}
+.user-card:hover{background:rgba(0,200,255,.04);border-color:rgba(0,200,255,.2);}
+.uc-left{display:flex;align-items:center;gap:10px;}
+.uc-avatar{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;font-family:Rajdhani,sans-serif;flex-shrink:0;
+}
+.uc-av-admin{background:rgba(0,255,136,.1);color:#00ff88;border:1px solid rgba(0,255,136,.2);}
+.uc-av-user{background:rgba(0,200,255,.08);color:#00c8ff;border:1px solid rgba(0,200,255,.2);}
+.uc-name{font-family:Share Tech Mono,monospace;font-size:10px;color:#e0eaf5;font-weight:500;}
+.uc-date{font-family:Share Tech Mono,monospace;font-size:8px;color:rgba(255,255,255,.25);margin-top:2px;}
+.uc-role{font-family:Rajdhani,sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:4px;}
+.uc-role-admin{background:rgba(0,255,136,.1);color:#00ff88;border:1px solid rgba(0,255,136,.2);}
+.uc-role-user{background:rgba(0,200,255,.08);color:#00c8ff;border:1px solid rgba(0,200,255,.15);}
+.uc-actions{display:flex;align-items:center;gap:5px;}
+.uc-btn{
+  background:rgba(255,51,85,.06);border:1px solid rgba(255,51,85,.15);
+  color:rgba(255,255,255,.3);cursor:pointer;font-size:10px;padding:4px 8px;
+  border-radius:5px;font-family:Rajdhani,sans-serif;transition:.15s;
+}
+.uc-btn:hover{color:#ff3355;border-color:rgba(255,51,85,.4);background:rgba(255,51,85,.1);}
 
-/* ── DEV CARD ──────────────────────────────────────────── */
-.dev-card{background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:8px 10px;margin-bottom:5px;display:flex;align-items:center;gap:8px;}
-.dev-card:hover{border-color:rgba(0,200,255,.3);}
-.dev-emoji{font-size:22px;line-height:1;width:28px;text-align:center;flex-shrink:0;}
+/* ── DEV CARD ─────────────────────────────────────────── */
+.dev-card{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:10px 12px;margin-bottom:5px;
+  display:flex;align-items:center;gap:10px;transition:.2s;
+}
+.dev-card:hover{background:rgba(0,200,255,.04);border-color:rgba(0,200,255,.2);}
+.dev-emoji{
+  font-size:24px;line-height:1;width:36px;height:36px;
+  text-align:center;flex-shrink:0;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+}
 .dc-info{flex:1;min-width:0;}
-.dc-name{font-family:Rajdhani,sans-serif;font-size:12px;font-weight:600;color:#c8dff0;}
-.dc-id{font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;}
-.dc-owner{font-family:Share Tech Mono,monospace;font-size:8px;color:#00c8ff;margin-top:1px;}
-.dc-del{background:none;border:1px solid rgba(255,51,85,.2);color:#6a8fa8;cursor:pointer;font-size:10px;padding:3px 7px;border-radius:3px;font-family:Rajdhani,sans-serif;transition:.15s;flex-shrink:0;}
-.dc-del:hover{color:#ff3355;border-color:rgba(255,51,85,.5);}
+.dc-name{font-family:Rajdhani,sans-serif;font-size:13px;font-weight:600;color:#e0eaf5;}
+.dc-id{font-family:Share Tech Mono,monospace;font-size:9px;color:rgba(255,255,255,.3);margin-top:1px;}
+.dc-owner{font-family:Share Tech Mono,monospace;font-size:8px;color:#00c8ff;margin-top:2px;opacity:.8;}
+.dc-del{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.3);cursor:pointer;font-size:11px;padding:5px 8px;
+  border-radius:6px;font-family:Rajdhani,sans-serif;transition:.15s;flex-shrink:0;
+}
+.dc-del:hover{color:#ff3355;border-color:rgba(255,51,85,.3);background:rgba(255,51,85,.08);}
 
 /* ── SEND CREDENTIALS MODAL ────────────────────────────── */
 #credModal{display:none;position:fixed;inset:0;background:rgba(6,13,24,.9);z-index:20000;align-items:center;justify-content:center;}
@@ -328,103 +433,91 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
 <!-- ═══ PANEL ADMIN DESPLEGABLE ═══════════════════════════════ -->
 <div id="adminPanel">
   <div class="adm-hdr">
-    <h3>⚙ ADMINISTRADOR</h3>
-    <button class="adm-close" onclick="toggleAdmin()">✕</button>
+    <div class="adm-hdr-left">
+      <div class="adm-hdr-icon">⚙</div>
+      <div>
+        <h3>ADMINISTRADOR</h3>
+        <div class="adm-hdr-sub" id="admUserLabel">HERMES GPS SYSTEM</div>
+      </div>
+    </div>
+    <button class="adm-close" onclick="toggleAdmin()" title="Cerrar">✕</button>
   </div>
   <div class="adm-tabs">
-    <div class="adm-tab active" onclick="admTab(this,'aT-devs')">EQUIPOS</div>
-    <div class="adm-tab" onclick="admTab(this,'aT-users')">USUARIOS</div>
-    <div class="adm-tab" onclick="admTab(this,'aT-assign')">ASIGNAR</div>
+    <div class="adm-tab active" onclick="admTab(this,'aT-devs')"><span class="adm-tab-icon">📡</span>EQUIPOS</div>
+    <div class="adm-tab" onclick="admTab(this,'aT-users')"><span class="adm-tab-icon">👤</span>USUARIOS</div>
+    <div class="adm-tab" onclick="admTab(this,'aT-assign')"><span class="adm-tab-icon">🔗</span>ASIGNAR</div>
   </div>
 
   <!-- TAB EQUIPOS -->
   <div class="adm-pane active" id="aT-devs">
     <div class="adm-sec">
-      <div class="adm-lbl">Agregar equipo</div>
+      <div class="adm-sec-title">Agregar equipo</div>
       <input id="aDevId" placeholder="ID dispositivo (HERMES-01)">
       <input id="aDevName" placeholder="Nombre del equipo" oninput="updateDevPreview()">
-      <!-- Preview del equipo -->
+      <!-- Preview + color -->
       <div class="ej-preview" id="devPreview">
         <div class="ep-icon" id="prevEmoji">🚗</div>
-        <div><div class="ep-name" id="prevName">Nuevo equipo</div><div class="ep-info">Selecciona un emoji abajo</div></div>
+        <div><div class="ep-name" id="prevName">Nuevo equipo</div><div class="ep-info">Selecciona un emoji</div></div>
       </div>
-      <!-- Selector de color -->
-      <div style="display:flex;align-items:center;gap:8px;margin:4px 0">
+      <div style="display:flex;align-items:center;gap:8px;margin:4px 0 6px">
         <div class="adm-lbl" style="margin:0;white-space:nowrap">Color</div>
-        <input type="color" id="aDevColor" value="#00c8ff" style="height:28px;padding:2px;flex:1;border-radius:3px;border:1px solid #1a3a5c;background:#0d1f38;cursor:pointer;" oninput="updateDevPreview()">
+        <input type="color" id="aDevColor" value="#00c8ff" style="height:26px;padding:2px;flex:1;border-radius:3px;border:1px solid #1a3a5c;background:#0d1f38;cursor:pointer;" oninput="updateDevPreview()">
       </div>
-      <!-- Categorías de emojis -->
-      <div class="ej-cat">🚗 Vehículos</div>
-      <div class="emoji-grid">
-        <span class="ej sel" onclick="selEmoji(this,'🚗')" title="Carro">🚗</span>
-        <span class="ej" onclick="selEmoji(this,'🚕')" title="Taxi">🚕</span>
-        <span class="ej" onclick="selEmoji(this,'🚙')" title="SUV">🚙</span>
-        <span class="ej" onclick="selEmoji(this,'🚌')" title="Bus">🚌</span>
-        <span class="ej" onclick="selEmoji(this,'🚎')" title="Camioneta">🚎</span>
-        <span class="ej" onclick="selEmoji(this,'🏎️')" title="Carro rapido">🏎️</span>
-        <span class="ej" onclick="selEmoji(this,'🚓')" title="Policia">🚓</span>
-        <span class="ej" onclick="selEmoji(this,'🚑')" title="Ambulancia">🚑</span>
-        <span class="ej" onclick="selEmoji(this,'🚒')" title="Bomberos">🚒</span>
-        <span class="ej" onclick="selEmoji(this,'🚐')" title="Minibus">🚐</span>
-        <span class="ej" onclick="selEmoji(this,'🚚')" title="Camion carga">🚚</span>
-        <span class="ej" onclick="selEmoji(this,'🚛')" title="Tractomula">🚛</span>
-      </div>
-      <div class="ej-cat">🏍️ Motos</div>
-      <div class="emoji-grid">
-        <span class="ej" onclick="selEmoji(this,'🏍️')" title="Moto">🏍️</span>
-        <span class="ej" onclick="selEmoji(this,'🛵')" title="Scooter">🛵</span>
-        <span class="ej" onclick="selEmoji(this,'🚲')" title="Bicicleta">🚲</span>
-        <span class="ej" onclick="selEmoji(this,'🛴')" title="Patineta">🛴</span>
-        <span class="ej" onclick="selEmoji(this,'🛺')" title="Mototaxi">🛺</span>
-        <span class="ej" onclick="selEmoji(this,'🚜')" title="Tractor">🚜</span>
-      </div>
-      <div class="ej-cat">📦 Paquetes y entregas</div>
-      <div class="emoji-grid">
-        <span class="ej" onclick="selEmoji(this,'📦')" title="Paquete">📦</span>
-        <span class="ej" onclick="selEmoji(this,'🎁')" title="Regalo">🎁</span>
-        <span class="ej" onclick="selEmoji(this,'🛍️')" title="Bolsa">🛍️</span>
-        <span class="ej" onclick="selEmoji(this,'💼')" title="Maletín">💼</span>
-        <span class="ej" onclick="selEmoji(this,'🎒')" title="Mochila">🎒</span>
-        <span class="ej" onclick="selEmoji(this,'📫')" title="Correo">📫</span>
-      </div>
-      <div class="ej-cat">📡 Dispositivos y tecnología</div>
-      <div class="emoji-grid">
-        <span class="ej" onclick="selEmoji(this,'📡')" title="Antena">📡</span>
-        <span class="ej" onclick="selEmoji(this,'🛰️')" title="Satelite">🛰️</span>
-        <span class="ej" onclick="selEmoji(this,'📱')" title="Celular">📱</span>
-        <span class="ej" onclick="selEmoji(this,'💻')" title="Computador">💻</span>
-        <span class="ej" onclick="selEmoji(this,'⌚')" title="Reloj">⌚</span>
-        <span class="ej" onclick="selEmoji(this,'🔋')" title="Bateria">🔋</span>
-      </div>
-      <div class="ej-cat">👷 Personas y seguridad</div>
-      <div class="emoji-grid">
-        <span class="ej" onclick="selEmoji(this,'👷')" title="Trabajador">👷</span>
-        <span class="ej" onclick="selEmoji(this,'💂')" title="Guardia">💂</span>
-        <span class="ej" onclick="selEmoji(this,'🕵️')" title="Detective">🕵️</span>
-        <span class="ej" onclick="selEmoji(this,'👮')" title="Policia">👮</span>
-        <span class="ej" onclick="selEmoji(this,'🧑‍💼')" title="Empleado">🧑‍💼</span>
-        <span class="ej" onclick="selEmoji(this,'🚶')" title="Persona">🚶</span>
-      </div>
-      <div class="ej-cat">📍 Marcadores</div>
-      <div class="emoji-grid">
-        <span class="ej" onclick="selEmoji(this,'📍')" title="Pin">📍</span>
-        <span class="ej" onclick="selEmoji(this,'📌')" title="Chinche">📌</span>
-        <span class="ej" onclick="selEmoji(this,'🔴')" title="Rojo">🔴</span>
-        <span class="ej" onclick="selEmoji(this,'🟢')" title="Verde">🟢</span>
-        <span class="ej" onclick="selEmoji(this,'🔵')" title="Azul">🔵</span>
-        <span class="ej" onclick="selEmoji(this,'⭐')" title="Estrella">⭐</span>
-        <span class="ej" onclick="selEmoji(this,'🔺')" title="Triangulo">🔺</span>
-        <span class="ej" onclick="selEmoji(this,'⚡')" title="Rayo">⚡</span>
-        <span class="ej" onclick="selEmoji(this,'🔔')" title="Alerta">🔔</span>
-        <span class="ej" onclick="selEmoji(this,'⚠️')" title="Advertencia">⚠️</span>
-        <span class="ej" onclick="selEmoji(this,'✅')" title="OK">✅</span>
-        <span class="ej" onclick="selEmoji(this,'❌')" title="Error">❌</span>
+      <!-- Emoji picker colapsable -->
+      <div style="border:1px solid #1a3a5c;border-radius:4px;overflow:hidden;margin-bottom:6px">
+        <div onclick="toggleEmojiPicker()" style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:#0d1f38;cursor:pointer;font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;letter-spacing:2px;">
+          <span>EMOJI / ICONO</span><span id="emojiPickerArrow">▼</span>
+        </div>
+        <div id="emojiPickerBody" style="display:none;padding:8px;background:#060d18;max-height:220px;overflow-y:auto">
+          <div class="ej-cat">🚗 Vehículos</div>
+          <div class="emoji-grid">
+            <span class="ej sel" onclick="selEmoji(this,'🚗')">🚗</span><span class="ej" onclick="selEmoji(this,'🚕')">🚕</span>
+            <span class="ej" onclick="selEmoji(this,'🚙')">🚙</span><span class="ej" onclick="selEmoji(this,'🚌')">🚌</span>
+            <span class="ej" onclick="selEmoji(this,'🚚')">🚚</span><span class="ej" onclick="selEmoji(this,'🚛')">🚛</span>
+            <span class="ej" onclick="selEmoji(this,'🚓')">🚓</span><span class="ej" onclick="selEmoji(this,'🚑')">🚑</span>
+            <span class="ej" onclick="selEmoji(this,'🚒')">🚒</span><span class="ej" onclick="selEmoji(this,'🏎️')">🏎️</span>
+            <span class="ej" onclick="selEmoji(this,'🚐')">🚐</span><span class="ej" onclick="selEmoji(this,'🚜')">🚜</span>
+          </div>
+          <div class="ej-cat">🏍️ Motos</div>
+          <div class="emoji-grid">
+            <span class="ej" onclick="selEmoji(this,'🏍️')">🏍️</span><span class="ej" onclick="selEmoji(this,'🛵')">🛵</span>
+            <span class="ej" onclick="selEmoji(this,'🚲')">🚲</span><span class="ej" onclick="selEmoji(this,'🛴')">🛴</span>
+            <span class="ej" onclick="selEmoji(this,'🛺')">🛺</span><span class="ej" onclick="selEmoji(this,'🚡')">🚡</span>
+          </div>
+          <div class="ej-cat">📦 Paquetes</div>
+          <div class="emoji-grid">
+            <span class="ej" onclick="selEmoji(this,'📦')">📦</span><span class="ej" onclick="selEmoji(this,'🎁')">🎁</span>
+            <span class="ej" onclick="selEmoji(this,'🛍️')">🛍️</span><span class="ej" onclick="selEmoji(this,'💼')">💼</span>
+            <span class="ej" onclick="selEmoji(this,'🎒')">🎒</span><span class="ej" onclick="selEmoji(this,'📫')">📫</span>
+          </div>
+          <div class="ej-cat">📡 Tecnología</div>
+          <div class="emoji-grid">
+            <span class="ej" onclick="selEmoji(this,'📡')">📡</span><span class="ej" onclick="selEmoji(this,'🛰️')">🛰️</span>
+            <span class="ej" onclick="selEmoji(this,'📱')">📱</span><span class="ej" onclick="selEmoji(this,'💻')">💻</span>
+            <span class="ej" onclick="selEmoji(this,'⌚')">⌚</span><span class="ej" onclick="selEmoji(this,'🔋')">🔋</span>
+          </div>
+          <div class="ej-cat">👷 Personas</div>
+          <div class="emoji-grid">
+            <span class="ej" onclick="selEmoji(this,'👷')">👷</span><span class="ej" onclick="selEmoji(this,'💂')">💂</span>
+            <span class="ej" onclick="selEmoji(this,'🕵️')">🕵️</span><span class="ej" onclick="selEmoji(this,'👮')">👮</span>
+            <span class="ej" onclick="selEmoji(this,'🚶')">🚶</span><span class="ej" onclick="selEmoji(this,'🧑‍💼')">🧑‍💼</span>
+          </div>
+          <div class="ej-cat">📍 Marcadores</div>
+          <div class="emoji-grid">
+            <span class="ej" onclick="selEmoji(this,'📍')">📍</span><span class="ej" onclick="selEmoji(this,'📌')">📌</span>
+            <span class="ej" onclick="selEmoji(this,'🔴')">🔴</span><span class="ej" onclick="selEmoji(this,'🟢')">🟢</span>
+            <span class="ej" onclick="selEmoji(this,'🔵')">🔵</span><span class="ej" onclick="selEmoji(this,'⭐')">⭐</span>
+            <span class="ej" onclick="selEmoji(this,'⚡')">⚡</span><span class="ej" onclick="selEmoji(this,'🔔')">🔔</span>
+            <span class="ej" onclick="selEmoji(this,'⚠️')">⚠️</span><span class="ej" onclick="selEmoji(this,'✅')">✅</span>
+            <span class="ej" onclick="selEmoji(this,'🔺')">🔺</span><span class="ej" onclick="selEmoji(this,'❌')">❌</span>
+          </div>
+        </div>
       </div>
       <input type="hidden" id="aDevIcon" value="🚗">
       <button class="adm-btn adm-btn-c" onclick="admAddDevice()">+ AGREGAR EQUIPO</button>
     </div>
     <div class="adm-sec">
-      <div class="adm-lbl">Equipos registrados</div>
+      <div class="adm-sec-title">Equipos registrados</div>
       <div id="admDevList"><div style="color:#6a8fa8;font-family:Share Tech Mono,monospace;font-size:10px">Cargando...</div></div>
     </div>
   </div>
@@ -432,7 +525,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   <!-- TAB USUARIOS -->
   <div class="adm-pane" id="aT-users">
     <div class="adm-sec">
-      <div class="adm-lbl">Crear usuario</div>
+      <div class="adm-sec-title">Crear usuario</div>
       <input id="aUsr" placeholder="Usuario / correo">
       <input id="aUsrPass" type="password" placeholder="Contrasena">
       <select id="aUsrRole" style="margin-top:3px">
@@ -442,7 +535,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
       <button class="adm-btn adm-btn-c" onclick="admCreateUser()">+ CREAR USUARIO</button>
     </div>
     <div class="adm-sec">
-      <div class="adm-lbl">Usuarios registrados</div>
+      <div class="adm-sec-title">Usuarios registrados</div>
       <div id="admUserList"><div style="color:#6a8fa8;font-family:Share Tech Mono,monospace;font-size:10px">Cargando...</div></div>
     </div>
   </div>
@@ -450,7 +543,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   <!-- TAB ASIGNAR -->
   <div class="adm-pane" id="aT-assign">
     <div class="adm-sec">
-      <div class="adm-lbl">Asignar equipo a usuario</div>
+      <div class="adm-sec-title">Asignar equipo a usuario</div>
       <input id="aAssignUser" placeholder="Usuario o correo">
       <input id="aAssignDev" placeholder="ID dispositivo (HERMES-01)">
       <button class="adm-btn adm-btn-g" onclick="admAssign()">↗ ASIGNAR EQUIPO</button>
@@ -823,12 +916,25 @@ function liveIcon(color){ return makeIcon(color,"📍"); }
 
 // ── Emoji picker ───────────────────────────────────────────
 let curEmoji = "🚗";
+function toggleEmojiPicker(){
+  const body  = document.getElementById("emojiPickerBody");
+  const arrow = document.getElementById("emojiPickerArrow");
+  const open  = body.style.display === "block";
+  body.style.display  = open ? "none" : "block";
+  arrow.innerText     = open ? "▼" : "▲";
+}
+
 function selEmoji(el, emoji){
   curEmoji = emoji;
-  document.querySelectorAll(".ej").forEach(e=>e.classList.remove("sel"));
+  document.querySelectorAll("#adminPanel .ej").forEach(e=>e.classList.remove("sel"));
   el.classList.add("sel");
   document.getElementById("aDevIcon").value = emoji;
+  document.getElementById("prevEmoji").innerText = emoji;
   updateDevPreview();
+  // Cerrar picker tras seleccionar
+  const body  = document.getElementById("emojiPickerBody");
+  const arrow = document.getElementById("emojiPickerArrow");
+  if(body){ body.style.display="none"; arrow.innerText="▼"; }
 }
 function updateDevPreview(){
   const name = document.getElementById("aDevName").value||"Nuevo equipo";
@@ -902,6 +1008,9 @@ function postLogin(){
     document.getElementById("adminToggleBtn").style.display="flex";
     document.getElementById("btnFlota").style.display="flex";
   }
+  // Mostrar usuario en el header del panel admin
+  const lbl = document.getElementById("admUserLabel");
+  if(lbl && USER) lbl.innerText = (USER.username||USER.email||"").toUpperCase();
   cargarDispositivos();
   startPoll();
 }
