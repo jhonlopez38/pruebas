@@ -521,9 +521,29 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   <div id="histPanel">
     <div class="sec">
       <div class="sec-t">RECORRIDO TIPO STRAVA</div>
-      <div class="hp-field"><div class="hp-lbl">DESDE</div><input type="datetime-local" id="hpFrom"></div>
-      <div class="hp-field"><div class="hp-lbl">HASTA</div><input type="datetime-local" id="hpTo"></div>
-      <button class="btn a" onclick="consultarRecorrido()">CONSULTAR RECORRIDO</button>
+      <!-- Atajos rápidos de fecha -->
+      <div class="date-range-box">
+        <div class="dr-title">📅 Rango de fechas</div>
+        <div class="dr-shortcuts">
+          <div class="dr-sc" onclick="setRangoRapido('hoy')">HOY</div>
+          <div class="dr-sc" onclick="setRangoRapido('ayer')">AYER</div>
+          <div class="dr-sc" onclick="setRangoRapido('semana')">7 DÍAS</div>
+          <div class="dr-sc" onclick="setRangoRapido('mes')">MES</div>
+          <div class="dr-sc" onclick="setRangoRapido('ultimas6h')">6 HORAS</div>
+          <div class="dr-sc" onclick="setRangoRapido('ultimo1h')">1 HORA</div>
+        </div>
+        <div class="dr-row">
+          <span class="dr-lbl">DESDE<br><span style="font-size:7px;color:#1a3a5c">COL</span></span>
+          <input type="datetime-local" id="hpFrom" class="dr-input">
+        </div>
+        <div class="dr-row">
+          <span class="dr-lbl">HASTA<br><span style="font-size:7px;color:#1a3a5c">COL</span></span>
+          <input type="datetime-local" id="hpTo" class="dr-input">
+        </div>
+      </div>
+      <button class="btn a" onclick="consultarRecorrido()" style="font-size:11px;padding:10px">
+        🔍 CONSULTAR RECORRIDO
+      </button>
     </div>
     <div class="play-bar">
       <div class="play-speed">
@@ -630,6 +650,95 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
 </div><!-- /rp -->
 
 </div><!-- /main -->
+
+<!-- ═══ MODAL EDICIÓN DISPOSITIVO ══════════════════════════ -->
+<div id="editDevModal">
+  <div class="edit-box">
+    <h3>✏️ EDITAR EQUIPO <button onclick="cerrarEditDev()" style="background:none;border:none;color:#6a8fa8;cursor:pointer;font-size:16px">✕</button></h3>
+    <input type="hidden" id="editDevId">
+    <div class="edit-preview-big">
+      <div class="epb-emoji" id="editPrevEmoji">📡</div>
+      <div><div class="epb-name" id="editPrevName">--</div><div class="epb-id" id="editPrevId">--</div></div>
+    </div>
+    <div class="adm-lbl">Nombre del equipo</div>
+    <input type="text" id="editDevName" placeholder="Nombre del equipo" oninput="updateEditPreview()">
+    <div style="display:flex;align-items:center;gap:8px;margin:4px 0 8px">
+      <div class="adm-lbl" style="margin:0;white-space:nowrap">Color</div>
+      <input type="color" id="editDevColor" value="#00c8ff" style="height:28px;padding:2px;flex:1;border-radius:3px;border:1px solid #1a3a5c;background:#0d1f38;cursor:pointer;" oninput="updateEditPreview()">
+    </div>
+    <div class="adm-lbl">Emoji / Ícono</div>
+    <div class="ej-cat">🚗 Vehículos</div>
+    <div class="emoji-grid" id="editEmojiGrid">
+      <span class="ej" onclick="selEditEmoji(this,'🚗')">🚗</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚕')">🚕</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚙')">🚙</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚌')">🚌</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚚')">🚚</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚛')">🚛</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚓')">🚓</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚑')">🚑</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚒')">🚒</span>
+      <span class="ej" onclick="selEditEmoji(this,'🏎️')">🏎️</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚐')">🚐</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚜')">🚜</span>
+    </div>
+    <div class="ej-cat">🏍️ Motos</div>
+    <div class="emoji-grid">
+      <span class="ej" onclick="selEditEmoji(this,'🏍️')">🏍️</span>
+      <span class="ej" onclick="selEditEmoji(this,'🛵')">🛵</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚲')">🚲</span>
+      <span class="ej" onclick="selEditEmoji(this,'🛴')">🛴</span>
+      <span class="ej" onclick="selEditEmoji(this,'🛺')">🛺</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚡')">🚡</span>
+    </div>
+    <div class="ej-cat">📦 Paquetes y entregas</div>
+    <div class="emoji-grid">
+      <span class="ej" onclick="selEditEmoji(this,'📦')">📦</span>
+      <span class="ej" onclick="selEditEmoji(this,'🎁')">🎁</span>
+      <span class="ej" onclick="selEditEmoji(this,'🛍️')">🛍️</span>
+      <span class="ej" onclick="selEditEmoji(this,'💼')">💼</span>
+      <span class="ej" onclick="selEditEmoji(this,'🎒')">🎒</span>
+      <span class="ej" onclick="selEditEmoji(this,'📫')">📫</span>
+    </div>
+    <div class="ej-cat">📡 Tecnología</div>
+    <div class="emoji-grid">
+      <span class="ej" onclick="selEditEmoji(this,'📡')">📡</span>
+      <span class="ej" onclick="selEditEmoji(this,'🛰️')">🛰️</span>
+      <span class="ej" onclick="selEditEmoji(this,'📱')">📱</span>
+      <span class="ej" onclick="selEditEmoji(this,'💻')">💻</span>
+      <span class="ej" onclick="selEditEmoji(this,'⌚')">⌚</span>
+      <span class="ej" onclick="selEditEmoji(this,'🔋')">🔋</span>
+    </div>
+    <div class="ej-cat">👷 Personas</div>
+    <div class="emoji-grid">
+      <span class="ej" onclick="selEditEmoji(this,'👷')">👷</span>
+      <span class="ej" onclick="selEditEmoji(this,'💂')">💂</span>
+      <span class="ej" onclick="selEditEmoji(this,'🕵️')">🕵️</span>
+      <span class="ej" onclick="selEditEmoji(this,'👮')">👮</span>
+      <span class="ej" onclick="selEditEmoji(this,'🚶')">🚶</span>
+      <span class="ej" onclick="selEditEmoji(this,'🧑‍💼')">🧑‍💼</span>
+    </div>
+    <div class="ej-cat">📍 Marcadores</div>
+    <div class="emoji-grid">
+      <span class="ej" onclick="selEditEmoji(this,'📍')">📍</span>
+      <span class="ej" onclick="selEditEmoji(this,'📌')">📌</span>
+      <span class="ej" onclick="selEditEmoji(this,'🔴')">🔴</span>
+      <span class="ej" onclick="selEditEmoji(this,'🟢')">🟢</span>
+      <span class="ej" onclick="selEditEmoji(this,'🔵')">🔵</span>
+      <span class="ej" onclick="selEditEmoji(this,'⭐')">⭐</span>
+      <span class="ej" onclick="selEditEmoji(this,'⚡')">⚡</span>
+      <span class="ej" onclick="selEditEmoji(this,'🔔')">🔔</span>
+      <span class="ej" onclick="selEditEmoji(this,'⚠️')">⚠️</span>
+      <span class="ej" onclick="selEditEmoji(this,'✅')">✅</span>
+      <span class="ej" onclick="selEditEmoji(this,'🔺')">🔺</span>
+      <span class="ej" onclick="selEditEmoji(this,'❌')">❌</span>
+    </div>
+    <input type="hidden" id="editDevIcon" value="📡">
+    <button class="edit-save" onclick="guardarEditDev()">💾 GUARDAR CAMBIOS</button>
+    <button class="edit-cancel" onclick="cerrarEditDev()">Cancelar</button>
+    <div id="editDevMsg" style="font-family:Share Tech Mono,monospace;font-size:10px;margin-top:6px;min-height:16px;text-align:center"></div>
+  </div>
+</div>
 
 <footer>
   <span><span class="fdot"></span>HERMES SENTINEL GPS SYSTEM · Operacion segura · Informacion confiable</span>
@@ -955,7 +1064,10 @@ async function admLoadDevices(){
           <div class="dc-id">${id}</div>
           <div class="dc-owner">👤 ${owner}</div>
         </div>
-        <button class="dc-del" onclick="admDeleteDev('${id}')" title="Eliminar">✕</button>
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <button class="dc-del" style="background:rgba(0,200,255,.08);border-color:rgba(0,200,255,.25);color:#00c8ff;margin-bottom:0" onclick="abrirEditDev('${id}','${nombre}','${emoji}')" title="Editar">✏️</button>
+          <button class="dc-del" onclick="admDeleteDev('${id}')" title="Eliminar">✕</button>
+        </div>
       </div>`;
     }).join("");
   }catch(e){}
@@ -1025,8 +1137,40 @@ function setMode(mode){
   document.getElementById("histPanel").style.display=mode==="hist"?"block":"none";
   document.getElementById("btn-live").className="btn"+(mode==="live"?" a":"");
   document.getElementById("btn-hist").className="btn"+(mode==="hist"?" a":"");
-  if(mode==="live"){startPoll();}
-  else{clearInterval(pollTimer);clearMapLive();}
+  if(mode==="live"){
+    startPoll();
+  } else {
+    clearInterval(pollTimer);
+    clearMapLive();
+    // Inicializar fechas con HOY si están vacías
+    if(!document.getElementById("hpFrom").value){
+      inicializarFechasHoy();
+    }
+  }
+}
+
+function inicializarFechasHoy(){
+  // Calcular hora Colombia UTC-5
+  const ahora = new Date();
+  const utc   = ahora.getTime() + ahora.getTimezoneOffset()*60000;
+  const col   = new Date(utc + COL*3600000);
+  const p     = n => String(n).padStart(2,"0");
+  const fmt   = d => `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+
+  // DESDE: inicio del día de hoy en Colombia
+  const desde = new Date(col);
+  desde.setHours(0,0,0,0);
+
+  // HASTA: hora actual en Colombia
+  const hasta = new Date(col);
+
+  document.getElementById("hpFrom").value = fmt(desde);
+  document.getElementById("hpTo").value   = fmt(hasta);
+
+  // Marcar atajo HOY como activo
+  document.querySelectorAll(".dr-sc").forEach(b=>{
+    b.classList.toggle("active", b.innerText.trim()==="HOY");
+  });
 }
 
 function clearMapLive(){
@@ -1509,6 +1653,141 @@ function reloj(){
 // ═══════════════════════════════════════════════════════════
 //  PWA
 // ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+//  SELECTOR DE FECHAS — ATAJOS RÁPIDOS
+// ═══════════════════════════════════════════════════════════
+function setRangoRapido(tipo){
+  // Trabajar en hora Colombia (UTC-5)
+  const ahora = new Date();
+  const utc   = ahora.getTime() + ahora.getTimezoneOffset()*60000;
+  const col   = new Date(utc + COL*3600000);
+
+  const fmt = d => {
+    const p = n => String(n).padStart(2,"0");
+    return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+  };
+
+  let desde, hasta;
+
+  if(tipo==="hoy"){
+    desde = new Date(col); desde.setHours(0,0,0,0);
+    hasta = new Date(col); hasta.setHours(23,59,0,0);
+  } else if(tipo==="ayer"){
+    desde = new Date(col); desde.setDate(desde.getDate()-1); desde.setHours(0,0,0,0);
+    hasta = new Date(col); hasta.setDate(hasta.getDate()-1); hasta.setHours(23,59,0,0);
+  } else if(tipo==="semana"){
+    desde = new Date(col); desde.setDate(desde.getDate()-7); desde.setHours(0,0,0,0);
+    hasta = new Date(col); hasta.setHours(23,59,0,0);
+  } else if(tipo==="mes"){
+    desde = new Date(col); desde.setDate(1); desde.setHours(0,0,0,0);
+    hasta = new Date(col); hasta.setHours(23,59,0,0);
+  } else if(tipo==="ultimas6h"){
+    desde = new Date(col.getTime() - 6*3600000);
+    hasta = new Date(col);
+  } else if(tipo==="ultimo1h"){
+    desde = new Date(col.getTime() - 1*3600000);
+    hasta = new Date(col);
+  }
+
+  document.getElementById("hpFrom").value = fmt(desde);
+  document.getElementById("hpTo").value   = fmt(hasta);
+
+  // Resaltar atajo activo
+  document.querySelectorAll(".dr-sc").forEach(b=>b.classList.remove("active"));
+  if(event && event.currentTarget) event.currentTarget.classList.add("active");
+  else if(event && event.target) event.target.classList.add("active");
+
+  log("Rango: "+tipo+" → "+fmt(desde)+" / "+fmt(hasta),"i");
+}
+
+// ═══════════════════════════════════════════════════════════
+//  EDICIÓN DE DISPOSITIVO
+// ═══════════════════════════════════════════════════════════
+let editCurEmoji = "📡";
+
+function abrirEditDev(id, nombre, emoji){
+  const cfg = getDevCfg(id);
+  editCurEmoji = cfg.icon || emoji || "📡";
+
+  document.getElementById("editDevId").value    = id;
+  document.getElementById("editDevName").value  = cfg.name || nombre || id;
+  document.getElementById("editDevColor").value = cfg.color || "#00c8ff";
+  document.getElementById("editDevIcon").value  = editCurEmoji;
+  document.getElementById("editPrevEmoji").innerText = editCurEmoji;
+  document.getElementById("editPrevName").innerText  = cfg.name || nombre || id;
+  document.getElementById("editPrevId").innerText    = id;
+  document.getElementById("editDevMsg").innerText    = "";
+
+  // Marcar emoji seleccionado en el grid
+  document.querySelectorAll("#editDevModal .ej").forEach(e=>{
+    e.classList.toggle("sel", e.innerText.trim()===editCurEmoji);
+  });
+
+  document.getElementById("editDevModal").classList.add("show");
+}
+
+function cerrarEditDev(){
+  document.getElementById("editDevModal").classList.remove("show");
+}
+
+function selEditEmoji(el, emoji){
+  editCurEmoji = emoji;
+  document.querySelectorAll("#editDevModal .ej").forEach(e=>e.classList.remove("sel"));
+  el.classList.add("sel");
+  document.getElementById("editDevIcon").value      = emoji;
+  document.getElementById("editPrevEmoji").innerText = emoji;
+}
+
+function updateEditPreview(){
+  const name  = document.getElementById("editDevName").value || "--";
+  const color = document.getElementById("editDevColor").value;
+  document.getElementById("editPrevName").innerText    = name;
+  document.getElementById("editPrevEmoji").style.filter = `drop-shadow(0 0 8px ${color}88)`;
+}
+
+async function guardarEditDev(){
+  const id    = document.getElementById("editDevId").value;
+  const name  = document.getElementById("editDevName").value.trim();
+  const color = document.getElementById("editDevColor").value;
+  const icon  = document.getElementById("editDevIcon").value;
+  const msg   = document.getElementById("editDevMsg");
+
+  if(!name){ msg.style.color="#ff3355"; msg.innerText="Nombre requerido"; return; }
+
+  // Guardar en localStorage (config local — funciona siempre)
+  saveDev(id, {color, icon, name});
+
+  // Intentar guardar en backend también
+  try{
+    const res = await fetch(BASE+"/devices/"+encodeURIComponent(id),{
+      method:"PUT",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
+      body: JSON.stringify({nombre:name, name:name, icono:icon, color})
+    });
+    const d = await res.json();
+    if(res.ok){
+      msg.style.color="#00ff88";
+      msg.innerText="✅ Guardado correctamente";
+      setTimeout(()=>{
+        cerrarEditDev();
+        admLoadDevices();
+        cargarDispositivos();
+        log("Dispositivo "+id+" actualizado: "+name+" "+icon,"ok");
+      },800);
+    } else {
+      // Si falla el backend, igual se guarda localmente
+      msg.style.color="#ffb800";
+      msg.innerText="Guardado localmente (backend: "+( d.detail||"error")+")";
+      setTimeout(()=>{ cerrarEditDev(); admLoadDevices(); cargarDispositivos(); },1200);
+    }
+  }catch(e){
+    // Sin conexión — guardar solo local
+    msg.style.color="#ffb800";
+    msg.innerText="Guardado localmente (sin conexión)";
+    setTimeout(()=>{ cerrarEditDev(); admLoadDevices(); cargarDispositivos(); },1200);
+  }
+}
+
 if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
 let deferredPrompt=null;
 window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;});
