@@ -12,37 +12,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-
-:root{--bg:#060d18;--bg2:#0a1628;--bg3:#0d1f38;--border:#1a3a5c;--accent:#00c8ff;--green:#00ff88;--warn:#ffb800;--danger:#ff3355;--text:#c8dff0;--text2:#6a8fa8;}
+:root{
+  --bg:#060d18;--bg2:#0a1628;--bg3:#0d1f38;--border:#1a3a5c;
+  --accent:#00c8ff;--green:#00ff88;--warn:#ffb800;--danger:#ff3355;
+  --text:#c8dff0;--text2:#6a8fa8;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;height:100vh;overflow:hidden;}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(0,200,255,.03),transparent 55%);pointer-events:none;z-index:0;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
 
-/* ── LOGIN ── */
+/* ── LOGIN ──────────────────────────────────────────────── */
 #loginScreen{position:fixed;inset:0;background:#060d18;z-index:99999;display:flex;align-items:center;justify-content:center;}
-.login-card{width:380px;background:#0a1628;border:1px solid #1a3a5c;padding:28px;border-radius:10px;box-shadow:0 0 30px rgba(0,200,255,.12);}
-.login-logo{text-align:center;margin-bottom:20px;}
-.login-logo h1{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:#00c8ff;letter-spacing:5px;}
-.login-logo p{font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;letter-spacing:3px;margin-top:3px;}
-.login-card input{width:100%;padding:11px 13px;margin:5px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:12px;transition:.2s;}
-.login-card input:focus{border-color:#00c8ff;}
-.login-card input::placeholder{color:#6a8fa8;}
-.l-hint{font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin:3px 0 8px 2px;}
+.lcard{width:380px;background:#0a1628;border:1px solid #1a3a5c;padding:28px;border-radius:10px;box-shadow:0 0 30px rgba(0,200,255,.12);}
+.lcard h1{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:#00c8ff;letter-spacing:5px;text-align:center;}
+.lcard p{font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;letter-spacing:3px;text-align:center;margin-bottom:20px;}
+.lcard input{width:100%;padding:11px 13px;margin:5px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:12px;transition:.2s;}
+.lcard input:focus{border-color:#00c8ff;}
+.lcard input::placeholder{color:#6a8fa8;}
+.l-hint{font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin:2px 0 8px 2px;}
+#loginMsg{font-family:'Share Tech Mono',monospace;font-size:11px;text-align:center;margin-top:8px;min-height:18px;}
 .btn-login{width:100%;padding:12px;background:#00c8ff;color:#06101f;border:none;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;cursor:pointer;border-radius:3px;margin-top:8px;transition:.2s;}
 .btn-login:hover{background:#33d4ff;}
-.btn-reg-toggle{width:100%;padding:9px;background:transparent;color:#00c8ff;border:1px solid rgba(0,200,255,.4);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:6px;transition:.2s;}
-.btn-reg-toggle:hover{background:rgba(0,200,255,.08);}
-.btn-register{width:100%;padding:11px;background:#00ff88;color:#06101f;border:none;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:6px;transition:.2s;}
-.btn-register:hover{background:#33ffaa;}
-#loginMsg{font-family:'Share Tech Mono',monospace;font-size:11px;text-align:center;margin-top:10px;min-height:18px;}
+.btn-reg-t{width:100%;padding:9px;background:transparent;color:#00c8ff;border:1px solid rgba(0,200,255,.4);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:6px;transition:.2s;}
+.btn-reg-t:hover{background:rgba(0,200,255,.08);}
+.btn-reg{width:100%;padding:11px;background:#00ff88;color:#06101f;border:none;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:6px;}
 .reg-sep{border-top:1px solid #1a3a5c;margin:14px 0 10px;padding-top:10px;}
-.reg-sep-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;margin-bottom:6px;}
+.reg-sep-l{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;margin-bottom:6px;}
 
-/* ── HEADER ── */
+/* ── HEADER ─────────────────────────────────────────────── */
 .hdr{height:60px;background:linear-gradient(135deg,#0a1628,#0b1a30);border-bottom:1px solid #1a3a5c;padding:0 14px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;flex-shrink:0;}
 .hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00c8ff,transparent);}
 .logo{display:flex;align-items:center;gap:10px;}
-.logo svg{width:36px;height:36px;}
+.logo svg{width:34px;height:34px;}
 .logo-t h1{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:4px;line-height:1;}
 .logo-t p{font-size:7px;color:#00c8ff;letter-spacing:3px;font-family:'Share Tech Mono',monospace;}
 .hstats{display:flex;gap:8px;align-items:center;}
@@ -56,38 +56,93 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .hdr-btn{display:none;padding:6px 13px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:.2s;border:1px solid transparent;}
 #logoutBtn{background:rgba(255,51,85,.12);color:#ff3355;border-color:rgba(255,51,85,.35);}
 #logoutBtn:hover{background:rgba(255,51,85,.25);}
-#installAppBtn{background:rgba(0,200,255,.12);color:#00c8ff;border-color:rgba(0,200,255,.35);}
+#installAppBtn{background:rgba(0,200,255,.12);color:#00c8ff;border-color:rgba(0,200,255,.35);display:flex!important;}
 #installAppBtn:hover{background:rgba(0,200,255,.22);}
 #adminToggleBtn{background:rgba(0,255,136,.08);color:#00ff88;border-color:rgba(0,255,136,.3);}
 #adminToggleBtn:hover,#adminToggleBtn.open{background:rgba(0,255,136,.2);border-color:#00ff88;}
 
-/* ── ADMIN PANEL ── */
-#adminPanel{display:none;position:absolute;top:64px;right:14px;width:295px;background:#0a1628;border:1px solid #1a3a5c;border-top:2px solid #00ff88;border-radius:0 0 8px 8px;z-index:1000;box-shadow:0 12px 40px rgba(0,0,0,.8);overflow:hidden;animation:dropDown .18s ease;}
+/* ── ADMIN PANEL desplegable ────────────────────────────── */
+#adminPanel{display:none;position:absolute;top:64px;right:14px;width:340px;background:#0a1628;border:1px solid #1a3a5c;border-top:2px solid #00ff88;border-radius:0 0 8px 8px;z-index:1000;box-shadow:0 12px 40px rgba(0,0,0,.8);animation:dropDown .18s ease;max-height:calc(100vh - 80px);overflow-y:auto;}
 @keyframes dropDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-.adm-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:rgba(0,255,136,.06);border-bottom:1px solid rgba(0,255,136,.15);}
+.adm-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:rgba(0,255,136,.06);border-bottom:1px solid rgba(0,255,136,.15);position:sticky;top:0;z-index:1;}
 .adm-hdr h3{color:#00ff88;font-family:'Rajdhani',sans-serif;letter-spacing:3px;font-size:12px;font-weight:700;}
 .adm-close{background:none;border:none;color:#6a8fa8;font-size:16px;cursor:pointer;padding:1px 5px;border-radius:3px;}.adm-close:hover{color:#ff3355;}
-.adm-sec{padding:11px 13px;border-bottom:1px solid rgba(26,58,92,.5);}.adm-sec:last-child{border-bottom:none;}
-.adm-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
-#adminPanel input{width:100%;padding:8px 9px;margin:3px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;}
-#adminPanel input:focus{border-color:#00c8ff;}
+.adm-tabs{display:flex;border-bottom:1px solid #1a3a5c;}
+.adm-tab{flex:1;padding:7px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;cursor:pointer;color:#6a8fa8;border-bottom:2px solid transparent;transition:.2s;}
+.adm-tab.active{color:#00c8ff;border-bottom-color:#00c8ff;}
+.adm-pane{display:none;padding:12px 13px;}.adm-pane.active{display:block;}
+.adm-sec{margin-bottom:10px;}
+.adm-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+#adminPanel input,#adminPanel select{width:100%;padding:8px 9px;margin:3px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;}
+#adminPanel input:focus,#adminPanel select:focus{border-color:#00c8ff;}
+#adminPanel input::placeholder{color:#6a8fa8;}
+.adm-row2{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
 .adm-btn{width:100%;padding:8px;border:none;font-weight:700;margin-top:5px;cursor:pointer;border-radius:3px;font-family:'Rajdhani',sans-serif;letter-spacing:2px;font-size:11px;transition:.2s;}
 .adm-btn-c{background:#00c8ff;color:#06101f;}.adm-btn-c:hover{background:#33d4ff;}
 .adm-btn-g{background:#00ff88;color:#06101f;}.adm-btn-g:hover{background:#33ffaa;}
-#adminMsg{font-size:10px;margin-top:4px;font-family:'Share Tech Mono',monospace;min-height:15px;}
+.adm-btn-r{background:rgba(255,51,85,.15);color:#ff3355;border:1px solid rgba(255,51,85,.3);}.adm-btn-r:hover{background:rgba(255,51,85,.25);}
+#adminMsg{font-size:10px;margin-top:5px;font-family:'Share Tech Mono',monospace;min-height:15px;}
+/* user-row reemplazado por user-card */
+/* dev-row reemplazado por dev-card */
 
-/* ── MOVIMIENTO ── */
-.mov-alert{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#0d1f38;border:1px solid #ffb800;border-radius:6px;padding:13px 17px;z-index:9000;transition:.3s;min-width:270px;text-align:center;box-shadow:0 0 20px rgba(255,184,0,.2);}
+/* ── EMOJI PICKER ──────────────────────────────────────── */
+.emoji-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin:6px 0;background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:6px;}
+.ej{font-size:20px;text-align:center;cursor:pointer;padding:4px;border-radius:3px;border:2px solid transparent;transition:.15s;line-height:1;}
+.ej:hover{background:rgba(0,200,255,.12);border-color:rgba(0,200,255,.3);}
+.ej.sel{background:rgba(0,255,136,.12);border-color:#00ff88;box-shadow:0 0 8px rgba(0,255,136,.3);}
+.ej-preview{display:flex;align-items:center;gap:8px;padding:6px 8px;background:#060d18;border:1px solid #1a3a5c;border-radius:3px;margin-bottom:6px;}
+.ej-preview .ep-icon{font-size:22px;line-height:1;}
+.ej-preview .ep-info{font-family:"Share Tech Mono",monospace;font-size:9px;color:#6a8fa8;}
+.ej-preview .ep-name{font-family:"Rajdhani",sans-serif;font-size:12px;font-weight:600;color:#c8dff0;}
+.ej-cat{font-family:"Share Tech Mono",monospace;font-size:7px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin:6px 0 3px;}
+
+/* ── USERS MANAGEMENT ──────────────────────────────────── */
+.user-card{background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:8px 10px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;gap:6px;}
+.user-card:hover{border-color:rgba(0,200,255,.3);}
+.uc-left{display:flex;align-items:center;gap:8px;}
+.uc-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:"Rajdhani",sans-serif;flex-shrink:0;}
+.uc-av-admin{background:rgba(0,255,136,.15);color:#00ff88;border:1px solid rgba(0,255,136,.3);}
+.uc-av-user{background:rgba(0,200,255,.1);color:#00c8ff;border:1px solid rgba(0,200,255,.25);}
+.uc-name{font-family:"Share Tech Mono",monospace;font-size:10px;color:#c8dff0;}
+.uc-role{font-family:"Rajdhani",sans-serif;font-size:8px;letter-spacing:1px;padding:1px 5px;border-radius:2px;}
+.uc-role-admin{background:rgba(0,255,136,.12);color:#00ff88;}
+.uc-role-user{background:rgba(0,200,255,.1);color:#00c8ff;}
+.uc-actions{display:flex;gap:4px;}
+.uc-btn{background:none;border:1px solid #1a3a5c;color:#6a8fa8;cursor:pointer;font-size:10px;padding:3px 7px;border-radius:3px;font-family:"Rajdhani",sans-serif;transition:.15s;}
+.uc-btn:hover{color:#ff3355;border-color:rgba(255,51,85,.4);}
+
+/* ── DEV CARD ──────────────────────────────────────────── */
+.dev-card{background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:8px 10px;margin-bottom:5px;display:flex;align-items:center;gap:8px;}
+.dev-card:hover{border-color:rgba(0,200,255,.3);}
+.dev-emoji{font-size:22px;line-height:1;width:28px;text-align:center;flex-shrink:0;}
+.dc-info{flex:1;min-width:0;}
+.dc-name{font-family:"Rajdhani",sans-serif;font-size:12px;font-weight:600;color:#c8dff0;}
+.dc-id{font-family:"Share Tech Mono",monospace;font-size:9px;color:#6a8fa8;}
+.dc-owner{font-family:"Share Tech Mono",monospace;font-size:8px;color:#00c8ff;margin-top:1px;}
+.dc-del{background:none;border:1px solid rgba(255,51,85,.2);color:#6a8fa8;cursor:pointer;font-size:10px;padding:3px 7px;border-radius:3px;font-family:"Rajdhani",sans-serif;transition:.15s;flex-shrink:0;}
+.dc-del:hover{color:#ff3355;border-color:rgba(255,51,85,.5);}
+
+/* ── SEND CREDENTIALS MODAL ────────────────────────────── */
+#credModal{display:none;position:fixed;inset:0;background:rgba(6,13,24,.9);z-index:20000;align-items:center;justify-content:center;}
+#credModal.show{display:flex;}
+.cred-box{background:#0a1628;border:1px solid #1a3a5c;border-top:2px solid #00c8ff;border-radius:8px;padding:22px;width:360px;box-shadow:0 0 30px rgba(0,200,255,.15);}
+.cred-box h3{font-family:"Rajdhani",sans-serif;color:#00c8ff;letter-spacing:3px;font-size:14px;margin-bottom:14px;}
+.cred-info{background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:12px;margin-bottom:12px;font-family:"Share Tech Mono",monospace;font-size:11px;line-height:1.8;}
+.cred-info .ci-lbl{color:#6a8fa8;font-size:9px;letter-spacing:2px;display:block;margin-bottom:2px;}
+.cred-info .ci-val{color:#fff;font-size:13px;font-family:"Rajdhani",sans-serif;font-weight:600;}
+.cred-copy{width:100%;padding:9px;background:rgba(0,200,255,.1);color:#00c8ff;border:1px solid rgba(0,200,255,.3);border-radius:3px;font-family:"Rajdhani",sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;margin-bottom:6px;transition:.2s;}
+.cred-copy:hover{background:rgba(0,200,255,.2);}
+.cred-close{width:100%;padding:8px;background:transparent;color:#6a8fa8;border:1px solid #1a3a5c;border-radius:3px;font-family:"Rajdhani",sans-serif;font-size:11px;cursor:pointer;}
+
+/* ── MOVIMIENTO ─────────────────────────────────────────── */
+.mov-alert{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#0d1f38;border:1px solid #ffb800;border-radius:6px;padding:13px 17px;z-index:9000;transition:.3s;min-width:270px;text-align:center;}
 .mov-alert.show{transform:translateX(-50%) translateY(0);}
 .mov-alert h4{color:#ffb800;font-family:'Rajdhani',sans-serif;letter-spacing:2px;margin-bottom:4px;}
 .mov-alert p{font-family:'Share Tech Mono',monospace;font-size:10px;color:#c8dff0;}
-.mov-x{position:absolute;top:5px;right:7px;background:none;border:none;color:#6a8fa8;cursor:pointer;font-size:13px;}.mov-x:hover{color:#ff3355;}
-.abar{background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.25);color:#ffb800;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;padding:3px 9px;margin-bottom:7px;border-radius:2px;display:none;}
-.abar.show{display:block;animation:ablink 1s infinite;}
-@keyframes ablink{0%,100%{border-color:rgba(255,184,0,.3);}50%{border-color:rgba(255,184,0,.8);}}
+.mov-x{position:absolute;top:5px;right:7px;background:none;border:none;color:#6a8fa8;cursor:pointer;font-size:13px;}
 
-/* ── MAIN ── */
-.main{display:grid;grid-template-columns:260px 1fr 280px;height:calc(100vh - 60px - 26px);z-index:1;}
+/* ── MAIN GRID ──────────────────────────────────────────── */
+.main{display:grid;grid-template-columns:260px 1fr 280px;flex:1;min-height:0;position:relative;z-index:1;}
 .lp,.rp{overflow-y:auto;padding:11px;background:#0a1628;}
 .lp{border-right:1px solid #1a3a5c;}.rp{border-left:1px solid #1a3a5c;}
 .lp::-webkit-scrollbar,.rp::-webkit-scrollbar{width:2px;}
@@ -114,26 +169,51 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 #hist th{color:#6a8fa8;padding:3px;border-bottom:1px solid #1a3a5c;}
 #hist td{padding:3px;border-bottom:1px solid rgba(26,58,92,.2);}
 #hist tr:hover td{background:rgba(0,200,255,.04);}
+.abar{background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.25);color:#ffb800;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;padding:3px 9px;margin-bottom:7px;border-radius:2px;display:none;}
+.abar.show{display:block;}
 
-/* ── MAP ── */
+/* ── MAP CENTER ─────────────────────────────────────────── */
 .mc{display:flex;flex-direction:column;position:relative;}
 .mtabs{display:flex;background:#0d1f38;border-bottom:1px solid #1a3a5c;padding:0 10px;flex-shrink:0;}
 .mtab{padding:7px 15px;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;color:#6a8fa8;transition:.2s;}
 .mtab.active{color:#00c8ff;border-bottom-color:#00c8ff;}
 #map{flex:1;min-height:0;}
-.moverlay{position:absolute;bottom:148px;left:10px;background:rgba(6,13,24,.92);border:1px solid #1a3a5c;border-radius:4px;padding:9px 12px;backdrop-filter:blur(10px);z-index:400;display:none;min-width:185px;}
+.moverlay{position:absolute;bottom:148px;left:10px;background:rgba(6,13,24,.92);border:1px solid #1a3a5c;border-radius:4px;padding:9px 12px;z-index:400;display:none;min-width:185px;}
 .moverlay h4{font-family:'Rajdhani',sans-serif;font-size:11px;color:#00c8ff;letter-spacing:2px;margin-bottom:4px;}
 .mor{display:flex;justify-content:space-between;font-size:10px;margin:2px 0;}
 .mor .mk{color:#6a8fa8;font-family:'Share Tech Mono',monospace;}
 .mor .mv{color:#fff;font-family:'Rajdhani',sans-serif;font-weight:600;}
 .mcbtn{position:absolute;bottom:148px;right:10px;z-index:400;background:#0d1f38;border:1px solid #1a3a5c;color:#00c8ff;width:28px;height:28px;border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;}
-.conwrap{background:#060d18;border-top:1px solid #1a3a5c;padding:7px 11px;height:140px;flex-shrink:0;}
+.conwrap{background:#060d18;border-top:1px solid #1a3a5c;padding:7px 11px;height:135px;flex-shrink:0;}
 .cont{font-family:'Share Tech Mono',monospace;font-size:9px;color:#00c8ff;letter-spacing:2px;margin-bottom:4px;}
-.con{height:100px;overflow-y:auto;font-family:'Share Tech Mono',monospace;font-size:10px;line-height:1.7;}
+.con{height:95px;overflow-y:auto;font-family:'Share Tech Mono',monospace;font-size:10px;line-height:1.7;}
 .con::-webkit-scrollbar{width:2px;}.con::-webkit-scrollbar-thumb{background:#1a3a5c;}
 .c-ok{color:#00ff88;}.c-w{color:#ffb800;}.c-e{color:#ff3355;}.c-i{color:#00c8ff;}
 
-/* ── RIGHT ── */
+/* ── HISTORIAL PANEL (panel izq — modo historial) ──────── */
+#histPanel{display:none;}
+.hp-field{margin-bottom:8px;}
+.hp-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;margin-bottom:3px;}
+.hp-field input,.hp-field select{width:100%;padding:8px 9px;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;}
+.hp-field input:focus,.hp-field select:focus{border-color:#00c8ff;}
+.play-bar{background:#0d1f38;border:1px solid #1a3a5c;border-radius:5px;padding:10px;margin-top:8px;}
+.play-speed{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:#6a8fa8;}
+.play-speed select{flex:1;padding:4px 7px;background:#060d18;color:#fff;border:1px solid #1a3a5c;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:10px;outline:none;}
+.play-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:8px;}
+.pb{padding:7px;border:none;border-radius:3px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:.2s;}
+.pb-play{background:#00c8ff;color:#06101f;}.pb-play:hover{background:#33d4ff;}
+.pb-pause{background:#ffb800;color:#06101f;}.pb-pause:hover{background:#ffc933;}
+.pb-reset{background:rgba(255,51,85,.15);color:#ff3355;border:1px solid rgba(255,51,85,.3);}
+.play-slider{width:100%;accent-color:#00c8ff;cursor:pointer;}
+.play-info{font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin-top:5px;text-align:center;}
+.play-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px;}
+.ps{background:#060d18;border:1px solid #1a3a5c;border-radius:3px;padding:6px;text-align:center;}
+.ps-v{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#00c8ff;}
+.ps-l{font-family:'Share Tech Mono',monospace;font-size:7px;color:#6a8fa8;letter-spacing:1px;}
+.kml-dl{width:100%;margin-top:8px;padding:8px;background:rgba(0,200,255,.08);color:#00c8ff;border:1px solid rgba(0,200,255,.3);border-radius:3px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:.2s;text-align:center;}
+.kml-dl:hover{background:rgba(0,200,255,.15);}
+
+/* ── RIGHT PANEL ────────────────────────────────────────── */
 .btn{width:100%;padding:8px;border:1px solid #1a3a5c;border-radius:3px;background:rgba(0,200,255,.04);color:#c8dff0;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:4px;justify-content:center;margin-bottom:4px;}
 .btn:hover{background:rgba(0,200,255,.1);border-color:#00c8ff;color:#00c8ff;}
 .btn.a{background:rgba(0,200,255,.06);border-color:rgba(0,200,255,.35);color:#00c8ff;}
@@ -142,7 +222,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn2{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:4px;}.btn2 .btn{margin-bottom:0;}
 .cycs{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:5px 0;}
 .cy{background:#0d1f38;border:1px solid #1a3a5c;border-radius:3px;padding:5px 2px;text-align:center;cursor:pointer;transition:.2s;}
-.cy:hover{border-color:#00c8ff;}.cy.active{background:rgba(0,200,255,.1);border-color:#00c8ff;}
+.cy:hover{border-color:#00c8ff;}
+.cy.active{background:rgba(0,200,255,.1);border-color:#00c8ff;box-shadow:0 0 8px rgba(0,200,255,.2);}
+.cy.cy-sending{background:rgba(255,184,0,.1);border-color:#ffb800;animation:pulse 0.8s infinite;}
+.cy.cy-ok{background:rgba(0,255,136,.1);border-color:#00ff88;}
+.cy.cy-err{background:rgba(255,51,85,.1);border-color:#ff3355;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
 .cy-n{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:#00c8ff;}
 .cy-m{font-family:'Share Tech Mono',monospace;font-size:7px;color:#6a8fa8;}
 .cy-desc{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;text-align:center;padding:3px 0;}
@@ -154,170 +239,437 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .fc{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(26,58,92,.3);}
 .fn{font-family:'Share Tech Mono',monospace;font-size:10px;color:#6a8fa8;}
 .fc a{color:#00c8ff;font-family:'Rajdhani',sans-serif;font-size:10px;text-decoration:none;letter-spacing:1px;}.fc a:hover{color:#fff;}
+
+/* ── FLEET / DEVICE SELECTOR ────────────────────────────── */
+.dev-sel{width:100%;padding:7px 9px;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;margin-bottom:5px;}
+.dev-sel:focus{border-color:#00c8ff;}
+
+/* ── LEAFLET OVERRIDES ──────────────────────────────────── */
 .leaflet-tile{filter:brightness(.65) saturate(.7);}.leaflet-container{background:#060d18;}
+
+/* ── FOOTER ─────────────────────────────────────────────── */
 footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16px;display:flex;align-items:center;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;flex-shrink:0;}
 .fdot{width:5px;height:5px;border-radius:50%;background:#00ff88;display:inline-block;margin-right:5px;animation:blink 2s infinite;}
-
 </style>
 </head>
 <body>
-<!-- LOGIN -->
+
+<!-- ═══ LOGIN ════════════════════════════════════════════════ -->
 <div id="loginScreen">
-<div class="login-card">
-<div class="login-logo"><h1>HERMES</h1><p>SISTEMA GPS TACTICO</p></div>
-<!-- CAMPO USUARIO: acepta nombre de usuario O correo -->
-<input id="loginUser" placeholder="Usuario o correo" autocomplete="username">
-<input id="loginPass" type="password" placeholder="Contrasena" autocomplete="current-password">
-<div class="l-hint">Admin: Hermesadmin / Colombia2026*</div>
-<p id="loginMsg"></p>
-<button class="btn-login" onclick="login()">INICIAR SESION</button>
-<button class="btn-reg-toggle" onclick="mostrarRegistro()">REGISTRAR NUEVO USUARIO</button>
-<div id="registerBox" style="display:none">
-<div class="reg-sep"><div class="reg-sep-lbl">NUEVO USUARIO</div>
-<input id="regName" placeholder="Nombre completo">
-<input id="regEmail" placeholder="Correo electronico">
-<input id="regPass" type="password" placeholder="Contrasena">
-<button class="btn-register" onclick="registerUser()">CREAR CUENTA</button>
+<div class="lcard">
+  <h1>HERMES</h1>
+  <p>SISTEMA GPS TACTICO</p>
+  <input id="loginUser" placeholder="Usuario o correo" autocomplete="username">
+  <input id="loginPass" type="password" placeholder="Contrasena" autocomplete="current-password">
+  <div class="l-hint">Admin: Hermesadmin / Colombia2026*</div>
+  <p id="loginMsg"></p>
+  <button class="btn-login" onclick="doLogin()">INICIAR SESION</button>
+  <button class="btn-reg-t" onclick="toggleReg()">REGISTRAR USUARIO</button>
+  <div id="regBox" style="display:none">
+    <div class="reg-sep"><div class="reg-sep-l">NUEVO USUARIO</div>
+      <input id="regName" placeholder="Nombre completo">
+      <input id="regEmail" placeholder="Correo electronico">
+      <input id="regPass" type="password" placeholder="Contrasena">
+      <button class="btn-reg" onclick="doRegister()">CREAR CUENTA</button>
+    </div>
+  </div>
 </div>
 </div>
-</div>
-</div>
+
+<!-- ═══ MOVIMIENTO ═══════════════════════════════════════════ -->
 <div class="mov-alert" id="movDiv">
-<button class="mov-x" onclick="cerrarMov()">x</button>
-<h4>MOVIMIENTO DETECTADO</h4>
-<p id="movTxt"></p>
+  <button class="mov-x" onclick="cerrarMov()">✕</button>
+  <h4>⚠ MOVIMIENTO DETECTADO</h4>
+  <p id="movTxt"></p>
 </div>
+
+<!-- ═══ MODAL CREDENCIALES ══════════════════════════════════ -->
+<div id="credModal">
+  <div class="cred-box">
+    <h3>🔑 CREDENCIALES GENERADAS</h3>
+    <div class="cred-info">
+      <span class="ci-lbl">USUARIO / CORREO</span>
+      <div class="ci-val" id="cred-user">--</div>
+      <span class="ci-lbl" style="margin-top:10px;display:block">CONTRASEÑA</span>
+      <div class="ci-val" id="cred-pass">--</div>
+    </div>
+    <p style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin-bottom:10px">Comparte estas credenciales con el usuario. La contraseña no se puede recuperar después.</p>
+    <button class="cred-copy" onclick="copiarCredenciales()">📋 COPIAR CREDENCIALES</button>
+    <button class="cred-close" onclick="cerrarCredModal()">Cerrar</button>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════ -->
 <div class="hdr">
-<div class="logo">
-<svg viewBox="0 0 40 40" fill="none"><polygon points="20,2 37,36 3,36" fill="none" stroke="#00c8ff" stroke-width="1.5"/><polygon points="20,9 31,32 9,32" fill="none" stroke="#00c8ff" stroke-width=".4" opacity=".4"/><circle cx="20" cy="26" r="3.5" fill="#00c8ff" opacity=".9"/><circle cx="20" cy="20" r="8" fill="none" stroke="#00ff88" stroke-width=".5" opacity=".3" stroke-dasharray="2 3"/></svg>
-<div class="logo-t"><h1>HERMES</h1><p>SISTEMA GPS TACTICO - HERMES-01</p></div>
+  <div class="logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <polygon points="20,2 37,36 3,36" fill="none" stroke="#00c8ff" stroke-width="1.5"/>
+      <polygon points="20,9 31,32 9,32" fill="none" stroke="#00c8ff" stroke-width=".4" opacity=".4"/>
+      <circle cx="20" cy="26" r="3.5" fill="#00c8ff" opacity=".9"/>
+      <circle cx="20" cy="20" r="8" fill="none" stroke="#00ff88" stroke-width=".5" opacity=".3" stroke-dasharray="2 3"/>
+    </svg>
+    <div class="logo-t"><h1>HERMES</h1><p>SISTEMA GPS TACTICO · HERMES-01</p></div>
+  </div>
+  <div class="hstats">
+    <div class="hs"><div class="hs-l">UNIDAD</div><div class="hs-v wh" id="h-unit">HERMES-01</div></div>
+    <div class="hs"><div class="hs-l">ESTADO</div><div class="hs-v warn" id="h-est">SIN DATOS</div></div>
+    <div class="hs"><div class="hs-l">GPS</div><div class="hs-v err" id="h-gps">SIN FIX</div></div>
+    <div class="hs"><div class="hs-l">ENLACE</div><div class="hs-v ok">ONLINE</div></div>
+    <div class="hs"><div class="hs-l">CICLO ACTUAL</div><div class="hs-v info" id="h-ciclo">-- min</div></div>
+    <div><div id="hclock">--:--:--</div><div id="hdate">-- / -- / ----</div></div>
+  </div>
+  <div class="hdr-actions">
+    <button id="installAppBtn" class="hdr-btn" onclick="installApp()">INSTALAR APP</button>
+    <button id="adminToggleBtn" class="hdr-btn" onclick="toggleAdmin()">⚙ ADMIN</button>
+    <button id="logoutBtn" class="hdr-btn" onclick="doLogout()">✕ SALIR</button>
+  </div>
 </div>
-<div class="hstats">
-<div class="hs"><div class="hs-l">UNIDAD</div><div class="hs-v wh">HERMES-01</div></div>
-<div class="hs"><div class="hs-l">ESTADO</div><div class="hs-v warn" id="h-est">SIN DATOS</div></div>
-<div class="hs"><div class="hs-l">GPS</div><div class="hs-v err" id="h-gps">SIN FIX</div></div>
-<div class="hs"><div class="hs-l">ENLACE</div><div class="hs-v ok">ONLINE</div></div>
-<div class="hs"><div class="hs-l">CICLO ACTUAL</div><div class="hs-v info" id="h-ciclo">-- min</div></div>
-<div><div id="hclock">--:--:--</div><div id="hdate">-- / -- / ----</div></div>
-</div>
-<div class="hdr-actions">
-<button id="installAppBtn" class="hdr-btn" style="display:flex" onclick="installApp()">INSTALAR APP</button>
-<button id="adminToggleBtn" class="hdr-btn" onclick="toggleAdmin()">ADMIN</button>
-<button id="logoutBtn" class="hdr-btn" onclick="logout()">SALIR</button>
-</div>
-</div>
+
+<!-- ═══ PANEL ADMIN DESPLEGABLE ═══════════════════════════════ -->
 <div id="adminPanel">
-<div class="adm-hdr"><h3>ADMINISTRADOR</h3><button class="adm-close" onclick="toggleAdmin()">x</button></div>
-<div class="adm-sec"><div class="adm-lbl">Agregar equipo</div>
-<input id="adminDevice" placeholder="ID dispositivo (HERMES-01)">
-<input id="adminDeviceName" placeholder="Nombre del equipo">
-<button class="adm-btn adm-btn-c" onclick="adminAddDevice()">+ AGREGAR EQUIPO</button>
+  <div class="adm-hdr">
+    <h3>⚙ ADMINISTRADOR</h3>
+    <button class="adm-close" onclick="toggleAdmin()">✕</button>
+  </div>
+  <div class="adm-tabs">
+    <div class="adm-tab active" onclick="admTab(this,'aT-devs')">EQUIPOS</div>
+    <div class="adm-tab" onclick="admTab(this,'aT-users')">USUARIOS</div>
+    <div class="adm-tab" onclick="admTab(this,'aT-assign')">ASIGNAR</div>
+  </div>
+
+  <!-- TAB EQUIPOS -->
+  <div class="adm-pane active" id="aT-devs">
+    <div class="adm-sec">
+      <div class="adm-lbl">Agregar equipo</div>
+      <input id="aDevId" placeholder="ID dispositivo (HERMES-01)">
+      <input id="aDevName" placeholder="Nombre del equipo" oninput="updateDevPreview()">
+      <!-- Preview del equipo -->
+      <div class="ej-preview" id="devPreview">
+        <div class="ep-icon" id="prevEmoji">🚗</div>
+        <div><div class="ep-name" id="prevName">Nuevo equipo</div><div class="ep-info">Selecciona un emoji abajo</div></div>
+      </div>
+      <!-- Selector de color -->
+      <div style="display:flex;align-items:center;gap:8px;margin:4px 0">
+        <div class="adm-lbl" style="margin:0;white-space:nowrap">Color</div>
+        <input type="color" id="aDevColor" value="#00c8ff" style="height:28px;padding:2px;flex:1;border-radius:3px;border:1px solid #1a3a5c;background:#0d1f38;cursor:pointer;" oninput="updateDevPreview()">
+      </div>
+      <!-- Categorías de emojis -->
+      <div class="ej-cat">🚗 Vehículos</div>
+      <div class="emoji-grid">
+        <span class="ej sel" onclick="selEmoji(this,'🚗')" title="Carro">🚗</span>
+        <span class="ej" onclick="selEmoji(this,'🚕')" title="Taxi">🚕</span>
+        <span class="ej" onclick="selEmoji(this,'🚙')" title="SUV">🚙</span>
+        <span class="ej" onclick="selEmoji(this,'🚌')" title="Bus">🚌</span>
+        <span class="ej" onclick="selEmoji(this,'🚎')" title="Camioneta">🚎</span>
+        <span class="ej" onclick="selEmoji(this,'🏎️')" title="Carro rapido">🏎️</span>
+        <span class="ej" onclick="selEmoji(this,'🚓')" title="Policia">🚓</span>
+        <span class="ej" onclick="selEmoji(this,'🚑')" title="Ambulancia">🚑</span>
+        <span class="ej" onclick="selEmoji(this,'🚒')" title="Bomberos">🚒</span>
+        <span class="ej" onclick="selEmoji(this,'🚐')" title="Minibus">🚐</span>
+        <span class="ej" onclick="selEmoji(this,'🚚')" title="Camion carga">🚚</span>
+        <span class="ej" onclick="selEmoji(this,'🚛')" title="Tractomula">🚛</span>
+      </div>
+      <div class="ej-cat">🏍️ Motos</div>
+      <div class="emoji-grid">
+        <span class="ej" onclick="selEmoji(this,'🏍️')" title="Moto">🏍️</span>
+        <span class="ej" onclick="selEmoji(this,'🛵')" title="Scooter">🛵</span>
+        <span class="ej" onclick="selEmoji(this,'🚲')" title="Bicicleta">🚲</span>
+        <span class="ej" onclick="selEmoji(this,'🛴')" title="Patineta">🛴</span>
+        <span class="ej" onclick="selEmoji(this,'🛺')" title="Mototaxi">🛺</span>
+        <span class="ej" onclick="selEmoji(this,'🚜')" title="Tractor">🚜</span>
+      </div>
+      <div class="ej-cat">📦 Paquetes y entregas</div>
+      <div class="emoji-grid">
+        <span class="ej" onclick="selEmoji(this,'📦')" title="Paquete">📦</span>
+        <span class="ej" onclick="selEmoji(this,'🎁')" title="Regalo">🎁</span>
+        <span class="ej" onclick="selEmoji(this,'🛍️')" title="Bolsa">🛍️</span>
+        <span class="ej" onclick="selEmoji(this,'💼')" title="Maletín">💼</span>
+        <span class="ej" onclick="selEmoji(this,'🎒')" title="Mochila">🎒</span>
+        <span class="ej" onclick="selEmoji(this,'📫')" title="Correo">📫</span>
+      </div>
+      <div class="ej-cat">📡 Dispositivos y tecnología</div>
+      <div class="emoji-grid">
+        <span class="ej" onclick="selEmoji(this,'📡')" title="Antena">📡</span>
+        <span class="ej" onclick="selEmoji(this,'🛰️')" title="Satelite">🛰️</span>
+        <span class="ej" onclick="selEmoji(this,'📱')" title="Celular">📱</span>
+        <span class="ej" onclick="selEmoji(this,'💻')" title="Computador">💻</span>
+        <span class="ej" onclick="selEmoji(this,'⌚')" title="Reloj">⌚</span>
+        <span class="ej" onclick="selEmoji(this,'🔋')" title="Bateria">🔋</span>
+      </div>
+      <div class="ej-cat">👷 Personas y seguridad</div>
+      <div class="emoji-grid">
+        <span class="ej" onclick="selEmoji(this,'👷')" title="Trabajador">👷</span>
+        <span class="ej" onclick="selEmoji(this,'💂')" title="Guardia">💂</span>
+        <span class="ej" onclick="selEmoji(this,'🕵️')" title="Detective">🕵️</span>
+        <span class="ej" onclick="selEmoji(this,'👮')" title="Policia">👮</span>
+        <span class="ej" onclick="selEmoji(this,'🧑‍💼')" title="Empleado">🧑‍💼</span>
+        <span class="ej" onclick="selEmoji(this,'🚶')" title="Persona">🚶</span>
+      </div>
+      <div class="ej-cat">📍 Marcadores</div>
+      <div class="emoji-grid">
+        <span class="ej" onclick="selEmoji(this,'📍')" title="Pin">📍</span>
+        <span class="ej" onclick="selEmoji(this,'📌')" title="Chinche">📌</span>
+        <span class="ej" onclick="selEmoji(this,'🔴')" title="Rojo">🔴</span>
+        <span class="ej" onclick="selEmoji(this,'🟢')" title="Verde">🟢</span>
+        <span class="ej" onclick="selEmoji(this,'🔵')" title="Azul">🔵</span>
+        <span class="ej" onclick="selEmoji(this,'⭐')" title="Estrella">⭐</span>
+        <span class="ej" onclick="selEmoji(this,'🔺')" title="Triangulo">🔺</span>
+        <span class="ej" onclick="selEmoji(this,'⚡')" title="Rayo">⚡</span>
+        <span class="ej" onclick="selEmoji(this,'🔔')" title="Alerta">🔔</span>
+        <span class="ej" onclick="selEmoji(this,'⚠️')" title="Advertencia">⚠️</span>
+        <span class="ej" onclick="selEmoji(this,'✅')" title="OK">✅</span>
+        <span class="ej" onclick="selEmoji(this,'❌')" title="Error">❌</span>
+      </div>
+      <input type="hidden" id="aDevIcon" value="🚗">
+      <button class="adm-btn adm-btn-c" onclick="admAddDevice()">+ AGREGAR EQUIPO</button>
+    </div>
+    <div class="adm-sec">
+      <div class="adm-lbl">Equipos registrados</div>
+      <div id="admDevList"><div style="color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:10px">Cargando...</div></div>
+    </div>
+  </div>
+
+  <!-- TAB USUARIOS -->
+  <div class="adm-pane" id="aT-users">
+    <div class="adm-sec">
+      <div class="adm-lbl">Crear usuario</div>
+      <input id="aUsr" placeholder="Usuario / correo">
+      <input id="aUsrPass" type="password" placeholder="Contrasena">
+      <select id="aUsrRole" style="margin-top:3px">
+        <option value="user">Usuario normal</option>
+        <option value="admin">Administrador</option>
+      </select>
+      <button class="adm-btn adm-btn-c" onclick="admCreateUser()">+ CREAR USUARIO</button>
+    </div>
+    <div class="adm-sec">
+      <div class="adm-lbl">Usuarios registrados</div>
+      <div id="admUserList"><div style="color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:10px">Cargando...</div></div>
+    </div>
+  </div>
+
+  <!-- TAB ASIGNAR -->
+  <div class="adm-pane" id="aT-assign">
+    <div class="adm-sec">
+      <div class="adm-lbl">Asignar equipo a usuario</div>
+      <input id="aAssignUser" placeholder="Usuario o correo">
+      <input id="aAssignDev" placeholder="ID dispositivo (HERMES-01)">
+      <button class="adm-btn adm-btn-g" onclick="admAssign()">↗ ASIGNAR EQUIPO</button>
+    </div>
+  </div>
+
+  <div style="padding:8px 13px"><div id="adminMsg"></div></div>
 </div>
-<div class="adm-sec"><div class="adm-lbl">Asignar equipo a usuario</div>
-<input id="assignEmail" placeholder="Usuario o correo">
-<input id="assignDevice" placeholder="ID dispositivo (HERMES-01)">
-<button class="adm-btn adm-btn-g" onclick="adminAssign()">ASIGNAR EQUIPO</button>
-</div>
-<div class="adm-sec" style="padding:8px 13px;"><div id="adminMsg"></div></div>
-</div>
+
+<!-- ═══ MAIN ═════════════════════════════════════════════════ -->
 <div class="main">
+
+<!-- ── PANEL IZQUIERDO ───────────────────────────────────── -->
 <div class="lp">
-<div class="abar" id="abar">MOVIMIENTO DETECTADO EN HERMES-01</div>
-<div class="sec"><div class="sec-t">ESTADO DE LA UNIDAD</div>
-<div class="row"><span class="lbl">Dispositivo</span><span class="val wh">HERMES-01</span></div>
-<div class="row"><span class="lbl">Estado</span><span id="bdg"><span class="badge b-wn">SIN DATOS</span></span></div>
-<div class="row"><span class="lbl">Modo</span><span class="val wh">AUTONOMO</span></div>
-<div class="row"><span class="lbl">Bateria</span><span class="val info" id="batV">0%</span><div class="bar"><div class="bar-f bg" id="batB" style="width:0%"></div></div></div>
-<div class="row"><span class="lbl">Senal GPS</span><span class="val warn" id="gpsS">Debil</span></div>
-<div class="row"><span class="lbl">Fallos GPS</span><span class="val" id="falV">--</span></div>
-<div class="row"><span class="lbl">Backend</span><span class="val ok">CONECTADO</span></div>
-<div class="row"><span class="lbl">WiFi ESP32</span><span class="val info" id="wifiV">--</span></div>
-<div class="row"><span class="lbl">Ultima conexion</span><span class="val info" id="ultCon">--</span></div>
-</div>
-<div class="sec"><div class="sec-t">POSICION ACTUAL</div>
-<div class="row"><span class="lbl">Latitud</span><span class="val wh" id="latV">--</span></div>
-<div class="row"><span class="lbl">Longitud</span><span class="val wh" id="lonV">--</span></div>
-<div class="row"><span class="lbl">Fecha</span><span class="val info" id="fechV">--</span></div>
-<div class="row"><span class="lbl">Hora (COL)</span><span class="val info" id="horV">--</span></div>
-</div>
-<div class="sec"><div class="sec-t">INFORMACION ADICIONAL</div>
-<div class="row"><span class="lbl">Despertar No</span><span class="val wh" id="despV">--</span></div>
-<div class="row"><span class="lbl">Ciclo inactivo</span><span class="val info" id="cicV">--</span></div>
-<div class="row"><span class="lbl">Tiempo activo</span><span class="val" id="tActV">--</span></div>
-</div>
-<div class="sec"><div class="sec-t">RESUMEN DEL RECORRIDO</div>
-<div class="sg"><div class="sc"><div class="sc-v" id="sumPts">0</div><div class="sc-l">PUNTOS</div></div><div class="sc"><div class="sc-v" id="sumDst">0 m</div><div class="sc-l">DISTANCIA</div></div></div>
-<div class="row"><span class="lbl">Ultima actualizacion</span><span class="val info" id="ultUpd">--</span></div>
-</div>
-<div class="sec"><div class="sec-t">HISTORIAL DE POSICIONES</div><div id="hist"></div></div>
-</div>
+
+  <!-- Selector de dispositivo + modo -->
+  <div class="sec">
+    <div class="sec-t">DISPOSITIVO ACTIVO</div>
+    <select class="dev-sel" id="devSelect" onchange="onDevChange()">
+      <option value="HERMES-01">HERMES-01</option>
+    </select>
+    <div class="btn2" style="margin-top:4px">
+      <button class="btn a" onclick="setMode('live')" id="btn-live">EN VIVO</button>
+      <button class="btn" onclick="setMode('hist')" id="btn-hist">HISTORIAL</button>
+    </div>
+  </div>
+
+  <!-- Panel en vivo -->
+  <div id="livePanel">
+    <div class="abar" id="abar">⚠ MOVIMIENTO DETECTADO</div>
+    <div class="sec">
+      <div class="sec-t">ESTADO DE LA UNIDAD</div>
+      <div class="row"><span class="lbl">Dispositivo</span><span class="val wh" id="dpName">HERMES-01</span></div>
+      <div class="row"><span class="lbl">Estado</span><span id="bdg"><span class="badge b-wn">SIN DATOS</span></span></div>
+      <div class="row"><span class="lbl">Modo</span><span class="val wh">AUTONOMO</span></div>
+      <div class="row"><span class="lbl">Bateria</span><span class="val info" id="batV">0%</span><div class="bar"><div class="bar-f bg" id="batB" style="width:0%"></div></div></div>
+      <div class="row"><span class="lbl">Senal GPS</span><span class="val warn" id="gpsS">Debil</span></div>
+      <div class="row"><span class="lbl">Fallos GPS</span><span class="val" id="falV">--</span></div>
+      <div class="row"><span class="lbl">Backend</span><span class="val ok">CONECTADO</span></div>
+      <div class="row"><span class="lbl">WiFi ESP32</span><span class="val info" id="wifiV">--</span></div>
+      <div class="row"><span class="lbl">Ultima conexion</span><span class="val info" id="ultCon">--</span></div>
+    </div>
+    <div class="sec">
+      <div class="sec-t">POSICION ACTUAL</div>
+      <div class="row"><span class="lbl">Latitud</span><span class="val wh" id="latV">--</span></div>
+      <div class="row"><span class="lbl">Longitud</span><span class="val wh" id="lonV">--</span></div>
+      <div class="row"><span class="lbl">Fecha</span><span class="val info" id="fechV">--</span></div>
+      <div class="row"><span class="lbl">Hora (COL)</span><span class="val info" id="horV">--</span></div>
+    </div>
+    <div class="sec">
+      <div class="sec-t">INFORMACION ADICIONAL</div>
+      <div class="row"><span class="lbl">Despertar No</span><span class="val wh" id="despV">--</span></div>
+      <div class="row"><span class="lbl">Ciclo inactivo</span><span class="val info" id="cicV">--</span></div>
+      <div class="row"><span class="lbl">Tiempo activo</span><span class="val" id="tActV">--</span></div>
+    </div>
+    <div class="sec">
+      <div class="sec-t">RESUMEN DEL RECORRIDO</div>
+      <div class="sg">
+        <div class="sc"><div class="sc-v" id="sumPts">0</div><div class="sc-l">PUNTOS</div></div>
+        <div class="sc"><div class="sc-v" id="sumDst">0 m</div><div class="sc-l">DISTANCIA</div></div>
+      </div>
+      <div class="row"><span class="lbl">Ultima actualizacion</span><span class="val info" id="ultUpd">--</span></div>
+    </div>
+    <div class="sec"><div class="sec-t">HISTORIAL DE POSICIONES</div><div id="hist"></div></div>
+  </div>
+
+  <!-- Panel historial tipo Strava -->
+  <div id="histPanel">
+    <div class="sec">
+      <div class="sec-t">RECORRIDO TIPO STRAVA</div>
+      <div class="hp-field"><div class="hp-lbl">DESDE</div><input type="datetime-local" id="hpFrom"></div>
+      <div class="hp-field"><div class="hp-lbl">HASTA</div><input type="datetime-local" id="hpTo"></div>
+      <button class="btn a" onclick="consultarRecorrido()">CONSULTAR RECORRIDO</button>
+    </div>
+    <div class="play-bar">
+      <div class="play-speed">
+        <span>VELOCIDAD</span>
+        <select id="playSpeed">
+          <option value="1">1x</option>
+          <option value="2">2x</option>
+          <option value="5">5x</option>
+          <option value="10">10x</option>
+        </select>
+      </div>
+      <div class="play-btns">
+        <button class="pb pb-play" onclick="playRecorrido()">▶ Play</button>
+        <button class="pb pb-pause" onclick="pauseRecorrido()">⏸ Pausa</button>
+        <button class="pb pb-reset" onclick="resetRecorrido()">⟳ Reiniciar</button>
+      </div>
+      <input type="range" class="play-slider" id="playSlider" min="0" value="0" oninput="sliderMove(this.value)">
+      <div class="play-info" id="playInfo">Sin recorrido cargado</div>
+    </div>
+    <div class="play-stats">
+      <div class="ps"><div class="ps-v" id="hp-pts">0</div><div class="ps-l">PUNTOS</div></div>
+      <div class="ps"><div class="ps-v" id="hp-dist">0 m</div><div class="ps-l">DISTANCIA</div></div>
+      <div class="ps"><div class="ps-v" id="hp-dur">--</div><div class="ps-l">DURACION</div></div>
+      <div class="ps"><div class="ps-v" id="hp-spd">--</div><div class="ps-l">VEL MEDIA</div></div>
+    </div>
+    <button class="kml-dl" onclick="dlKML()">⬇ DESCARGAR KML</button>
+  </div>
+
+</div><!-- /lp -->
+
+<!-- ── MAPA CENTRAL ──────────────────────────────────────── -->
 <div class="mc">
-<div class="mtabs"><div class="mtab active" onclick="setTab(this,'osm')">Mapa</div><div class="mtab" onclick="setTab(this,'sat')">Satelite</div></div>
-<div id="map"></div>
-<div class="moverlay" id="movOv"><h4>HERMES-01</h4>
-<div class="mor"><span class="mk">FECHA/HORA</span><span class="mv" id="ov-dt">--</span></div>
-<div class="mor"><span class="mk">LATITUD</span><span class="mv" id="ov-lat">--</span></div>
-<div class="mor"><span class="mk">LONGITUD</span><span class="mv" id="ov-lon">--</span></div>
-<div class="mor"><span class="mk">PUNTOS</span><span class="mv" id="ov-pts">--</span></div>
+  <div class="mtabs">
+    <div class="mtab active" onclick="setTile(this,'osm')">Mapa</div>
+    <div class="mtab" onclick="setTile(this,'sat')">Satelite</div>
+  </div>
+  <div id="map"></div>
+  <div class="moverlay" id="movOv">
+    <h4 id="ov-name">HERMES-01</h4>
+    <div class="mor"><span class="mk">FECHA/HORA</span><span class="mv" id="ov-dt">--</span></div>
+    <div class="mor"><span class="mk">LATITUD</span><span class="mv" id="ov-lat">--</span></div>
+    <div class="mor"><span class="mk">LONGITUD</span><span class="mv" id="ov-lon">--</span></div>
+    <div class="mor"><span class="mk">PUNTOS</span><span class="mv" id="ov-pts">--</span></div>
+  </div>
+  <button class="mcbtn" onclick="centrar()">⊕</button>
+  <div class="conwrap">
+    <div class="cont">&gt; CONSOLA DEL SISTEMA</div>
+    <div class="con" id="con">
+      <span class="c-ok">[BOOT] SYSTEM ONLINE</span><br>
+      <span class="c-ok">[BOOT] BACKEND LINK STABLE</span><br>
+      <span class="c-i">[INFO] WAITING GPS DATA...</span><br>
+    </div>
+  </div>
 </div>
-<button class="mcbtn" onclick="centrar()">+</button>
-<div class="conwrap"><div class="cont">&gt; CONSOLA DEL SISTEMA</div>
-<div class="con" id="con"><span class="c-ok">[BOOT] SYSTEM ONLINE</span><br><span class="c-ok">[BOOT] BACKEND LINK STABLE</span><br><span class="c-i">[INFO] WAITING GPS DATA...</span><br></div>
-</div>
-</div>
+
+<!-- ── PANEL DERECHO ─────────────────────────────────────── -->
 <div class="rp">
-<div class="sec"><div class="sec-t">COMANDOS RAPIDOS</div>
-<button class="btn a" onclick="actualizar()">ACTUALIZAR MAPA</button>
-<button class="btn a" onclick="verRuta()">VER RUTA COMPLETA</button>
-<div class="btn2"><button class="btn g" onclick="statusBackend()">STATUS</button><button class="btn g" onclick="statusDisp()">DISPOSITIVO</button><button class="btn" onclick="verKML()">KML</button><button class="btn" onclick="verCSV()">CSV</button></div>
-</div>
-<div class="sec"><div class="sec-t">CICLO DE OPERACION</div>
-<div class="cycs">
-<div class="cy" id="cy0" onclick="envCiclo(0)"><div class="cy-n">1</div><div class="cy-m">5 min</div></div>
-<div class="cy" id="cy1" onclick="envCiclo(1)"><div class="cy-n">2</div><div class="cy-m">10 min</div></div>
-<div class="cy" id="cy2" onclick="envCiclo(2)"><div class="cy-n">3</div><div class="cy-m">15 min</div></div>
-<div class="cy" id="cy3" onclick="envCiclo(3)"><div class="cy-n">4</div><div class="cy-m">30 min</div></div>
-<div class="cy" id="cy4" onclick="envCiclo(4)"><div class="cy-n">5</div><div class="cy-m">60 min</div></div>
-</div>
-<div class="cy-desc" id="cyDesc">Selecciona un ciclo para cambiar la frecuencia</div>
-</div>
-<div class="sec"><div class="sec-t">ENVIAR COMANDO AL ESP32</div>
-<p style="font-size:8px;color:#6a8fa8;font-family:'Share Tech Mono',monospace;margin-bottom:4px">Se ejecuta en el proximo despertar</p>
-<div class="btn2" style="margin-bottom:4px"><button class="btn" onclick="envCmd('status')">STATUS</button><button class="btn" onclick="envCmd('kml')">KML</button><button class="btn" onclick="envCmd('csv')">CSV</button><button class="btn d" onclick="envCmd('reset')">RESET</button></div>
-<div class="cmd-row"><input class="cmd-in" id="cmdIn" placeholder="Comando personalizado..." onkeydown="if(event.key==='Enter')envCmdP()"><button class="cmd-go" onclick="envCmdP()">ENVIAR</button></div>
-</div>
-<div class="sec"><div class="sec-t">ARCHIVOS Y DESCARGAS</div>
-<div class="fc"><span class="fn">gps_log.csv</span><a href="#" onclick="verCSV();return false">Ver / Descargar</a></div>
-<div class="fc"><span class="fn">ruta.kml</span><a href="#" onclick="verKML();return false">Ver / Descargar</a></div>
-<p style="font-size:8px;color:#6a8fa8;font-family:'Share Tech Mono',monospace;margin-top:3px">Se actualizan automaticamente en el backend</p>
-</div>
-</div>
-</div>
+  <div class="sec">
+    <div class="sec-t">COMANDOS RAPIDOS</div>
+    <button class="btn a" onclick="actualizar()">↺ ACTUALIZAR MAPA</button>
+    <button class="btn a" onclick="verRuta()">◈ VER RUTA COMPLETA</button>
+    <div class="btn2">
+      <button class="btn g" onclick="statusBackend()">◉ STATUS</button>
+      <button class="btn g" onclick="statusDisp()">◎ DISPOSITIVO</button>
+      <button class="btn" onclick="verKML()">⊞ KML</button>
+      <button class="btn" onclick="verCSV()">⊟ CSV</button>
+    </div>
+    <!-- Solo admin: ver flota completa -->
+    <button class="btn" id="btnFlota" style="display:none" onclick="verFlota()">◈ VER FLOTA COMPLETA</button>
+  </div>
+  <div class="sec">
+    <div class="sec-t">CICLO DE OPERACION</div>
+    <div class="cycs">
+      <div class="cy" id="cy0" onclick="envCiclo(0)"><div class="cy-n">1</div><div class="cy-m">5 min</div></div>
+      <div class="cy" id="cy1" onclick="envCiclo(1)"><div class="cy-n">2</div><div class="cy-m">10 min</div></div>
+      <div class="cy" id="cy2" onclick="envCiclo(2)"><div class="cy-n">3</div><div class="cy-m">15 min</div></div>
+      <div class="cy" id="cy3" onclick="envCiclo(3)"><div class="cy-n">4</div><div class="cy-m">30 min</div></div>
+      <div class="cy" id="cy4" onclick="envCiclo(4)"><div class="cy-n">5</div><div class="cy-m">60 min</div></div>
+    </div>
+    <div class="cy-desc" id="cyDesc">Selecciona un ciclo para cambiar la frecuencia</div>
+  </div>
+  <div class="sec">
+    <div class="sec-t">ENVIAR COMANDO AL ESP32</div>
+    <p style="font-size:8px;color:#6a8fa8;font-family:'Share Tech Mono',monospace;margin-bottom:4px">Se ejecuta en el proximo despertar</p>
+    <div class="btn2" style="margin-bottom:4px">
+      <button class="btn" onclick="envCmd('status')">◉ STATUS</button>
+      <button class="btn" onclick="envCmd('kml')">⊞ KML</button>
+      <button class="btn" onclick="envCmd('csv')">⊟ CSV</button>
+      <button class="btn d" onclick="envCmd('reset')">⟳ RESET</button>
+    </div>
+    <div class="cmd-row">
+      <input class="cmd-in" id="cmdIn" placeholder="Comando personalizado..." onkeydown="if(event.key==='Enter')envCmdP()">
+      <button class="cmd-go" onclick="envCmdP()">ENVIAR</button>
+    </div>
+    <button class="btn" style="margin-top:4px;font-size:9px" onclick="verComandosPendientes()">🔍 VER PENDIENTES</button>
+    <div id="cmdStatus" style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin-top:4px;min-height:14px"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-t">ARCHIVOS Y DESCARGAS</div>
+    <div class="fc"><span class="fn">📄 gps_log.csv</span><a href="#" onclick="verCSV();return false">Ver / Descargar ↓</a></div>
+    <div class="fc"><span class="fn">📍 ruta.kml</span><a href="#" onclick="verKML();return false">Ver / Descargar ↓</a></div>
+    <p style="font-size:8px;color:#6a8fa8;font-family:'Share Tech Mono',monospace;margin-top:3px">☁ Se actualizan automaticamente en el backend</p>
+  </div>
+</div><!-- /rp -->
+
+</div><!-- /main -->
+
 <footer>
-<span><span class="fdot"></span>HERMES SENTINEL GPS SYSTEM - Operacion segura - Informacion confiable</span>
-<span id="fstatus">INICIALIZANDO...</span>
-<span>v2.2.0 - <span id="ftime">--:--:--</span></span>
+  <span><span class="fdot"></span>HERMES SENTINEL GPS SYSTEM · Operacion segura · Informacion confiable</span>
+  <span id="fstatus">INICIALIZANDO...</span>
+  <span>v3.0.0 · <span id="ftime">--:--:--</span></span>
 </footer>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// ═══════════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════════
+const BASE    = "https://gps-backend-pqzg.onrender.com";
+const CICLOS  = [5,10,15,30,60];
+const COL     = -5;
+const MOV_M   = 30;
+const DEVICE_KEY = "HERMES_DEVICE_KEY_123";
 
-const BASE="https://gps-backend-pqzg.onrender.com";
-const DEVICE="HERMES-01";
-const CICLOS=[5,10,15,30,60];
-const COL=-5;
-const MOV_M=30;
+let TOKEN  = localStorage.getItem("hermes_token");
+let USER   = null;
+let CUR_DEV = "HERMES-01";
+let CUR_MODE = "live";  // "live" | "hist"
+let startT = Date.now();
+let pollTimer = null;
 
-let TOKEN=localStorage.getItem("hermes_token");
-let USER=null;
+// ── dispositivos conocidos (icono/color por id) ────────────
+let devConfig = JSON.parse(localStorage.getItem("hermes_devconfig")||"{}");
+function saveDev(id,cfg){devConfig[id]=cfg;localStorage.setItem("hermes_devconfig",JSON.stringify(devConfig));}
+function getDevCfg(id){return devConfig[id]||{color:"#00ff88",icon:"circle",name:id};}
 
-// MAP
-const map=L.map("map",{zoomControl:false}).setView([4.82,-74.34],13);
+// ═══════════════════════════════════════════════════════════
+//  MAPA
+// ═══════════════════════════════════════════════════════════
+const map = L.map("map",{zoomControl:false}).setView([4.82,-74.34],13);
 L.control.zoom({position:"bottomright"}).addTo(map);
-const tOSM=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"Hermes GPS"});
-const tSAT=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});
+const tOSM = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"Hermes GPS"});
+const tSAT = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});
 tOSM.addTo(map);
-let curTile="osm";
-function setTab(el,t){
+let curTile = "osm";
+function setTile(el,t){
   document.querySelectorAll(".mtab").forEach(x=>x.classList.remove("active"));
   el.classList.add("active");
   if(t==="sat"&&curTile!=="sat"){map.removeLayer(tOSM);tSAT.addTo(map);curTile="sat";}
@@ -325,35 +677,77 @@ function setTab(el,t){
 }
 setTimeout(()=>map.invalidateSize(),500);
 
-const mkIcon=L.divIcon({className:"",html:'<div style="width:14px;height:14px;background:#00ff88;border-radius:50%;border:2px solid #fff;box-shadow:0 0 10px #00ff88"></div>',iconSize:[14,14],iconAnchor:[7,7]});
-let mainMk=null,polyln=null,dots=[],prevLat=null,prevLon=null,movActivo=false,startT=Date.now();
+// marcadores live
+let mainMk=null, polyln=null, dots=[];
+// marcadores flota
+let fleetMks={};
+// play historial
+let playCoords=[], playIdx=0, playTimer=null, playPaused=false;
+let histPolyln=null, histDots=[], playMk=null;
 
-// AUTH
+// ── Crear icono con emoji + burbuja de color ──────────────
+function makeIcon(color, emoji){
+  const c = color||"#00ff88";
+  // si no es emoji (legacy), usar un círculo de color
+  const isEmoji = emoji && emoji.length <= 8 && /\p{Emoji}/u.test(emoji);
+  const html = isEmoji
+    ? `<div style="
+        position:relative;
+        width:36px;height:36px;
+        display:flex;align-items:center;justify-content:center;
+        font-size:22px;line-height:1;
+        filter:drop-shadow(0 2px 6px rgba(0,0,0,.7)) drop-shadow(0 0 8px ${c}88);">
+        ${emoji}
+        <div style="
+          position:absolute;bottom:-2px;right:-2px;
+          width:10px;height:10px;border-radius:50%;
+          background:${c};border:1.5px solid #fff;
+          box-shadow:0 0 6px ${c};"></div>
+      </div>`
+    : `<div style="
+        width:16px;height:16px;border-radius:50%;
+        background:${c};border:2px solid #fff;
+        box-shadow:0 0 10px ${c};"></div>`;
+  return L.divIcon({className:"",html,iconSize:[36,36],iconAnchor:[18,18],popupAnchor:[0,-20]});
+}
+function liveIcon(color){ return makeIcon(color,"📍"); }
+
+// ── Emoji picker ───────────────────────────────────────────
+let curEmoji = "🚗";
+function selEmoji(el, emoji){
+  curEmoji = emoji;
+  document.querySelectorAll(".ej").forEach(e=>e.classList.remove("sel"));
+  el.classList.add("sel");
+  document.getElementById("aDevIcon").value = emoji;
+  updateDevPreview();
+}
+function updateDevPreview(){
+  const name = document.getElementById("aDevName").value||"Nuevo equipo";
+  const color = document.getElementById("aDevColor").value;
+  document.getElementById("prevEmoji").innerText = curEmoji;
+  document.getElementById("prevName").innerText = name;
+  document.getElementById("prevEmoji").style.filter = `drop-shadow(0 0 8px ${color}88)`;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  AUTH
+// ═══════════════════════════════════════════════════════════
 function authH(){return TOKEN?{"Authorization":"Bearer "+TOKEN}:{};}
 
-// ── LOGIN ─────────────────────────────────────────────────────
-// El backend acepta "username" o "email" en el mismo campo.
-// Enviamos el valor como AMBOS campos para compatibilidad total.
-function mostrarRegistro(){
-  const b=document.getElementById("registerBox");
+function toggleReg(){
+  const b=document.getElementById("regBox");
   b.style.display=b.style.display==="none"?"block":"none";
 }
 
-async function login(){
+async function doLogin(){
   const raw=document.getElementById("loginUser").value.trim();
   const pass=document.getElementById("loginPass").value;
   const msg=document.getElementById("loginMsg");
   msg.style.color="#ffb800"; msg.innerText="Conectando...";
-
-  if(!raw||!pass){msg.style.color="#ff3355";msg.innerText="Completa usuario y contrasena.";return;}
-
+  if(!raw||!pass){msg.style.color="#ff3355";msg.innerText="Completa todos los campos.";return;}
   try{
-    const res=await fetch(BASE+"/login",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      // enviamos el valor como "username" Y "email" — el backend usa el que exista
-      body:JSON.stringify({username:raw,email:raw,password:pass})
-    });
+    const res=await fetch(BASE+"/login",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({username:raw,email:raw,password:pass})});
     const d=await res.json();
     if(d.token){
       TOKEN=d.token;
@@ -365,88 +759,294 @@ async function login(){
       msg.style.color="#ff3355";
       msg.innerText=d.detail||"Credenciales incorrectas";
     }
-  } catch(e){
-    msg.style.color="#ff3355";
-    msg.innerText="Error de conexion con el servidor";
-  }
+  }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
 }
 
-async function registerUser(){
+async function doRegister(){
   const name=document.getElementById("regName").value.trim();
   const email=document.getElementById("regEmail").value.trim();
   const pass=document.getElementById("regPass").value;
   const msg=document.getElementById("loginMsg");
-
   if(!email||!pass){msg.style.color="#ff3355";msg.innerText="Correo y contrasena requeridos.";return;}
-
   try{
-    const res=await fetch(BASE+"/register",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({username:email,email:email,name:name||email,password:pass})
-    });
+    const res=await fetch(BASE+"/register",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({username:email,email:email,name:name||email,password:pass})});
     const d=await res.json();
-    if(res.ok){msg.style.color="#00ff88";msg.innerText="Usuario creado. Ahora inicia sesion.";}
+    if(res.ok){msg.style.color="#00ff88";msg.innerText="Cuenta creada. Inicia sesion.";}
     else{msg.style.color="#ff3355";msg.innerText=d.detail||"Error al registrar";}
-  } catch(e){
-    msg.style.color="#ff3355";msg.innerText="Error de conexion";
-  }
+  }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
 }
 
 async function checkSession(){
   if(!TOKEN)return;
   try{
     const res=await fetch(BASE+"/me",{headers:authH()});
-    if(res.ok){
-      USER=await res.json();
-      postLogin();
-      log("SESION ACTIVA: "+(USER.username||USER.email),"ok");
-    } else {
-      localStorage.removeItem("hermes_token");
-      TOKEN=null;
-    }
-  } catch(e){}
+    if(res.ok){USER=await res.json();postLogin();log("SESION ACTIVA: "+(USER.username||USER.email),"ok");}
+    else{localStorage.removeItem("hermes_token");TOKEN=null;}
+  }catch(e){}
 }
 
 function postLogin(){
   document.getElementById("loginScreen").style.display="none";
   document.getElementById("logoutBtn").style.display="flex";
-  if(USER&&USER.role==="admin")
+  if(USER&&USER.role==="admin"){
     document.getElementById("adminToggleBtn").style.display="flex";
+    document.getElementById("btnFlota").style.display="flex";
+  }
+  cargarDispositivos();
+  startPoll();
 }
 
-function logout(){
+function doLogout(){
+  clearInterval(pollTimer);
   localStorage.removeItem("hermes_token");
   TOKEN=null; USER=null;
   location.reload();
 }
 
-// ── ADMIN PANEL ───────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+//  PANEL ADMIN
+// ═══════════════════════════════════════════════════════════
 function toggleAdmin(){
-  const panel=document.getElementById("adminPanel"),btn=document.getElementById("adminToggleBtn");
-  const open=panel.style.display==="block";
-  panel.style.display=open?"none":"block";
-  btn.classList.toggle("open",!open);
-  if(!open) setTimeout(()=>document.addEventListener("click",outsideAdmin,{once:true}),10);
+  const p=document.getElementById("adminPanel"),b=document.getElementById("adminToggleBtn");
+  const open=p.style.display==="block";
+  p.style.display=open?"none":"block";
+  b.classList.toggle("open",!open);
+  if(!open){
+    admLoadUsers();admLoadDevices();
+    setTimeout(()=>document.addEventListener("click",outsideAdmin,{once:true}),10);
+  }
 }
 function outsideAdmin(e){
-  const panel=document.getElementById("adminPanel"),btn=document.getElementById("adminToggleBtn");
-  if(!panel.contains(e.target)&&!btn.contains(e.target)){panel.style.display="none";btn.classList.remove("open");}
+  const p=document.getElementById("adminPanel"),b=document.getElementById("adminToggleBtn");
+  if(!p.contains(e.target)&&!b.contains(e.target)){p.style.display="none";b.classList.remove("open");}
 }
-async function adminAddDevice(){
-  const res=await fetch(BASE+"/admin/device",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify({device:document.getElementById("adminDevice").value,device_id:document.getElementById("adminDevice").value,nombre:document.getElementById("adminDeviceName").value,name:document.getElementById("adminDeviceName").value})});
-  const d=await res.json(),msg=document.getElementById("adminMsg");
-  msg.style.color=res.ok?"var(--green)":"var(--danger)";
-  msg.innerText=res.ok?"Equipo agregado":d.detail||"Error";
-}
-async function adminAssign(){
-  const res=await fetch(BASE+"/admin/assign",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify({user_email:document.getElementById("assignEmail").value,device:document.getElementById("assignDevice").value})});
-  const d=await res.json(),msg=document.getElementById("adminMsg");
-  msg.style.color=res.ok?"var(--green)":"var(--danger)";
-  msg.innerText=res.ok?"Equipo asignado":d.detail||"Error";
+function admTab(el,pane){
+  document.querySelectorAll(".adm-tab").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".adm-pane").forEach(x=>x.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById(pane).classList.add("active");
+  if(pane==="aT-users")admLoadUsers();
+  if(pane==="aT-devs")admLoadDevices();
 }
 
-// ── CONSOLA ───────────────────────────────────────────────────
+async function admAddDevice(){
+  const id=document.getElementById("aDevId").value.trim();
+  const name=document.getElementById("aDevName").value.trim();
+  const color=document.getElementById("aDevColor").value;
+  const icon=document.getElementById("aDevIcon").value;
+  const msg=document.getElementById("adminMsg");
+  if(!id){msg.style.color="#ff3355";msg.innerText="ID requerido";return;}
+  saveDev(id,{color,icon,name:name||id});
+  try{
+    const res=await fetch(BASE+"/admin/device",{method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
+      body:JSON.stringify({device_id:id,device:id,nombre:name||id,name:name||id,icono:icon,color})});
+    const d=await res.json();
+    msg.style.color=res.ok?"#00ff88":"#ff3355";
+    msg.innerText=res.ok?"Equipo agregado":d.detail||"Error";
+    if(res.ok){admLoadDevices();cargarDispositivos();}
+  }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
+}
+
+async function admCreateUser(){
+  const usr=document.getElementById("aUsr").value.trim();
+  const pass=document.getElementById("aUsrPass").value;
+  const role=document.getElementById("aUsrRole").value;
+  const msg=document.getElementById("adminMsg");
+  if(!usr||!pass){msg.style.color="#ff3355";msg.innerText="Usuario y contrasena requeridos";return;}
+  try{
+    const res=await fetch(BASE+"/admin/users",{method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
+      body:JSON.stringify({username:usr,email:usr,password:pass,role})});
+    const d=await res.json();
+    if(res.ok){
+      msg.style.color="#00ff88";
+      msg.innerText="Usuario creado";
+      admLoadUsers();
+      // mostrar credenciales en modal
+      document.getElementById("cred-user").innerText=usr;
+      document.getElementById("cred-pass").innerText=pass;
+      document.getElementById("credModal").classList.add("show");
+      // limpiar campos
+      document.getElementById("aUsr").value="";
+      document.getElementById("aUsrPass").value="";
+    } else {
+      msg.style.color="#ff3355";
+      msg.innerText=d.detail||"Error";
+    }
+  }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
+}
+
+function cerrarCredModal(){document.getElementById("credModal").classList.remove("show");}
+function copiarCredenciales(){
+  const user=document.getElementById("cred-user").innerText;
+  const pass=document.getElementById("cred-pass").innerText;
+  const txt=`HERMES GPS - Credenciales de acceso
+Usuario: ${user}
+Contraseña: ${pass}
+Acceso: https://gps-backend-pqzg.onrender.com`;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=document.querySelector(".cred-copy");
+    btn.innerText="✅ COPIADO";
+    setTimeout(()=>btn.innerText="📋 COPIAR CREDENCIALES",2000);
+  });
+}
+
+async function admDeleteUser(username){
+  if(!confirm("Eliminar usuario "+username+"?"))return;
+  await fetch(BASE+"/admin/users/"+encodeURIComponent(username),
+    {method:"DELETE",headers:authH()});
+  admLoadUsers();
+}
+
+async function admLoadUsers(){
+  try{
+    const res=await fetch(BASE+"/admin/users",{headers:authH()});
+    if(!res.ok)return;
+    const users=await res.json();
+    const el=document.getElementById("admUserList");
+    if(!users.length){
+      el.innerHTML='<div style="color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:10px;padding:8px">Sin usuarios registrados</div>';
+      return;
+    }
+    el.innerHTML=users.map(u=>{
+      const name=u.username||u.email||"?";
+      const isAdmin=u.role==="admin";
+      const letter=(name[0]||"?").toUpperCase();
+      const since=u.created_at?new Date(u.created_at).toLocaleDateString("es-CO"):"--";
+      return `<div class="user-card">
+        <div class="uc-left">
+          <div class="uc-avatar ${isAdmin?"uc-av-admin":"uc-av-user"}">${letter}</div>
+          <div>
+            <div class="uc-name">${name}</div>
+            <div style="font-size:8px;color:#6a8fa8;font-family:'Share Tech Mono',monospace">${since}</div>
+          </div>
+        </div>
+        <div class="uc-actions">
+          <span class="uc-role ${isAdmin?"uc-role-admin":"uc-role-user"}">${isAdmin?"ADMIN":"USER"}</span>
+          ${!isAdmin?`<button class="uc-btn" onclick="admDeleteUser('${name}')" title="Eliminar">✕</button>`:""}
+        </div>
+      </div>`;
+    }).join("");
+  }catch(e){}
+}
+
+async function admLoadDevices(){
+  try{
+    const res=await fetch(BASE+"/devices",{headers:authH()});
+    if(!res.ok)return;
+    const devs=await res.json();
+    const el=document.getElementById("admDevList");
+    if(!devs.length){
+      el.innerHTML='<div style="color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:10px;padding:8px">Sin equipos registrados</div>';
+      return;
+    }
+    el.innerHTML=devs.map(d=>{
+      const id=d.device_id||d.device||"?";
+      const cfg=getDevCfg(id);
+      const emoji=cfg.icon||"📡";
+      const nombre=d.nombre||d.name||id;
+      const owner=d.owner||"--";
+      return `<div class="dev-card">
+        <div class="dev-emoji">${emoji}</div>
+        <div class="dc-info">
+          <div class="dc-name">${nombre}</div>
+          <div class="dc-id">${id}</div>
+          <div class="dc-owner">👤 ${owner}</div>
+        </div>
+        <button class="dc-del" onclick="admDeleteDev('${id}')" title="Eliminar">✕</button>
+      </div>`;
+    }).join("");
+  }catch(e){}
+}
+
+async function admDeleteDev(id){
+  if(!confirm("Eliminar equipo "+id+"?"))return;
+  await fetch(BASE+"/devices/"+encodeURIComponent(id),{method:"DELETE",headers:authH()});
+  admLoadDevices();cargarDispositivos();
+}
+
+async function admAssign(){
+  const user=document.getElementById("aAssignUser").value.trim();
+  const dev=document.getElementById("aAssignDev").value.trim();
+  const msg=document.getElementById("adminMsg");
+  if(!user||!dev){msg.style.color="#ff3355";msg.innerText="Completa ambos campos";return;}
+  try{
+    const res=await fetch(BASE+"/admin/assign",{method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
+      body:JSON.stringify({user_email:user,device:dev})});
+    const d=await res.json();
+    msg.style.color=res.ok?"#00ff88":"#ff3355";
+    msg.innerText=res.ok?"Equipo asignado":d.detail||"Error";
+  }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DISPOSITIVOS — selector
+// ═══════════════════════════════════════════════════════════
+async function cargarDispositivos(){
+  try{
+    const res=await fetch(BASE+"/devices",{headers:authH()});
+    if(!res.ok)return;
+    const devs=await res.json();
+    const sel=document.getElementById("devSelect");
+    // mantener seleccion actual
+    const cur=sel.value;
+    sel.innerHTML="";
+    // siempre agregar HERMES-01
+    const ids=new Set(["HERMES-01"]);
+    devs.forEach(d=>ids.add(d.device_id||d.device));
+    ids.forEach(id=>{
+      const opt=document.createElement("option");
+      opt.value=id; opt.text=getDevCfg(id).name||id;
+      sel.appendChild(opt);
+    });
+    if([...ids].includes(cur))sel.value=cur;
+    CUR_DEV=sel.value;
+    document.getElementById("h-unit").innerText=CUR_DEV;
+  }catch(e){}
+}
+
+function onDevChange(){
+  CUR_DEV=document.getElementById("devSelect").value;
+  document.getElementById("h-unit").innerText=CUR_DEV;
+  document.getElementById("dpName").innerText=CUR_DEV;
+  resetPlayState();
+  if(CUR_MODE==="live")actualizar();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MODO LIVE / HISTORIAL
+// ═══════════════════════════════════════════════════════════
+function setMode(mode){
+  CUR_MODE=mode;
+  document.getElementById("livePanel").style.display=mode==="live"?"block":"none";
+  document.getElementById("histPanel").style.display=mode==="hist"?"block":"none";
+  document.getElementById("btn-live").className="btn"+(mode==="live"?" a":"");
+  document.getElementById("btn-hist").className="btn"+(mode==="hist"?" a":"");
+  if(mode==="live"){startPoll();}
+  else{clearInterval(pollTimer);clearMapLive();}
+}
+
+function clearMapLive(){
+  dots.forEach(m=>map.removeLayer(m));dots=[];
+  if(polyln){map.removeLayer(polyln);polyln=null;}
+  if(mainMk){map.removeLayer(mainMk);mainMk=null;}
+}
+
+// ═══════════════════════════════════════════════════════════
+//  POLLING EN VIVO
+// ═══════════════════════════════════════════════════════════
+function startPoll(){
+  clearInterval(pollTimer);
+  actualizar();statusDisp();
+  pollTimer=setInterval(()=>{if(CUR_MODE==="live"){actualizar();statusDisp();}},30000);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONSOLA
+// ═══════════════════════════════════════════════════════════
 function log(msg,t="i"){
   const c=document.getElementById("con");
   const cls={ok:"c-ok",w:"c-w",e:"c-e",i:"c-i"}[t]||"c-i";
@@ -456,20 +1056,24 @@ function log(msg,t="i"){
 function horaCol(d){
   const b=d?new Date(d):new Date();
   const u=b.getTime()+b.getTimezoneOffset()*60000;
-  const c=new Date(u+COL*3600000);
-  return c.toLocaleTimeString("es-CO",{hour12:false});
+  return new Date(u+COL*3600000).toLocaleTimeString("es-CO",{hour12:false});
 }
 function hav(a,b,c,d){
   const R=6371000,dL=(c-a)*Math.PI/180,dN=(d-b)*Math.PI/180;
   const x=Math.sin(dL/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dN/2)**2;
   return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
 }
+
+// ═══════════════════════════════════════════════════════════
+//  MOVIMIENTO
+// ═══════════════════════════════════════════════════════════
+let prevLat=null,prevLon=null,movActivo=false;
 function chkMov(lat,lon){
   if(prevLat===null){prevLat=lat;prevLon=lon;return;}
   const d=hav(prevLat,prevLon,lat,lon);
   if(d>=MOV_M&&!movActivo){
     movActivo=true;
-    document.getElementById("movTxt").innerText=`Desplazamiento: ${d.toFixed(0)} m\nLat: ${lat.toFixed(6)} | Lon: ${lon.toFixed(6)}`;
+    document.getElementById("movTxt").innerText=`Desplazamiento: ${d.toFixed(0)} m\n${lat.toFixed(6)}, ${lon.toFixed(6)}`;
     document.getElementById("movDiv").classList.add("show");
     document.getElementById("abar").classList.add("show");
     log(`MOVIMIENTO: ${d.toFixed(0)} m`,"w");
@@ -478,10 +1082,16 @@ function chkMov(lat,lon){
   if(d<MOV_M)movActivo=false;
   prevLat=lat;prevLon=lon;
 }
-function cerrarMov(){document.getElementById("movDiv").classList.remove("show");document.getElementById("abar").classList.remove("show");}
+function cerrarMov(){
+  document.getElementById("movDiv").classList.remove("show");
+  document.getElementById("abar").classList.remove("show");
+}
 
-// ── MAPA / DATOS ──────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+//  ACTUALIZAR MAPA LIVE
+// ═══════════════════════════════════════════════════════════
 function actualizar(){
+  if(CUR_MODE!=="live")return;
   fetch(BASE+"/files/gps_log.csv?t="+Date.now())
     .then(r=>{if(!r.ok)throw new Error("Sin datos");return r.text();})
     .then(data=>{
@@ -492,25 +1102,35 @@ function actualizar(){
         const p=lines[i].trim().split(",");
         if(p.length>=6){
           const lat=parseFloat(p[4]),lon=parseFloat(p[5]);
-          if(!isNaN(lat)&&!isNaN(lon)&&(lat!==0||lon!==0))
-            coords.push({id:p[0],desp:p[1],fecha:p[2],hora:p[3],lat,lon});
+          if(!isNaN(lat)&&!isNaN(lon)&&(lat!==0||lon!==0)){
+            // filtrar por dispositivo si hay columna device (col 9)
+            const dev=p[9]||"HERMES-01";
+            // p[9] = device, p[0]=id, p[1]=desp, p[2]=fecha, p[3]=hora
+            if(!p[9]||p[9]===CUR_DEV||p[9].trim()===CUR_DEV.trim())
+              coords.push({id:p[0],desp:p[1],fecha:p[2],hora:p[3],lat,lon});
+          }
         }
       }
-      if(!coords.length){log("Sin coordenadas validas","w");return;}
+      if(!coords.length){log("Sin coordenadas validas para "+CUR_DEV,"w");return;}
       for(let i=1;i<coords.length;i++) distT+=hav(coords[i-1].lat,coords[i-1].lon,coords[i].lat,coords[i].lon);
       const u=coords[coords.length-1]; chkMov(u.lat,u.lon);
-      dots.forEach(m=>map.removeLayer(m));dots=[];if(polyln)map.removeLayer(polyln);
-      if(coords.length>=2) polyln=L.polyline(coords.map(c=>[c.lat,c.lon]),{color:"#00c8ff",weight:3,opacity:.8}).addTo(map);
+      const cfg=getDevCfg(CUR_DEV);
+      dots.forEach(m=>map.removeLayer(m));dots=[];
+      if(polyln){map.removeLayer(polyln);polyln=null;}
+      if(coords.length>=2)
+        polyln=L.polyline(coords.map(c=>[c.lat,c.lon]),{color:cfg.color||"#00c8ff",weight:3,opacity:.8}).addTo(map);
       coords.slice(0,-1).forEach(c=>{
-        const m=L.circleMarker([c.lat,c.lon],{radius:4,color:"#00c8ff",fillColor:"#003a5c",fillOpacity:.9,weight:1})
+        const m=L.circleMarker([c.lat,c.lon],{radius:4,color:cfg.color||"#00c8ff",fillColor:"#003a5c",fillOpacity:.9,weight:1})
           .bindPopup(`<b>#${c.desp}</b><br>${c.fecha} ${c.hora}<br>${c.lat.toFixed(6)}, ${c.lon.toFixed(6)}`).addTo(map);
         dots.push(m);
       });
-      if(!mainMk) mainMk=L.marker([u.lat,u.lon],{icon:mkIcon}).addTo(map);
-      else mainMk.setLatLng([u.lat,u.lon]);
-      mainMk.bindPopup(`<b>HERMES-01</b><br>${u.fecha} ${u.hora}<br>${u.lat.toFixed(6)} N, ${u.lon.toFixed(6)} W`);
-      if(map.getZoom()<14) map.setView([u.lat,u.lon],14); else map.panTo([u.lat,u.lon]);
+      const icon=makeIcon(cfg.color||"#00ff88",cfg.icon||"circle");
+      if(!mainMk) mainMk=L.marker([u.lat,u.lon],{icon}).addTo(map);
+      else mainMk.setLatLng([u.lat,u.lon]).setIcon(icon);
+      mainMk.bindPopup(`<b>${CUR_DEV}</b><br>${u.fecha} ${u.hora}<br>${u.lat.toFixed(6)} N, ${u.lon.toFixed(6)} W`);
+      if(map.getZoom()<14)map.setView([u.lat,u.lon],14);else map.panTo([u.lat,u.lon]);
       document.getElementById("movOv").style.display="block";
+      document.getElementById("ov-name").innerText=CUR_DEV;
       document.getElementById("ov-dt").innerText=u.fecha+" "+u.hora;
       document.getElementById("ov-lat").innerText=u.lat.toFixed(6)+" N";
       document.getElementById("ov-lon").innerText=u.lon.toFixed(6)+" W";
@@ -532,22 +1152,17 @@ function actualizar(){
     .catch(e=>log("CSV: "+e.message,"w"));
 }
 
-function verRuta(){actualizar();log("RUTA COMPLETA CARGADA","ok");}
-function verKML(){window.open(BASE+"/files/ruta.kml","_blank");}
-function verCSV(){window.open(BASE+"/files/gps_log.csv","_blank");}
-function centrar(){if(mainMk){map.setView(mainMk.getLatLng(),16);log("CENTRADO","i");}else log("Sin posicion disponible","w");}
-
-// ── STATUS ────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+//  STATUS DISPOSITIVO
+// ═══════════════════════════════════════════════════════════
 function statusBackend(){
-  fetch(BASE+"/health")
-    .then(r=>r.json())
+  fetch(BASE+"/health").then(r=>r.json())
     .then(d=>{alert(JSON.stringify(d,null,2));log("BACKEND OK","ok");})
     .catch(()=>log("ERROR backend","e"));
 }
 function statusDisp(){
-  fetch(BASE+"/device-status?device="+DEVICE+"&t="+Date.now())
-    .then(r=>r.json())
-    .then(d=>{
+  fetch(BASE+"/device-status?device="+CUR_DEV+"&t="+Date.now())
+    .then(r=>r.json()).then(d=>{
       const pct=d.bateria_pct||0;
       document.getElementById("batV").innerText=pct+"%";
       const b=document.getElementById("batB"); b.style.width=pct+"%";
@@ -562,90 +1177,355 @@ function statusDisp(){
       document.getElementById("cicV").innerText=cm?cm+" min":"--";
       document.getElementById("h-ciclo").innerText=cm?cm+" min":"-- min";
       CICLOS.forEach((c,i)=>{const el=document.getElementById("cy"+i);if(el)el.classList.toggle("active",c===cm);});
-      if(cm){const idx=CICLOS.indexOf(cm);document.getElementById("cyDesc").innerText=`Ciclo ${idx+1} activo (${cm} min) - Se aplica al despertar`;}
+      if(cm){const idx=CICLOS.indexOf(cm);document.getElementById("cyDesc").innerText=`Ciclo ${idx+1} activo (${cm} min)`;}
       const est=(d.estado||"").toUpperCase();
       const he=document.getElementById("h-est"),hg=document.getElementById("h-gps"),bdg=document.getElementById("bdg");
-      if(est.includes("NUEVA")||est.includes("FIX")||est.includes("OK")||est.includes("UBICACION")){
-        he.innerText="OPERATIVO";he.className="hs-v ok";
-        hg.innerText="LOCK";hg.className="hs-v ok";
+      if(est.includes("NUEVA")||est.includes("UBICACION")||est.includes("OK")){
+        he.innerText="OPERATIVO";he.className="hs-v ok";hg.innerText="LOCK";hg.className="hs-v ok";
         bdg.innerHTML='<span class="badge b-ok">ACTIVO</span>';
         document.getElementById("gpsS").className="val ok";
       } else if(est.includes("ULTIMA")||est.includes("REENV")||est.includes("PEND")){
-        he.innerText="DEGRADADO";he.className="hs-v warn";
-        hg.innerText="SIN FIX";hg.className="hs-v warn";
+        he.innerText="DEGRADADO";he.className="hs-v warn";hg.innerText="SIN FIX";hg.className="hs-v warn";
         bdg.innerHTML='<span class="badge b-wn">DEGRADADO</span>';
       } else {
-        he.innerText="SIN DATOS";he.className="hs-v err";
-        hg.innerText="SIN FIX";hg.className="hs-v err";
+        he.innerText="SIN DATOS";he.className="hs-v err";hg.innerText="SIN FIX";hg.className="hs-v err";
         bdg.innerHTML='<span class="badge b-er">SIN DATOS</span>';
       }
       log("DEVICE STATUS ACTUALIZADO","ok");
-    })
-    .catch(()=>log("Sin respuesta del dispositivo","w"));
+    }).catch(()=>log("Sin respuesta del dispositivo","w"));
 }
 
-// ── CICLOS Y COMANDOS ────────────────────────────────────────
-function envCiclo(idx){
-  const min=CICLOS[idx];
-  fetch(BASE+"/command",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({device:DEVICE,cmd:"ciclo "+min})})
-    .then(r=>r.json())
-    .then(()=>{
-      CICLOS.forEach((_,i)=>{const el=document.getElementById("cy"+i);if(el)el.classList.toggle("active",i===idx);});
-      document.getElementById("cyDesc").innerText=`Ciclo ${idx+1} (${min} min) enviado - Espera el proximo despertar`;
-      document.getElementById("h-ciclo").innerText=min+" min";
-      log(`CICLO: ${min} min enviado`,"ok");
-    })
-    .catch(()=>log("ERROR enviando ciclo","e"));
+// ═══════════════════════════════════════════════════════════
+//  FLOTA COMPLETA (admin)
+// ═══════════════════════════════════════════════════════════
+async function verFlota(){
+  Object.values(fleetMks).forEach(m=>map.removeLayer(m));
+  fleetMks={};
+  clearMapLive();
+  try{
+    const res=await fetch(BASE+"/fleet/latest");
+    const data=await res.json();
+    const devices=Object.entries(data);
+    if(!devices.length){log("Sin dispositivos en la flota","w");return;}
+    const bounds=[];
+    devices.forEach(([id,d])=>{
+      if(!d||!d.lat||!d.lon||d.lat===0)return;
+      const cfg=getDevCfg(id);
+      const icon=makeIcon(cfg.color||"#00ff88",cfg.icon||"circle");
+      const mk=L.marker([d.lat,d.lon],{icon}).addTo(map);
+      // popup con info del último dato
+      const popHtml=`
+        <div style="font-family:'Share Tech Mono',monospace;font-size:11px;min-width:180px">
+          <b style="color:#00c8ff;font-size:13px;font-family:'Rajdhani',sans-serif;letter-spacing:2px">${id}</b><br>
+          <span style="color:#6a8fa8">Estado:</span> <b>${d.estado||"--"}</b><br>
+          <span style="color:#6a8fa8">Fecha:</span> ${d.fecha||"--"} ${d.hora||""}<br>
+          <span style="color:#6a8fa8">Lat:</span> ${parseFloat(d.lat).toFixed(6)}<br>
+          <span style="color:#6a8fa8">Lon:</span> ${parseFloat(d.lon).toFixed(6)}<br>
+          <span style="color:#6a8fa8">Bat:</span> ${d.bateria_v||"--"}V (${d.bateria_pct||"--"}%)<br>
+          <span style="color:#6a8fa8">GPS Fallos:</span> ${d.fallos_gps||0}<br>
+          <span style="color:#6a8fa8">Despertar:</span> ${d.despertar||"--"}<br>
+          <span style="color:#6a8fa8">Ciclo:</span> ${d.ciclo_min||"--"} min
+        </div>`;
+      mk.bindPopup(popHtml,{maxWidth:220});
+      mk.on("click",()=>{
+        document.getElementById("ov-name").innerText=id;
+        document.getElementById("ov-dt").innerText=(d.fecha||"")+" "+(d.hora||"");
+        document.getElementById("ov-lat").innerText=parseFloat(d.lat).toFixed(6)+" N";
+        document.getElementById("ov-lon").innerText=parseFloat(d.lon).toFixed(6)+" W";
+        document.getElementById("ov-pts").innerText="--";
+        document.getElementById("movOv").style.display="block";
+      });
+      fleetMks[id]=mk;
+      bounds.push([d.lat,d.lon]);
+    });
+    if(bounds.length>0)map.fitBounds(L.latLngBounds(bounds).pad(0.15));
+    log(`FLOTA: ${Object.keys(fleetMks).length} dispositivos visibles`,"ok");
+  }catch(e){log("Error cargando flota: "+e.message,"e");}
 }
-function envCmd(cmd){
-  fetch(BASE+"/command",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({device:DEVICE,cmd})})
-    .then(r=>r.json()).then(()=>log(`CMD: ${cmd.toUpperCase()} enviado`,"ok"))
-    .catch(()=>log("ERROR enviando comando","e"));
-}
-function envCmdP(){const v=document.getElementById("cmdIn").value.trim();if(v){envCmd(v);document.getElementById("cmdIn").value="";}}
 
-// ── RELOJ ────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+//  HISTORIAL TIPO STRAVA
+// ═══════════════════════════════════════════════════════════
+async function consultarRecorrido(){
+  const from=document.getElementById("hpFrom").value;
+  const to=document.getElementById("hpTo").value;
+  if(!from||!to){log("Selecciona fecha desde y hasta","w");return;}
+  resetPlayState();
+  // datetime-local da "2026-06-04T14:30" — convertir a ISO completo
+  const toISO = v => v ? new Date(v).toISOString() : null;
+  let url = BASE+"/history?device="+encodeURIComponent(CUR_DEV);
+  const isoFrom = toISO(from);
+  const isoTo   = toISO(to);
+  if(isoFrom) url += "&start="+encodeURIComponent(isoFrom);
+  if(isoTo)   url += "&end="+encodeURIComponent(isoTo);
+  try{
+    const res=await fetch(url,{headers:authH()});
+    const data=await res.json();
+    if(!data||!data.length){log("Sin datos en ese rango de fechas","w");document.getElementById("playInfo").innerText="Sin datos en el rango seleccionado";return;}
+    playCoords=data.filter(p=>p.lat&&p.lon&&parseFloat(p.lat)!==0);
+    if(!playCoords.length){log("Sin coordenadas GPS validas en el rango","w");return;}
+    // dibujar ruta completa tenue
+    histDots.forEach(m=>map.removeLayer(m));histDots=[];
+    if(histPolyln){map.removeLayer(histPolyln);histPolyln=null;}
+    const cfg=getDevCfg(CUR_DEV);
+    histPolyln=L.polyline(playCoords.map(p=>[parseFloat(p.lat),parseFloat(p.lon)]),
+      {color:cfg.color||"#00c8ff",weight:2,opacity:.3,dashArray:"5,5"}).addTo(map);
+    map.fitBounds(histPolyln.getBounds().pad(0.1));
+    // calcular stats
+    let dist=0;
+    for(let i=1;i<playCoords.length;i++)
+      dist+=hav(parseFloat(playCoords[i-1].lat),parseFloat(playCoords[i-1].lon),
+                 parseFloat(playCoords[i].lat),parseFloat(playCoords[i].lon));
+    const dur=calcDuration(playCoords[0].created_at,playCoords[playCoords.length-1].created_at);
+    document.getElementById("hp-pts").innerText=playCoords.length;
+    document.getElementById("hp-dist").innerText=dist>=1000?(dist/1000).toFixed(2)+" km":dist.toFixed(0)+" m";
+    document.getElementById("hp-dur").innerText=dur;
+    document.getElementById("hp-spd").innerText=dist>0&&dur!=="--"?calcSpeed(dist,playCoords):"--";
+    const sl=document.getElementById("playSlider");
+    sl.max=playCoords.length-1; sl.value=0;
+    document.getElementById("playInfo").innerText=`${playCoords.length} puntos listos · Toca Play`;
+    log(`HISTORIAL: ${playCoords.length} puntos cargados`,"ok");
+  }catch(e){log("Error cargando historial: "+e.message,"e");}
+}
+
+function calcDuration(t1,t2){
+  if(!t1||!t2)return "--";
+  const d=(new Date(t2)-new Date(t1))/1000;
+  if(isNaN(d)||d<0)return "--";
+  const h=Math.floor(d/3600),m=Math.floor((d%3600)/60),s=Math.floor(d%60);
+  return h>0?`${h}h ${m}m`:`${m}m ${s}s`;
+}
+function calcSpeed(dist,pts){
+  if(!pts[0].created_at||!pts[pts.length-1].created_at)return "--";
+  const sec=(new Date(pts[pts.length-1].created_at)-new Date(pts[0].created_at))/1000;
+  if(sec<=0)return "--";
+  const kmh=(dist/1000)/(sec/3600);
+  return kmh.toFixed(1)+" km/h";
+}
+
+function resetPlayState(){
+  clearInterval(playTimer);playTimer=null;playPaused=false;playIdx=0;
+  if(playMk){map.removeLayer(playMk);playMk=null;}
+  histDots.forEach(m=>map.removeLayer(m));histDots=[];
+  if(histPolyln){map.removeLayer(histPolyln);histPolyln=null;}
+  document.getElementById("playSlider").value=0;
+  document.getElementById("playInfo").innerText="Sin recorrido cargado";
+}
+function resetRecorrido(){resetPlayState();playCoords=[];
+  document.getElementById("hp-pts").innerText="0";
+  document.getElementById("hp-dist").innerText="0 m";
+  document.getElementById("hp-dur").innerText="--";
+  document.getElementById("hp-spd").innerText="--";
+}
+
+function playRecorrido(){
+  if(!playCoords.length){log("Consulta primero el recorrido","w");return;}
+  if(playPaused){playPaused=false;}
+  if(playIdx>=playCoords.length)playIdx=0;
+  const speed=parseInt(document.getElementById("playSpeed").value)||1;
+  clearInterval(playTimer);
+  const cfg=getDevCfg(CUR_DEV);
+  const icon=makeIcon(cfg.color||"#00ff88","star");
+
+  playTimer=setInterval(()=>{
+    if(playPaused)return;
+    if(playIdx>=playCoords.length){clearInterval(playTimer);playTimer=null;document.getElementById("playInfo").innerText="Recorrido completado";return;}
+    const p=playCoords[playIdx];
+    const lat=parseFloat(p.lat),lon=parseFloat(p.lon);
+    // dibujar rastro
+    if(playIdx>0){
+      const prev=playCoords[playIdx-1];
+      L.polyline([[parseFloat(prev.lat),parseFloat(prev.lon)],[lat,lon]],
+        {color:cfg.color||"#00c8ff",weight:3,opacity:.9}).addTo(map);
+    }
+    // mover marcador
+    if(!playMk) playMk=L.marker([lat,lon],{icon}).addTo(map);
+    else playMk.setLatLng([lat,lon]);
+    playMk.bindPopup(`<b>${CUR_DEV}</b><br>${p.fecha||""} ${p.hora||""}<br>${lat.toFixed(6)}, ${lon.toFixed(6)}`);
+    map.panTo([lat,lon]);
+    document.getElementById("playSlider").value=playIdx;
+    document.getElementById("playInfo").innerText=`Punto ${playIdx+1}/${playCoords.length} · ${p.fecha||""} ${p.hora||""}`;
+    playIdx++;
+  }, Math.max(100, 500/speed));
+}
+
+function pauseRecorrido(){playPaused=!playPaused;document.getElementById("playInfo").innerText=playPaused?"PAUSADO":"Reproduciendo...";}
+
+function sliderMove(val){
+  playIdx=parseInt(val);
+  if(playCoords[playIdx]){
+    const p=playCoords[playIdx];
+    const lat=parseFloat(p.lat),lon=parseFloat(p.lon);
+    if(!playMk){const cfg=getDevCfg(CUR_DEV);playMk=L.marker([lat,lon],{icon:makeIcon(cfg.color,"star")}).addTo(map);}
+    playMk.setLatLng([lat,lon]);
+    map.panTo([lat,lon]);
+    document.getElementById("playInfo").innerText=`Punto ${playIdx+1}/${playCoords.length} · ${p.fecha||""} ${p.hora||""}`;
+  }
+}
+
+function dlKML(){
+  const from = document.getElementById("hpFrom").value;
+  const to   = document.getElementById("hpTo").value;
+  let url = BASE+"/files/ruta.kml?device="+encodeURIComponent(CUR_DEV)+"&t="+Date.now();
+  if(from) url += "&start="+encodeURIComponent(from);
+  if(to)   url += "&end="+encodeURIComponent(to);
+  window.open(url,"_blank");
+}
+
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+//  CICLOS Y COMANDOS
+// ═══════════════════════════════════════════════════════════
+
+// Enviar ciclo con feedback visual y verificación
+async function envCiclo(idx){
+  const min = CICLOS[idx];
+  const btn = document.getElementById("cy"+idx);
+
+  // Feedback visual inmediato: animación de envío
+  document.querySelectorAll(".cy").forEach(c=>{
+    c.classList.remove("active","cy-sending","cy-ok","cy-err");
+    c.style.opacity="";
+  });
+  if(btn){ btn.classList.add("cy-sending"); }
+  document.getElementById("cyDesc").innerText="Enviando ciclo "+min+" min...";
+
+  try{
+    const res = await fetch(BASE+"/command",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({device:CUR_DEV, cmd:"ciclo "+min})
+    });
+    const d = await res.json();
+
+    if(!res.ok) throw new Error(d.detail||"HTTP "+res.status);
+
+    // Éxito: marcar activo
+    document.querySelectorAll(".cy").forEach(c=>c.classList.remove("cy-sending"));
+    if(btn) btn.classList.add("active");
+    document.getElementById("cyDesc").innerText=
+      "Ciclo "+(idx+1)+" ("+min+" min) enviado — Se aplica en el proximo despertar";
+    document.getElementById("h-ciclo").innerText=min+" min";
+    log("CICLO "+min+" min enviado a "+CUR_DEV,"ok");
+
+    // Verificar que quedó en el backend
+    setTimeout(()=>verificarComando(CUR_DEV,min), 1500);
+
+  }catch(e){
+    document.querySelectorAll(".cy").forEach(c=>c.classList.remove("cy-sending"));
+    if(btn) btn.classList.add("cy-err");
+    document.getElementById("cyDesc").innerText="ERROR: "+e.message;
+    log("ERROR enviando ciclo: "+e.message,"e");
+  }
+}
+
+// Consultar el backend y confirmar que el comando fue guardado
+async function verificarComando(device, expectedMin){
+  try{
+    const res = await fetch(BASE+"/command?device="+encodeURIComponent(device));
+    if(!res.ok) return;
+    const d = await res.json();
+    const cmd = (d.cmd||"").toLowerCase().trim();
+    const exp = "ciclo "+expectedMin;
+    if(cmd===exp || cmd===String(expectedMin)){
+      log("Confirmado: backend tiene '"+d.cmd+"' para "+device,"ok");
+      document.getElementById("cyDesc").innerText=
+        "Ciclo "+expectedMin+" min confirmado en el backend";
+    } else if(cmd==="none"||cmd===""){
+      log("Backend sin cmd pendiente para "+device+" (puede ya ejecutarse)","w");
+    } else {
+      log("Backend tiene: '"+d.cmd+"' para "+device,"i");
+    }
+  }catch(e){ log("No se pudo verificar: "+e.message,"w"); }
+}
+
+// Enviar comando genérico con feedback
+async function envCmd(cmd){
+  try{
+    const res = await fetch(BASE+"/command",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({device:CUR_DEV, cmd:cmd})
+    });
+    const d = await res.json();
+    if(res.ok && d.ok){
+      log("CMD '"+cmd+"' enviado a "+CUR_DEV+" — proximo despertar","ok");
+    } else {
+      log("ERROR cmd '"+cmd+"': "+(d.detail||d.msg||"sin detalle"),"e");
+    }
+  }catch(e){ log("ERROR enviando comando: "+e.message,"e"); }
+}
+
+function envCmdP(){
+  const v=document.getElementById("cmdIn").value.trim();
+  if(!v)return;
+  envCmd(v);
+  document.getElementById("cmdIn").value="";
+}
+
+// Ver todos los comandos pendientes en el backend
+async function verComandosPendientes(){
+  try{
+    const res = await fetch(BASE+"/command/status",{headers:authH()});
+    if(!res.ok){ log("Error consultando comandos (requiere auth)","w"); return; }
+    const d = await res.json();
+    const entries = Object.entries(d);
+    if(!entries.length){ log("Sin comandos en el backend","i"); return; }
+    const pendientes = entries.filter(([,v])=>v.cmd&&v.cmd!=="none");
+    if(pendientes.length){
+      pendientes.forEach(([k,v])=>log("Pendiente: "+k+" → '"+v.cmd+"'","w"));
+    } else {
+      log("Todos los comandos ejecutados (none)","ok");
+    }
+    const el=document.getElementById("cmdStatus");
+    if(el) el.innerText="Pendientes: "+pendientes.length+" | Total: "+entries.length;
+  }catch(e){ log("Error consultando comandos: "+e.message,"e"); }
+}
+
+function verRuta(){actualizar();log("RUTA COMPLETA","ok");}
+function verKML(){
+  window.open(BASE+"/files/ruta.kml?device="+encodeURIComponent(CUR_DEV)+"&t="+Date.now(),"_blank");
+}
+function verCSV(){
+  // abre el endpoint directo que sirve el CSV con headers correctos
+  window.open(BASE+"/files/gps_log.csv?t="+Date.now(),"_blank");
+}
+function centrar(){if(mainMk){map.setView(mainMk.getLatLng(),16);log("CENTRADO","i");}else log("Sin posicion","w");}
+
+// ═══════════════════════════════════════════════════════════
+//  RELOJ
+// ═══════════════════════════════════════════════════════════
 function reloj(){
   const now=new Date(),utc=now.getTime()+now.getTimezoneOffset()*60000,col=new Date(utc+COL*3600000);
   const p=n=>String(n).padStart(2,"0");
   const hh=p(col.getHours()),mm=p(col.getMinutes()),ss=p(col.getSeconds());
-  const dd=p(col.getDate()),mo=p(col.getMonth()+1),yy=col.getFullYear();
   document.getElementById("hclock").innerText=`${hh}:${mm}:${ss}`;
-  document.getElementById("hdate").innerText=`${dd} / ${mo} / ${yy}`;
+  document.getElementById("hdate").innerText=`${p(col.getDate())} / ${p(col.getMonth()+1)} / ${col.getFullYear()}`;
   document.getElementById("ftime").innerText=`${hh}:${mm}:${ss}`;
   const e=Math.floor((Date.now()-startT)/1000);
   document.getElementById("tActV").innerText=`${p(Math.floor(e/3600))}:${p(Math.floor((e%3600)/60))}:${p(e%60)}`;
 }
 
-// ── PWA ──────────────────────────────────────────────────────
-if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
+// ═══════════════════════════════════════════════════════════
+//  PWA
+// ═══════════════════════════════════════════════════════════
+if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
 let deferredPrompt=null;
-window.addEventListener("beforeinstallprompt",event=>{event.preventDefault();deferredPrompt=event;});
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;});
 async function installApp(){
-  if(deferredPrompt){
-    deferredPrompt.prompt();
-    const r=await deferredPrompt.userChoice;
-    deferredPrompt=null;
-    if(r.outcome==="accepted"){document.getElementById("installAppBtn").style.display="none";return;}
-  }
+  if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;return;}
   const ua=navigator.userAgent;
-  if(/iPad|iPhone|iPod/.test(ua)&&!window.MSStream)
-    alert("iPhone/iPad:\n1. Toca el icono Compartir\n2. Agregar a pantalla de inicio\n3. Toca Agregar");
-  else if(/Android/.test(ua))
-    alert("Android Chrome:\n1. Menu (3 puntos)\n2. Agregar a pantalla de inicio\n3. Instalar");
-  else
-    alert("PC Chrome/Edge:\n- Busca el icono de instalacion en la barra de direcciones\n- O: Menu > Instalar HERMES GPS");
+  if(/iPad|iPhone|iPod/.test(ua))alert("iPhone: Compartir → Agregar a pantalla de inicio");
+  else if(/Android/.test(ua))alert("Android: Menu 3 puntos → Agregar a pantalla de inicio");
+  else alert("PC Chrome/Edge: Icono de instalacion en barra de direcciones");
 }
 
-// ── INIT ────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
 checkSession();
-actualizar();
-statusDisp();
 reloj();
-setInterval(actualizar,30000);
-setInterval(statusDisp,30000);
 setInterval(reloj,1000);
-
 </script>
 </body>
 </html>
