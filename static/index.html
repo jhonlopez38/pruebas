@@ -18,42 +18,42 @@
   --text:#c8dff0;--text2:#6a8fa8;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+body{background:var(--bg);color:var(--text);font-family:Exo 2,sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
 
 /* ── LOGIN ──────────────────────────────────────────────── */
 #loginScreen{position:fixed;inset:0;background:#060d18;z-index:99999;display:flex;align-items:center;justify-content:center;}
 .lcard{width:380px;background:#0a1628;border:1px solid #1a3a5c;padding:28px;border-radius:10px;box-shadow:0 0 30px rgba(0,200,255,.12);}
-.lcard h1{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:#00c8ff;letter-spacing:5px;text-align:center;}
-.lcard p{font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;letter-spacing:3px;text-align:center;margin-bottom:20px;}
-.lcard input{width:100%;padding:11px 13px;margin:5px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:12px;transition:.2s;}
+.lcard h1{font-family:Rajdhani,sans-serif;font-size:26px;font-weight:700;color:#00c8ff;letter-spacing:5px;text-align:center;}
+.lcard p{font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;letter-spacing:3px;text-align:center;margin-bottom:20px;}
+.lcard input{width:100%;padding:11px 13px;margin:5px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:Share Tech Mono,monospace;font-size:12px;transition:.2s;}
 .lcard input:focus{border-color:#00c8ff;}
 .lcard input::placeholder{color:#6a8fa8;}
-.l-hint{font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin:2px 0 8px 2px;}
-#loginMsg{font-family:'Share Tech Mono',monospace;font-size:11px;text-align:center;margin-top:8px;min-height:18px;}
-.btn-login{width:100%;padding:12px;background:#00c8ff;color:#06101f;border:none;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;cursor:pointer;border-radius:3px;margin-top:8px;transition:.2s;}
+.l-hint{font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;margin:2px 0 8px 2px;}
+#loginMsg{font-family:Share Tech Mono,monospace;font-size:11px;text-align:center;margin-top:8px;min-height:18px;}
+.btn-login{width:100%;padding:12px;background:#00c8ff;color:#06101f;border:none;font-family:Rajdhani,sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;cursor:pointer;border-radius:3px;margin-top:8px;transition:.2s;}
 .btn-login:hover{background:#33d4ff;}
-.btn-reg-t{width:100%;padding:9px;background:transparent;color:#00c8ff;border:1px solid rgba(0,200,255,.4);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:6px;transition:.2s;}
+.btn-reg-t{width:100%;padding:9px;background:transparent;color:#00c8ff;border:1px solid rgba(0,200,255,.4);font-family:Rajdhani,sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:6px;transition:.2s;}
 .btn-reg-t:hover{background:rgba(0,200,255,.08);}
-.btn-reg{width:100%;padding:11px;background:#00ff88;color:#06101f;border:none;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:6px;}
+.btn-reg{width:100%;padding:11px;background:#00ff88;color:#06101f;border:none;font-family:Rajdhani,sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:6px;}
 .reg-sep{border-top:1px solid #1a3a5c;margin:14px 0 10px;padding-top:10px;}
-.reg-sep-l{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;margin-bottom:6px;}
+.reg-sep-l{font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;margin-bottom:6px;}
 
 /* ── HEADER ─────────────────────────────────────────────── */
 .hdr{height:60px;background:linear-gradient(135deg,#0a1628,#0b1a30);border-bottom:1px solid #1a3a5c;padding:0 14px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;flex-shrink:0;}
 .hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00c8ff,transparent);}
 .logo{display:flex;align-items:center;gap:10px;}
 .logo svg{width:34px;height:34px;}
-.logo-t h1{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:4px;line-height:1;}
-.logo-t p{font-size:7px;color:#00c8ff;letter-spacing:3px;font-family:'Share Tech Mono',monospace;}
+.logo-t h1{font-family:Rajdhani,sans-serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:4px;line-height:1;}
+.logo-t p{font-size:7px;color:#00c8ff;letter-spacing:3px;font-family:Share Tech Mono,monospace;}
 .hstats{display:flex;gap:8px;align-items:center;}
 .hs{text-align:center;padding:4px 10px;border:1px solid #1a3a5c;border-radius:3px;background:rgba(0,200,255,.03);}
-.hs-l{font-size:7px;color:#6a8fa8;letter-spacing:2px;font-family:'Share Tech Mono',monospace;}
-.hs-v{font-size:11px;font-weight:700;font-family:'Rajdhani',sans-serif;letter-spacing:1px;}
+.hs-l{font-size:7px;color:#6a8fa8;letter-spacing:2px;font-family:Share Tech Mono,monospace;}
+.hs-v{font-size:11px;font-weight:700;font-family:Rajdhani,sans-serif;letter-spacing:1px;}
 .ok{color:#00ff88;}.warn{color:#ffb800;}.err{color:#ff3355;}.info{color:#00c8ff;}.wh{color:#fff;}
-#hclock{font-family:'Share Tech Mono',monospace;font-size:16px;color:#00c8ff;letter-spacing:2px;}
-#hdate{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;text-align:center;}
+#hclock{font-family:Share Tech Mono,monospace;font-size:16px;color:#00c8ff;letter-spacing:2px;}
+#hdate{font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;text-align:center;}
 .hdr-actions{display:flex;align-items:center;gap:6px;}
-.hdr-btn{display:none;padding:6px 13px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:.2s;border:1px solid transparent;}
+.hdr-btn{display:none;padding:6px 13px;border-radius:4px;font-family:Rajdhani,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:.2s;border:1px solid transparent;}
 #logoutBtn{background:rgba(255,51,85,.12);color:#ff3355;border-color:rgba(255,51,85,.35);}
 #logoutBtn:hover{background:rgba(255,51,85,.25);}
 #installAppBtn{background:rgba(0,200,255,.12);color:#00c8ff;border-color:rgba(0,200,255,.35);display:flex!important;}
@@ -65,23 +65,23 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;heigh
 #adminPanel{display:none;position:absolute;top:64px;right:14px;width:340px;background:#0a1628;border:1px solid #1a3a5c;border-top:2px solid #00ff88;border-radius:0 0 8px 8px;z-index:1000;box-shadow:0 12px 40px rgba(0,0,0,.8);animation:dropDown .18s ease;max-height:calc(100vh - 80px);overflow-y:auto;}
 @keyframes dropDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
 .adm-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:rgba(0,255,136,.06);border-bottom:1px solid rgba(0,255,136,.15);position:sticky;top:0;z-index:1;}
-.adm-hdr h3{color:#00ff88;font-family:'Rajdhani',sans-serif;letter-spacing:3px;font-size:12px;font-weight:700;}
+.adm-hdr h3{color:#00ff88;font-family:Rajdhani,sans-serif;letter-spacing:3px;font-size:12px;font-weight:700;}
 .adm-close{background:none;border:none;color:#6a8fa8;font-size:16px;cursor:pointer;padding:1px 5px;border-radius:3px;}.adm-close:hover{color:#ff3355;}
 .adm-tabs{display:flex;border-bottom:1px solid #1a3a5c;}
-.adm-tab{flex:1;padding:7px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;cursor:pointer;color:#6a8fa8;border-bottom:2px solid transparent;transition:.2s;}
+.adm-tab{flex:1;padding:7px;text-align:center;font-family:Rajdhani,sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;cursor:pointer;color:#6a8fa8;border-bottom:2px solid transparent;transition:.2s;}
 .adm-tab.active{color:#00c8ff;border-bottom-color:#00c8ff;}
 .adm-pane{display:none;padding:12px 13px;}.adm-pane.active{display:block;}
 .adm-sec{margin-bottom:10px;}
-.adm-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-#adminPanel input,#adminPanel select{width:100%;padding:8px 9px;margin:3px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;}
+.adm-lbl{font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+#adminPanel input,#adminPanel select{width:100%;padding:8px 9px;margin:3px 0;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:Share Tech Mono,monospace;font-size:11px;}
 #adminPanel input:focus,#adminPanel select:focus{border-color:#00c8ff;}
 #adminPanel input::placeholder{color:#6a8fa8;}
 .adm-row2{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-.adm-btn{width:100%;padding:8px;border:none;font-weight:700;margin-top:5px;cursor:pointer;border-radius:3px;font-family:'Rajdhani',sans-serif;letter-spacing:2px;font-size:11px;transition:.2s;}
+.adm-btn{width:100%;padding:8px;border:none;font-weight:700;margin-top:5px;cursor:pointer;border-radius:3px;font-family:Rajdhani,sans-serif;letter-spacing:2px;font-size:11px;transition:.2s;}
 .adm-btn-c{background:#00c8ff;color:#06101f;}.adm-btn-c:hover{background:#33d4ff;}
 .adm-btn-g{background:#00ff88;color:#06101f;}.adm-btn-g:hover{background:#33ffaa;}
 .adm-btn-r{background:rgba(255,51,85,.15);color:#ff3355;border:1px solid rgba(255,51,85,.3);}.adm-btn-r:hover{background:rgba(255,51,85,.25);}
-#adminMsg{font-size:10px;margin-top:5px;font-family:'Share Tech Mono',monospace;min-height:15px;}
+#adminMsg{font-size:10px;margin-top:5px;font-family:Share Tech Mono,monospace;min-height:15px;}
 /* user-row reemplazado por user-card */
 /* dev-row reemplazado por dev-card */
 
@@ -92,23 +92,23 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;heigh
 .ej.sel{background:rgba(0,255,136,.12);border-color:#00ff88;box-shadow:0 0 8px rgba(0,255,136,.3);}
 .ej-preview{display:flex;align-items:center;gap:8px;padding:6px 8px;background:#060d18;border:1px solid #1a3a5c;border-radius:3px;margin-bottom:6px;}
 .ej-preview .ep-icon{font-size:22px;line-height:1;}
-.ej-preview .ep-info{font-family:"Share Tech Mono",monospace;font-size:9px;color:#6a8fa8;}
-.ej-preview .ep-name{font-family:"Rajdhani",sans-serif;font-size:12px;font-weight:600;color:#c8dff0;}
-.ej-cat{font-family:"Share Tech Mono",monospace;font-size:7px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin:6px 0 3px;}
+.ej-preview .ep-info{font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;}
+.ej-preview .ep-name{font-family:Rajdhani,sans-serif;font-size:12px;font-weight:600;color:#c8dff0;}
+.ej-cat{font-family:Share Tech Mono,monospace;font-size:7px;color:#6a8fa8;letter-spacing:2px;text-transform:uppercase;margin:6px 0 3px;}
 
 /* ── USERS MANAGEMENT ──────────────────────────────────── */
 .user-card{background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:8px 10px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;gap:6px;}
 .user-card:hover{border-color:rgba(0,200,255,.3);}
 .uc-left{display:flex;align-items:center;gap:8px;}
-.uc-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:"Rajdhani",sans-serif;flex-shrink:0;}
+.uc-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:Rajdhani,sans-serif;flex-shrink:0;}
 .uc-av-admin{background:rgba(0,255,136,.15);color:#00ff88;border:1px solid rgba(0,255,136,.3);}
 .uc-av-user{background:rgba(0,200,255,.1);color:#00c8ff;border:1px solid rgba(0,200,255,.25);}
-.uc-name{font-family:"Share Tech Mono",monospace;font-size:10px;color:#c8dff0;}
-.uc-role{font-family:"Rajdhani",sans-serif;font-size:8px;letter-spacing:1px;padding:1px 5px;border-radius:2px;}
+.uc-name{font-family:Share Tech Mono,monospace;font-size:10px;color:#c8dff0;}
+.uc-role{font-family:Rajdhani,sans-serif;font-size:8px;letter-spacing:1px;padding:1px 5px;border-radius:2px;}
 .uc-role-admin{background:rgba(0,255,136,.12);color:#00ff88;}
 .uc-role-user{background:rgba(0,200,255,.1);color:#00c8ff;}
 .uc-actions{display:flex;gap:4px;}
-.uc-btn{background:none;border:1px solid #1a3a5c;color:#6a8fa8;cursor:pointer;font-size:10px;padding:3px 7px;border-radius:3px;font-family:"Rajdhani",sans-serif;transition:.15s;}
+.uc-btn{background:none;border:1px solid #1a3a5c;color:#6a8fa8;cursor:pointer;font-size:10px;padding:3px 7px;border-radius:3px;font-family:Rajdhani,sans-serif;transition:.15s;}
 .uc-btn:hover{color:#ff3355;border-color:rgba(255,51,85,.4);}
 
 /* ── DEV CARD ──────────────────────────────────────────── */
@@ -116,29 +116,29 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;heigh
 .dev-card:hover{border-color:rgba(0,200,255,.3);}
 .dev-emoji{font-size:22px;line-height:1;width:28px;text-align:center;flex-shrink:0;}
 .dc-info{flex:1;min-width:0;}
-.dc-name{font-family:"Rajdhani",sans-serif;font-size:12px;font-weight:600;color:#c8dff0;}
-.dc-id{font-family:"Share Tech Mono",monospace;font-size:9px;color:#6a8fa8;}
-.dc-owner{font-family:"Share Tech Mono",monospace;font-size:8px;color:#00c8ff;margin-top:1px;}
-.dc-del{background:none;border:1px solid rgba(255,51,85,.2);color:#6a8fa8;cursor:pointer;font-size:10px;padding:3px 7px;border-radius:3px;font-family:"Rajdhani",sans-serif;transition:.15s;flex-shrink:0;}
+.dc-name{font-family:Rajdhani,sans-serif;font-size:12px;font-weight:600;color:#c8dff0;}
+.dc-id{font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;}
+.dc-owner{font-family:Share Tech Mono,monospace;font-size:8px;color:#00c8ff;margin-top:1px;}
+.dc-del{background:none;border:1px solid rgba(255,51,85,.2);color:#6a8fa8;cursor:pointer;font-size:10px;padding:3px 7px;border-radius:3px;font-family:Rajdhani,sans-serif;transition:.15s;flex-shrink:0;}
 .dc-del:hover{color:#ff3355;border-color:rgba(255,51,85,.5);}
 
 /* ── SEND CREDENTIALS MODAL ────────────────────────────── */
 #credModal{display:none;position:fixed;inset:0;background:rgba(6,13,24,.9);z-index:20000;align-items:center;justify-content:center;}
 #credModal.show{display:flex;}
 .cred-box{background:#0a1628;border:1px solid #1a3a5c;border-top:2px solid #00c8ff;border-radius:8px;padding:22px;width:360px;box-shadow:0 0 30px rgba(0,200,255,.15);}
-.cred-box h3{font-family:"Rajdhani",sans-serif;color:#00c8ff;letter-spacing:3px;font-size:14px;margin-bottom:14px;}
-.cred-info{background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:12px;margin-bottom:12px;font-family:"Share Tech Mono",monospace;font-size:11px;line-height:1.8;}
+.cred-box h3{font-family:Rajdhani,sans-serif;color:#00c8ff;letter-spacing:3px;font-size:14px;margin-bottom:14px;}
+.cred-info{background:#0d1f38;border:1px solid #1a3a5c;border-radius:4px;padding:12px;margin-bottom:12px;font-family:Share Tech Mono,monospace;font-size:11px;line-height:1.8;}
 .cred-info .ci-lbl{color:#6a8fa8;font-size:9px;letter-spacing:2px;display:block;margin-bottom:2px;}
-.cred-info .ci-val{color:#fff;font-size:13px;font-family:"Rajdhani",sans-serif;font-weight:600;}
-.cred-copy{width:100%;padding:9px;background:rgba(0,200,255,.1);color:#00c8ff;border:1px solid rgba(0,200,255,.3);border-radius:3px;font-family:"Rajdhani",sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;margin-bottom:6px;transition:.2s;}
+.cred-info .ci-val{color:#fff;font-size:13px;font-family:Rajdhani,sans-serif;font-weight:600;}
+.cred-copy{width:100%;padding:9px;background:rgba(0,200,255,.1);color:#00c8ff;border:1px solid rgba(0,200,255,.3);border-radius:3px;font-family:Rajdhani,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;margin-bottom:6px;transition:.2s;}
 .cred-copy:hover{background:rgba(0,200,255,.2);}
-.cred-close{width:100%;padding:8px;background:transparent;color:#6a8fa8;border:1px solid #1a3a5c;border-radius:3px;font-family:"Rajdhani",sans-serif;font-size:11px;cursor:pointer;}
+.cred-close{width:100%;padding:8px;background:transparent;color:#6a8fa8;border:1px solid #1a3a5c;border-radius:3px;font-family:Rajdhani,sans-serif;font-size:11px;cursor:pointer;}
 
 /* ── MOVIMIENTO ─────────────────────────────────────────── */
 .mov-alert{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#0d1f38;border:1px solid #ffb800;border-radius:6px;padding:13px 17px;z-index:9000;transition:.3s;min-width:270px;text-align:center;}
 .mov-alert.show{transform:translateX(-50%) translateY(0);}
-.mov-alert h4{color:#ffb800;font-family:'Rajdhani',sans-serif;letter-spacing:2px;margin-bottom:4px;}
-.mov-alert p{font-family:'Share Tech Mono',monospace;font-size:10px;color:#c8dff0;}
+.mov-alert h4{color:#ffb800;font-family:Rajdhani,sans-serif;letter-spacing:2px;margin-bottom:4px;}
+.mov-alert p{font-family:Share Tech Mono,monospace;font-size:10px;color:#c8dff0;}
 .mov-x{position:absolute;top:5px;right:7px;background:none;border:none;color:#6a8fa8;cursor:pointer;font-size:13px;}
 
 /* ── MAIN GRID ──────────────────────────────────────────── */
@@ -148,11 +148,11 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;heigh
 .lp::-webkit-scrollbar,.rp::-webkit-scrollbar{width:2px;}
 .lp::-webkit-scrollbar-thumb,.rp::-webkit-scrollbar-thumb{background:#1a3a5c;}
 .sec{margin-bottom:11px;}
-.sec-t{font-family:'Rajdhani',sans-serif;font-size:9px;letter-spacing:3px;color:#00c8ff;border-bottom:1px solid #1a3a5c;padding-bottom:3px;margin-bottom:6px;font-weight:600;}
+.sec-t{font-family:Rajdhani,sans-serif;font-size:9px;letter-spacing:3px;color:#00c8ff;border-bottom:1px solid #1a3a5c;padding-bottom:3px;margin-bottom:6px;font-weight:600;}
 .row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid rgba(26,58,92,.3);font-size:11px;}.row:last-child{border-bottom:none;}
-.lbl{color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:9px;}
-.val{font-weight:600;font-size:11px;font-family:'Rajdhani',sans-serif;}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:2px;font-size:10px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;}
+.lbl{color:#6a8fa8;font-family:Share Tech Mono,monospace;font-size:9px;}
+.val{font-weight:600;font-size:11px;font-family:Rajdhani,sans-serif;}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:2px;font-size:10px;font-family:Rajdhani,sans-serif;font-weight:700;letter-spacing:1px;}
 .badge::before{content:'';width:5px;height:5px;border-radius:50%;}
 .b-ok{background:rgba(0,255,136,.1);color:#00ff88;border:1px solid rgba(0,255,136,.3);}.b-ok::before{background:#00ff88;animation:blink 1.5s infinite;}
 .b-wn{background:rgba(255,184,0,.1);color:#ffb800;border:1px solid rgba(255,184,0,.3);}.b-wn::before{background:#ffb800;}
@@ -163,58 +163,58 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;heigh
 .bg{background:linear-gradient(90deg,#00ff88,#00c8ff);}.bw{background:linear-gradient(90deg,#ffb800,#ff6b35);}.be{background:#ff3355;}
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:5px 0;}
 .sc{background:#0d1f38;border:1px solid #1a3a5c;border-radius:3px;padding:7px;text-align:center;}
-.sc-v{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:#00c8ff;}
-.sc-l{font-family:'Share Tech Mono',monospace;font-size:7px;color:#6a8fa8;letter-spacing:2px;}
-#hist table{width:100%;border-collapse:collapse;font-family:'Share Tech Mono',monospace;font-size:9px;}
+.sc-v{font-family:Rajdhani,sans-serif;font-size:19px;font-weight:700;color:#00c8ff;}
+.sc-l{font-family:Share Tech Mono,monospace;font-size:7px;color:#6a8fa8;letter-spacing:2px;}
+#hist table{width:100%;border-collapse:collapse;font-family:Share Tech Mono,monospace;font-size:9px;}
 #hist th{color:#6a8fa8;padding:3px;border-bottom:1px solid #1a3a5c;}
 #hist td{padding:3px;border-bottom:1px solid rgba(26,58,92,.2);}
 #hist tr:hover td{background:rgba(0,200,255,.04);}
-.abar{background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.25);color:#ffb800;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;padding:3px 9px;margin-bottom:7px;border-radius:2px;display:none;}
+.abar{background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.25);color:#ffb800;font-family:Rajdhani,sans-serif;font-size:10px;letter-spacing:2px;padding:3px 9px;margin-bottom:7px;border-radius:2px;display:none;}
 .abar.show{display:block;}
 
 /* ── MAP CENTER ─────────────────────────────────────────── */
 .mc{display:flex;flex-direction:column;position:relative;}
 .mtabs{display:flex;background:#0d1f38;border-bottom:1px solid #1a3a5c;padding:0 10px;flex-shrink:0;}
-.mtab{padding:7px 15px;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;color:#6a8fa8;transition:.2s;}
+.mtab{padding:7px 15px;font-family:Rajdhani,sans-serif;font-size:10px;letter-spacing:2px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;color:#6a8fa8;transition:.2s;}
 .mtab.active{color:#00c8ff;border-bottom-color:#00c8ff;}
 #map{flex:1;min-height:0;}
 .moverlay{position:absolute;bottom:148px;left:10px;background:rgba(6,13,24,.92);border:1px solid #1a3a5c;border-radius:4px;padding:9px 12px;z-index:400;display:none;min-width:185px;}
-.moverlay h4{font-family:'Rajdhani',sans-serif;font-size:11px;color:#00c8ff;letter-spacing:2px;margin-bottom:4px;}
+.moverlay h4{font-family:Rajdhani,sans-serif;font-size:11px;color:#00c8ff;letter-spacing:2px;margin-bottom:4px;}
 .mor{display:flex;justify-content:space-between;font-size:10px;margin:2px 0;}
-.mor .mk{color:#6a8fa8;font-family:'Share Tech Mono',monospace;}
-.mor .mv{color:#fff;font-family:'Rajdhani',sans-serif;font-weight:600;}
+.mor .mk{color:#6a8fa8;font-family:Share Tech Mono,monospace;}
+.mor .mv{color:#fff;font-family:Rajdhani,sans-serif;font-weight:600;}
 .mcbtn{position:absolute;bottom:148px;right:10px;z-index:400;background:#0d1f38;border:1px solid #1a3a5c;color:#00c8ff;width:28px;height:28px;border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;}
 .conwrap{background:#060d18;border-top:1px solid #1a3a5c;padding:7px 11px;height:135px;flex-shrink:0;}
-.cont{font-family:'Share Tech Mono',monospace;font-size:9px;color:#00c8ff;letter-spacing:2px;margin-bottom:4px;}
-.con{height:95px;overflow-y:auto;font-family:'Share Tech Mono',monospace;font-size:10px;line-height:1.7;}
+.cont{font-family:Share Tech Mono,monospace;font-size:9px;color:#00c8ff;letter-spacing:2px;margin-bottom:4px;}
+.con{height:95px;overflow-y:auto;font-family:Share Tech Mono,monospace;font-size:10px;line-height:1.7;}
 .con::-webkit-scrollbar{width:2px;}.con::-webkit-scrollbar-thumb{background:#1a3a5c;}
 .c-ok{color:#00ff88;}.c-w{color:#ffb800;}.c-e{color:#ff3355;}.c-i{color:#00c8ff;}
 
 /* ── HISTORIAL PANEL (panel izq — modo historial) ──────── */
 #histPanel{display:none;}
 .hp-field{margin-bottom:8px;}
-.hp-lbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;margin-bottom:3px;}
-.hp-field input,.hp-field select{width:100%;padding:8px 9px;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;}
+.hp-lbl{font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;letter-spacing:2px;margin-bottom:3px;}
+.hp-field input,.hp-field select{width:100%;padding:8px 9px;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:Share Tech Mono,monospace;font-size:11px;}
 .hp-field input:focus,.hp-field select:focus{border-color:#00c8ff;}
 .play-bar{background:#0d1f38;border:1px solid #1a3a5c;border-radius:5px;padding:10px;margin-top:8px;}
-.play-speed{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:#6a8fa8;}
-.play-speed select{flex:1;padding:4px 7px;background:#060d18;color:#fff;border:1px solid #1a3a5c;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:10px;outline:none;}
+.play-speed{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-family:Share Tech Mono,monospace;font-size:10px;color:#6a8fa8;}
+.play-speed select{flex:1;padding:4px 7px;background:#060d18;color:#fff;border:1px solid #1a3a5c;border-radius:3px;font-family:Share Tech Mono,monospace;font-size:10px;outline:none;}
 .play-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:8px;}
-.pb{padding:7px;border:none;border-radius:3px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:.2s;}
+.pb{padding:7px;border:none;border-radius:3px;font-family:Rajdhani,sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:.2s;}
 .pb-play{background:#00c8ff;color:#06101f;}.pb-play:hover{background:#33d4ff;}
 .pb-pause{background:#ffb800;color:#06101f;}.pb-pause:hover{background:#ffc933;}
 .pb-reset{background:rgba(255,51,85,.15);color:#ff3355;border:1px solid rgba(255,51,85,.3);}
 .play-slider{width:100%;accent-color:#00c8ff;cursor:pointer;}
-.play-info{font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin-top:5px;text-align:center;}
+.play-info{font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;margin-top:5px;text-align:center;}
 .play-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px;}
 .ps{background:#060d18;border:1px solid #1a3a5c;border-radius:3px;padding:6px;text-align:center;}
-.ps-v{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#00c8ff;}
-.ps-l{font-family:'Share Tech Mono',monospace;font-size:7px;color:#6a8fa8;letter-spacing:1px;}
-.kml-dl{width:100%;margin-top:8px;padding:8px;background:rgba(0,200,255,.08);color:#00c8ff;border:1px solid rgba(0,200,255,.3);border-radius:3px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:.2s;text-align:center;}
+.ps-v{font-family:Rajdhani,sans-serif;font-size:16px;font-weight:700;color:#00c8ff;}
+.ps-l{font-family:Share Tech Mono,monospace;font-size:7px;color:#6a8fa8;letter-spacing:1px;}
+.kml-dl{width:100%;margin-top:8px;padding:8px;background:rgba(0,200,255,.08);color:#00c8ff;border:1px solid rgba(0,200,255,.3);border-radius:3px;font-family:Rajdhani,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:.2s;text-align:center;}
 .kml-dl:hover{background:rgba(0,200,255,.15);}
 
 /* ── RIGHT PANEL ────────────────────────────────────────── */
-.btn{width:100%;padding:8px;border:1px solid #1a3a5c;border-radius:3px;background:rgba(0,200,255,.04);color:#c8dff0;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:4px;justify-content:center;margin-bottom:4px;}
+.btn{width:100%;padding:8px;border:1px solid #1a3a5c;border-radius:3px;background:rgba(0,200,255,.04);color:#c8dff0;font-family:Rajdhani,sans-serif;font-size:10px;letter-spacing:2px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:4px;justify-content:center;margin-bottom:4px;}
 .btn:hover{background:rgba(0,200,255,.1);border-color:#00c8ff;color:#00c8ff;}
 .btn.a{background:rgba(0,200,255,.06);border-color:rgba(0,200,255,.35);color:#00c8ff;}
 .btn.g{background:rgba(0,255,136,.05);border-color:rgba(0,255,136,.25);color:#00ff88;}.btn.g:hover{background:rgba(0,255,136,.12);}
@@ -228,27 +228,27 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;heigh
 .cy.cy-ok{background:rgba(0,255,136,.1);border-color:#00ff88;}
 .cy.cy-err{background:rgba(255,51,85,.1);border-color:#ff3355;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
-.cy-n{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:#00c8ff;}
-.cy-m{font-family:'Share Tech Mono',monospace;font-size:7px;color:#6a8fa8;}
-.cy-desc{font-family:'Share Tech Mono',monospace;font-size:8px;color:#6a8fa8;text-align:center;padding:3px 0;}
+.cy-n{font-family:Rajdhani,sans-serif;font-size:13px;font-weight:700;color:#00c8ff;}
+.cy-m{font-family:Share Tech Mono,monospace;font-size:7px;color:#6a8fa8;}
+.cy-desc{font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;text-align:center;padding:3px 0;}
 .cmd-row{display:flex;gap:3px;}
-.cmd-in{flex:1;padding:7px;background:#0d1f38;color:#c8dff0;border:1px solid #1a3a5c;font-family:'Share Tech Mono',monospace;font-size:10px;outline:none;border-radius:3px;}
+.cmd-in{flex:1;padding:7px;background:#0d1f38;color:#c8dff0;border:1px solid #1a3a5c;font-family:Share Tech Mono,monospace;font-size:10px;outline:none;border-radius:3px;}
 .cmd-in:focus{border-color:#00c8ff;}
-.cmd-go{padding:7px 11px;background:rgba(0,200,255,.1);color:#00c8ff;border:1px solid rgba(0,200,255,.3);font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;border-radius:3px;transition:.2s;}
+.cmd-go{padding:7px 11px;background:rgba(0,200,255,.1);color:#00c8ff;border:1px solid rgba(0,200,255,.3);font-family:Rajdhani,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;border-radius:3px;transition:.2s;}
 .cmd-go:hover{background:rgba(0,200,255,.2);}
 .fc{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(26,58,92,.3);}
-.fn{font-family:'Share Tech Mono',monospace;font-size:10px;color:#6a8fa8;}
-.fc a{color:#00c8ff;font-family:'Rajdhani',sans-serif;font-size:10px;text-decoration:none;letter-spacing:1px;}.fc a:hover{color:#fff;}
+.fn{font-family:Share Tech Mono,monospace;font-size:10px;color:#6a8fa8;}
+.fc a{color:#00c8ff;font-family:Rajdhani,sans-serif;font-size:10px;text-decoration:none;letter-spacing:1px;}.fc a:hover{color:#fff;}
 
 /* ── FLEET / DEVICE SELECTOR ────────────────────────────── */
-.dev-sel{width:100%;padding:7px 9px;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;margin-bottom:5px;}
+.dev-sel{width:100%;padding:7px 9px;background:#0d1f38;color:#fff;border:1px solid #1a3a5c;outline:none;border-radius:3px;font-family:Share Tech Mono,monospace;font-size:11px;margin-bottom:5px;}
 .dev-sel:focus{border-color:#00c8ff;}
 
 /* ── LEAFLET OVERRIDES ──────────────────────────────────── */
 .leaflet-tile{filter:brightness(.65) saturate(.7);}.leaflet-container{background:#060d18;}
 
 /* ── FOOTER ─────────────────────────────────────────────── */
-footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16px;display:flex;align-items:center;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;flex-shrink:0;}
+footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16px;display:flex;align-items:center;justify-content:space-between;font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;flex-shrink:0;}
 .fdot{width:5px;height:5px;border-radius:50%;background:#00ff88;display:inline-block;margin-right:5px;animation:blink 2s infinite;}
 </style>
 </head>
@@ -293,7 +293,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
       <span class="ci-lbl" style="margin-top:10px;display:block">CONTRASEÑA</span>
       <div class="ci-val" id="cred-pass">--</div>
     </div>
-    <p style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin-bottom:10px">Comparte estas credenciales con el usuario. La contraseña no se puede recuperar después.</p>
+    <p style="font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;margin-bottom:10px">Comparte estas credenciales con el usuario. La contraseña no se puede recuperar después.</p>
     <button class="cred-copy" onclick="copiarCredenciales()">📋 COPIAR CREDENCIALES</button>
     <button class="cred-close" onclick="cerrarCredModal()">Cerrar</button>
   </div>
@@ -425,7 +425,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
     </div>
     <div class="adm-sec">
       <div class="adm-lbl">Equipos registrados</div>
-      <div id="admDevList"><div style="color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:10px">Cargando...</div></div>
+      <div id="admDevList"><div style="color:#6a8fa8;font-family:Share Tech Mono,monospace;font-size:10px">Cargando...</div></div>
     </div>
   </div>
 
@@ -443,7 +443,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
     </div>
     <div class="adm-sec">
       <div class="adm-lbl">Usuarios registrados</div>
-      <div id="admUserList"><div style="color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:10px">Cargando...</div></div>
+      <div id="admUserList"><div style="color:#6a8fa8;font-family:Share Tech Mono,monospace;font-size:10px">Cargando...</div></div>
     </div>
   </div>
 
@@ -607,7 +607,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   </div>
   <div class="sec">
     <div class="sec-t">ENVIAR COMANDO AL ESP32</div>
-    <p style="font-size:8px;color:#6a8fa8;font-family:'Share Tech Mono',monospace;margin-bottom:4px">Se ejecuta en el proximo despertar</p>
+    <p style="font-size:8px;color:#6a8fa8;font-family:Share Tech Mono,monospace;margin-bottom:4px">Se ejecuta en el proximo despertar</p>
     <div class="btn2" style="margin-bottom:4px">
       <button class="btn" onclick="envCmd('status')">◉ STATUS</button>
       <button class="btn" onclick="envCmd('kml')">⊞ KML</button>
@@ -619,13 +619,13 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
       <button class="cmd-go" onclick="envCmdP()">ENVIAR</button>
     </div>
     <button class="btn" style="margin-top:4px;font-size:9px" onclick="verComandosPendientes()">🔍 VER PENDIENTES</button>
-    <div id="cmdStatus" style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#6a8fa8;margin-top:4px;min-height:14px"></div>
+    <div id="cmdStatus" style="font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;margin-top:4px;min-height:14px"></div>
   </div>
   <div class="sec">
     <div class="sec-t">ARCHIVOS Y DESCARGAS</div>
     <div class="fc"><span class="fn">📄 gps_log.csv</span><a href="#" onclick="verCSV();return false">Ver / Descargar ↓</a></div>
     <div class="fc"><span class="fn">📍 ruta.kml</span><a href="#" onclick="verKML();return false">Ver / Descargar ↓</a></div>
-    <p style="font-size:8px;color:#6a8fa8;font-family:'Share Tech Mono',monospace;margin-top:3px">☁ Se actualizan automaticamente en el backend</p>
+    <p style="font-size:8px;color:#6a8fa8;font-family:Share Tech Mono,monospace;margin-top:3px">☁ Se actualizan automaticamente en el backend</p>
   </div>
 </div><!-- /rp -->
 
@@ -907,7 +907,7 @@ async function admLoadUsers(){
     const users=await res.json();
     const el=document.getElementById("admUserList");
     if(!users.length){
-      el.innerHTML='<div style="color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:10px;padding:8px">Sin usuarios registrados</div>';
+      el.innerHTML='<div style="color:#6a8fa8;font-family:Share Tech Mono,monospace;font-size:10px;padding:8px">Sin usuarios registrados</div>';
       return;
     }
     el.innerHTML=users.map(u=>{
@@ -920,7 +920,7 @@ async function admLoadUsers(){
           <div class="uc-avatar ${isAdmin?"uc-av-admin":"uc-av-user"}">${letter}</div>
           <div>
             <div class="uc-name">${name}</div>
-            <div style="font-size:8px;color:#6a8fa8;font-family:'Share Tech Mono',monospace">${since}</div>
+            <div style="font-size:8px;color:#6a8fa8;font-family:Share Tech Mono,monospace">${since}</div>
           </div>
         </div>
         <div class="uc-actions">
@@ -939,7 +939,7 @@ async function admLoadDevices(){
     const devs=await res.json();
     const el=document.getElementById("admDevList");
     if(!devs.length){
-      el.innerHTML='<div style="color:#6a8fa8;font-family:'Share Tech Mono',monospace;font-size:10px;padding:8px">Sin equipos registrados</div>';
+      el.innerHTML='<div style="color:#6a8fa8;font-family:Share Tech Mono,monospace;font-size:10px;padding:8px">Sin equipos registrados</div>';
       return;
     }
     el.innerHTML=devs.map(d=>{
@@ -1215,8 +1215,8 @@ async function verFlota(){
       const mk=L.marker([d.lat,d.lon],{icon}).addTo(map);
       // popup con info del último dato
       const popHtml=`
-        <div style="font-family:'Share Tech Mono',monospace;font-size:11px;min-width:180px">
-          <b style="color:#00c8ff;font-size:13px;font-family:'Rajdhani',sans-serif;letter-spacing:2px">${id}</b><br>
+        <div style="font-family:Share Tech Mono,monospace;font-size:11px;min-width:180px">
+          <b style="color:#00c8ff;font-size:13px;font-family:Rajdhani,sans-serif;letter-spacing:2px">${id}</b><br>
           <span style="color:#6a8fa8">Estado:</span> <b>${d.estado||"--"}</b><br>
           <span style="color:#6a8fa8">Fecha:</span> ${d.fecha||"--"} ${d.hora||""}<br>
           <span style="color:#6a8fa8">Lat:</span> ${parseFloat(d.lat).toFixed(6)}<br>
