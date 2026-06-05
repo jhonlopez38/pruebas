@@ -3,9 +3,16 @@
     "username": "Hermesadmin",
     "email": "Hermesadmin",
     "name": "Administrador HERMES",
-    "password": "$2b$12$Mx/O47RikV2AHWyu8qH/gufqxE33SA1laQzyJlQMM5MzY7w92LQ66",
+    "password": "$2b$12$YAzVhXnn39sjI6K1eh8ujO/pVq4LaEU5ZAIAOvPJfBdHwePMNeQ3O",
     "role": "admin",
     "created_at": "2026-06-05T01:05:01.395604",
-    "updated_at": "2026-06-05T01:46:11.468650"
+    "updated_at": "2026-06-05T02:26:44.972408"
+  },
+  "MINI1.1.8": {
+    "username": "MINI1.1.8",
+    "email": "MINI1.1.8",
+    "password": "$2b$12$csMNIOwGeTrfwOPZm/RrcuSEGZPunu51P4VgcrTvVYJT0Kwyis.sq",
+    "role": "user",
+    "created_at": "2026-06-05T02:32:25.774192"
   }
 }
