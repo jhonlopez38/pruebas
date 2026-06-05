@@ -1254,9 +1254,23 @@ async function admLoadDevices(){
 }
 
 async function admDeleteDev(id){
-  if(!confirm("Eliminar equipo "+id+"?"))return;
-  await fetch(BASE+"/devices/"+encodeURIComponent(id),{method:"DELETE",headers:authH()});
-  admLoadDevices();cargarDispositivos();
+  if(!confirm("¿Eliminar equipo "+id+"?"))return;
+  try{
+    const res = await fetch(BASE+"/devices/"+encodeURIComponent(id),{
+      method:"DELETE",
+      headers:authH()
+    });
+    if(res.ok){
+      log("Equipo "+id+" eliminado","ok");
+      admLoadDevices();
+      cargarDispositivos();
+    } else {
+      const d = await res.json();
+      log("Error eliminando "+id+": "+(d.detail||res.status),"e");
+    }
+  } catch(e){
+    log("Error de conexion al eliminar: "+e.message,"e");
+  }
 }
 
 async function admAssign(){
@@ -1416,11 +1430,17 @@ function cerrarMov(){
 // ═══════════════════════════════════════════════════════════
 function actualizar(){
   if(CUR_MODE!=="live")return;
+  // Intentar primero con el CSV, si está vacío usar /history
   fetch(BASE+"/files/gps_log.csv?t="+Date.now())
-    .then(r=>{if(!r.ok)throw new Error("Sin datos");return r.text();})
+    .then(r=>{if(!r.ok)throw new Error("Sin CSV");return r.text();})
     .then(data=>{
       const lines=data.trim().split("\n");
-      if(lines.length<2){log("CSV sin datos GPS todavia","w");return;}
+      if(lines.length<2){
+        // CSV vacío — cargar desde /history directamente
+        log("CSV vacío — cargando desde historial","w");
+        cargarDesdeHistory();
+        return;
+      }
       let coords=[],distT=0;
       for(let i=1;i<lines.length;i++){
         const p=lines[i].trim().split(",");
@@ -1807,6 +1827,55 @@ async function verComandosPendientes(){
 }
 
 function verRuta(){actualizar();log("RUTA COMPLETA","ok");}
+
+async function cargarDesdeHistory(){
+  try{
+    const res=await fetch(BASE+"/history?device="+encodeURIComponent(CUR_DEV)+"&t="+Date.now(),{headers:authH()});
+    if(!res.ok)return;
+    const data=await res.json();
+    if(!data||!data.length){log("Sin datos GPS en historial todavia","w");return;}
+    let coords=[],distT=0;
+    data.forEach(p=>{
+      const lat=parseFloat(p.lat||0),lon=parseFloat(p.lon||0);
+      if(Math.abs(lat)>0.0001&&Math.abs(lon)>0.0001)
+        coords.push({id:p.despertar,desp:p.despertar,fecha:p.fecha,hora:p.hora,lat,lon});
+    });
+    if(!coords.length){log("Sin coordenadas validas en historial","w");return;}
+    for(let i=1;i<coords.length;i++) distT+=hav(coords[i-1].lat,coords[i-1].lon,coords[i].lat,coords[i].lon);
+    const u=coords[coords.length-1];
+    dots.forEach(m=>map.removeLayer(m));dots=[];
+    if(polyln)map.removeLayer(polyln);
+    if(coords.length>=2) polyln=L.polyline(coords.map(c=>[c.lat,c.lon]),{color:"#00c8ff",weight:3,opacity:.8}).addTo(map);
+    coords.slice(0,-1).forEach(c=>{
+      const m=L.circleMarker([c.lat,c.lon],{radius:4,color:"#00c8ff",fillColor:"#003a5c",fillOpacity:.9,weight:1})
+        .bindPopup(`#${c.desp||""} ${c.fecha||""} ${c.hora||""}`).addTo(map);
+      dots.push(m);
+    });
+    const cfg=getDevCfg(CUR_DEV);
+    if(!mainMk)mainMk=L.marker([u.lat,u.lon],{icon:makeIcon(cfg.color,cfg.icon)}).addTo(map);
+    else mainMk.setLatLng([u.lat,u.lon]);
+    mainMk.bindPopup(`<b>${CUR_DEV}</b><br>${u.fecha||""} ${u.hora||""}`);
+    map.setView([u.lat,u.lon],14);
+    document.getElementById("movOv").style.display="block";
+    document.getElementById("ov-dt").innerText=(u.fecha||"")+" "+(u.hora||"");
+    document.getElementById("ov-lat").innerText=u.lat.toFixed(6)+" N";
+    document.getElementById("ov-lon").innerText=u.lon.toFixed(6)+" W";
+    document.getElementById("ov-pts").innerText=coords.length;
+    document.getElementById("latV").innerText=u.lat.toFixed(6)+" N";
+    document.getElementById("lonV").innerText=u.lon.toFixed(6)+" W";
+    document.getElementById("fechV").innerText=u.fecha||"--";
+    document.getElementById("horV").innerText=u.hora||"--";
+    document.getElementById("sumPts").innerText=coords.length;
+    document.getElementById("sumDst").innerText=distT>=1000?(distT/1000).toFixed(2)+" km":distT.toFixed(0)+" m";
+    document.getElementById("ultUpd").innerText=horaCol();
+    let h="<table><tr><th>#</th><th>HORA</th><th>LAT</th><th>LON</th></tr>";
+    coords.slice(-8).reverse().forEach(c=>{
+      h+=`<tr><td>${c.desp||""}</td><td>${c.hora||""}</td><td>${c.lat.toFixed(4)}</td><td>${c.lon.toFixed(4)}</td></tr>`;
+    });
+    document.getElementById("hist").innerHTML=h+"</table>";
+    log("Cargados "+coords.length+" puntos desde historial","ok");
+  }catch(e){log("Error cargando historial: "+e.message,"e");}
+}
 function verKML(){
   window.open(BASE+"/files/ruta.kml?device="+encodeURIComponent(CUR_DEV)+"&t="+Date.now(),"_blank");
 }
