@@ -1,0 +1,11 @@
+{
+  "Hermesadmin": {
+    "username": "Hermesadmin",
+    "email": "Hermesadmin",
+    "name": "Administrador HERMES",
+    "password": "$2b$12$6MsK1rhef/HtWhVPeCc6K.BN8v8rB8cmuQtpqlCAFGZiNhUCLF1OW",
+    "role": "admin",
+    "created_at": "2026-06-05T01:05:01.395604",
+    "updated_at": "2026-06-05T01:05:01.395622"
+  }
+}
