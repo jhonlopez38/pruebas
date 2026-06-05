@@ -1430,15 +1430,18 @@ function cerrarMov(){
 // ═══════════════════════════════════════════════════════════
 function actualizar(){
   if(CUR_MODE!=="live")return;
-  // Intentar primero con el CSV, si está vacío usar /history
+  // Usar siempre /history — más confiable que el CSV
+  cargarDesdeHistory();
+}
+
+function actualizarCSV_UNUSED(){
+  // Función original por CSV — no se usa, reemplazada por /history
   fetch(BASE+"/files/gps_log.csv?t="+Date.now())
     .then(r=>{if(!r.ok)throw new Error("Sin CSV");return r.text();})
     .then(data=>{
       const lines=data.trim().split("\n");
       if(lines.length<2){
-        // CSV vacío — cargar desde /history directamente
-        log("CSV vacío — cargando desde historial","w");
-        cargarDesdeHistory();
+        log("CSV vacío","w");
         return;
       }
       let coords=[],distT=0;
