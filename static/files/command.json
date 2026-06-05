@@ -3,6 +3,6 @@
     "device": "HERMES-01",
     "cmd": "ciclo 15",
     "created_at": "2026-06-05T22:56:14.461962",
-    "attempts": 0
+    "attempts": 1
   }
 }
