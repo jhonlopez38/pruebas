@@ -1,1 +1,1 @@
-id,despertar,fecha,hora,lat,lon,enviadoTelegram
+id,despertar,fecha,hora,lat,lon,estado,bateria_v,bateria_pct,device,created_at
