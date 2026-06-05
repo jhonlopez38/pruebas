@@ -390,6 +390,39 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
 
 .qej{font-size:18px;cursor:pointer;padding:3px 5px;border-radius:5px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);transition:.15s;line-height:1;display:inline-flex;align-items:center;justify-content:center;}
 .qej:hover{background:rgba(0,200,255,.1);border-color:rgba(0,200,255,.3);transform:scale(1.15);}
+
+/* ══ OVERRIDE HISTORIAL — fechas y playback ══════════════════ */
+.date-range-box{background:rgba(255,255,255,.02)!important;border:1px solid rgba(0,200,255,.12)!important;border-radius:8px!important;overflow:hidden!important;margin-bottom:8px!important;padding:0!important;}
+.dr-title{font-family:Share Tech Mono,monospace!important;font-size:8px!important;color:#00c8ff!important;letter-spacing:2px!important;padding:8px 10px 6px!important;background:rgba(0,200,255,.05)!important;border-bottom:1px solid rgba(0,200,255,.1)!important;display:block!important;}
+.dr-shortcuts{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:3px!important;padding:7px!important;margin:0!important;}
+.dr-sc{padding:8px 2px!important;background:rgba(255,255,255,.03)!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:6px!important;font-family:Rajdhani,sans-serif!important;font-size:12px!important;font-weight:700!important;color:#6a8fa8!important;cursor:pointer!important;text-align:center!important;letter-spacing:1px!important;transition:.15s!important;}
+.dr-sc:hover{border-color:rgba(0,200,255,.4)!important;color:#00c8ff!important;background:rgba(0,200,255,.08)!important;}
+.dr-sc.active{border-color:#00c8ff!important;color:#fff!important;background:rgba(0,200,255,.15)!important;}
+.dr-inputs{padding:7px 8px 9px!important;}
+.dr-row{display:flex!important;align-items:center!important;gap:8px!important;margin-bottom:6px!important;}
+.dr-lbl{font-family:Share Tech Mono,monospace!important;font-size:8px!important;color:#6a8fa8!important;width:32px!important;flex-shrink:0!important;text-align:right!important;}
+.dr-input{flex:1!important;padding:8px 10px!important;background:rgba(255,255,255,.04)!important;color:#fff!important;border:1px solid rgba(255,255,255,.08)!important;outline:none!important;border-radius:6px!important;font-family:Share Tech Mono,monospace!important;font-size:11px!important;color-scheme:dark!important;}
+.dr-input:focus{border-color:rgba(0,200,255,.5)!important;box-shadow:0 0 0 2px rgba(0,200,255,.08)!important;}
+
+.play-bar{background:rgba(255,255,255,.02)!important;border:1px solid rgba(255,255,255,.07)!important;border-radius:8px!important;padding:11px!important;margin:8px 0!important;}
+.play-speed{display:flex!important;align-items:center!important;justify-content:space-between!important;margin-bottom:9px!important;}
+.play-speed span{font-family:Share Tech Mono,monospace!important;font-size:8px!important;color:#6a8fa8!important;letter-spacing:2px!important;}
+.play-speed select{background:rgba(0,200,255,.08)!important;color:#00c8ff!important;border:1px solid rgba(0,200,255,.25)!important;padding:5px 10px!important;border-radius:5px!important;font-family:Share Tech Mono,monospace!important;font-size:10px!important;outline:none!important;cursor:pointer!important;}
+.play-btns{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important;margin-bottom:9px!important;}
+.pb{padding:10px 4px!important;border:none!important;border-radius:6px!important;font-family:Rajdhani,sans-serif!important;font-size:12px!important;font-weight:700!important;cursor:pointer!important;transition:.2s!important;}
+.pb-play{background:linear-gradient(135deg,#00ff88,#00cc6a)!important;color:#060d18!important;box-shadow:0 3px 10px rgba(0,255,136,.25)!important;}
+.pb-play:hover{transform:translateY(-1px)!important;box-shadow:0 5px 15px rgba(0,255,136,.35)!important;}
+.pb-pause{background:linear-gradient(135deg,#ffb800,#ff8c00)!important;color:#060d18!important;}
+.pb-reset{background:rgba(255,51,85,.1)!important;color:#ff3355!important;border:1px solid rgba(255,51,85,.25)!important;}
+.pb-reset:hover{background:rgba(255,51,85,.2)!important;}
+.play-slider{width:100%!important;accent-color:#00c8ff!important;margin:4px 0!important;cursor:pointer!important;}
+.play-info{font-family:Share Tech Mono,monospace!important;font-size:9px!important;color:#6a8fa8!important;text-align:center!important;margin-top:6px!important;background:rgba(0,0,0,.2)!important;border-radius:4px!important;padding:4px 6px!important;}
+.play-stats{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:5px!important;margin:7px 0!important;}
+.ps{background:rgba(255,255,255,.03)!important;border:1px solid rgba(255,255,255,.07)!important;border-radius:6px!important;padding:9px 6px!important;text-align:center!important;}
+.ps-v{font-family:Rajdhani,sans-serif!important;font-size:17px!important;font-weight:700!important;color:#00c8ff!important;}
+.ps-l{font-family:Share Tech Mono,monospace!important;font-size:7px!important;color:#6a8fa8!important;letter-spacing:1px!important;margin-top:2px!important;display:block!important;}
+.kml-dl{width:100%!important;padding:9px!important;background:rgba(0,200,255,.06)!important;color:#00c8ff!important;border:1px solid rgba(0,200,255,.18)!important;border-radius:6px!important;font-family:Rajdhani,sans-serif!important;font-size:11px!important;font-weight:700!important;letter-spacing:2px!important;cursor:pointer!important;margin-top:6px!important;transition:.2s!important;}
+.kml-dl:hover{background:rgba(0,200,255,.12)!important;}
 </style>
 </head>
 <body>
@@ -636,27 +669,31 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   <div id="histPanel">
     <div class="sec">
       <div class="sec-t">RECORRIDO TIPO STRAVA</div>
-      <!-- Atajos rápidos de fecha -->
       <div class="date-range-box">
-        <div class="dr-title">📅 Rango de fechas</div>
+        <div class="dr-title">📅 SELECCIONAR RANGO</div>
         <div class="dr-shortcuts">
-          <div class="dr-sc" onclick="setRangoRapido('hoy')">HOY</div>
-          <div class="dr-sc" onclick="setRangoRapido('ayer')">AYER</div>
-          <div class="dr-sc" onclick="setRangoRapido('semana')">7 DÍAS</div>
-          <div class="dr-sc" onclick="setRangoRapido('mes')">MES</div>
-          <div class="dr-sc" onclick="setRangoRapido('ultimas6h')">6 HORAS</div>
-          <div class="dr-sc" onclick="setRangoRapido('ultimo1h')">1 HORA</div>
+          <div class="dr-sc active" onclick="setRangoRapido('hoy',this)">HOY</div>
+          <div class="dr-sc" onclick="setRangoRapido('ayer',this)">AYER</div>
+          <div class="dr-sc" onclick="setRangoRapido('semana',this)">7 DÍAS</div>
+          <div class="dr-sc" onclick="setRangoRapido('mes',this)">MES</div>
+          <div class="dr-sc" onclick="setRangoRapido('ultimas6h',this)">6 H</div>
+          <div class="dr-sc" onclick="setRangoRapido('ultimo1h',this)">1 H</div>
         </div>
-        <div class="dr-row">
-          <span class="dr-lbl">DESDE<br><span style="font-size:7px;color:#1a3a5c">COL</span></span>
-          <input type="datetime-local" id="hpFrom" class="dr-input">
-        </div>
-        <div class="dr-row">
-          <span class="dr-lbl">HASTA<br><span style="font-size:7px;color:#1a3a5c">COL</span></span>
-          <input type="datetime-local" id="hpTo" class="dr-input">
+        <div class="dr-inputs">
+          <div class="dr-row">
+            <span class="dr-lbl">DESDE</span>
+            <input type="datetime-local" id="hpFrom" class="dr-input">
+          </div>
+          <div class="dr-row">
+            <span class="dr-lbl">HASTA</span>
+            <input type="datetime-local" id="hpTo" class="dr-input">
+          </div>
         </div>
       </div>
-      <button class="btn a" onclick="consultarRecorrido()" style="font-size:11px;padding:10px">
+      <button class="btn a" onclick="consultarRecorrido()"
+        style="padding:11px;font-size:11px;letter-spacing:2px;border-radius:6px;
+               background:linear-gradient(135deg,rgba(0,200,255,.12),rgba(0,200,255,.06));
+               border-color:rgba(0,200,255,.35)">
         🔍 CONSULTAR RECORRIDO
       </button>
     </div>
@@ -1799,8 +1836,7 @@ function reloj(){
 // ═══════════════════════════════════════════════════════════
 //  SELECTOR DE FECHAS — ATAJOS RÁPIDOS
 // ═══════════════════════════════════════════════════════════
-function setRangoRapido(tipo){
-  // Trabajar en hora Colombia (UTC-5)
+function setRangoRapido(tipo, el){
   const ahora = new Date();
   const utc   = ahora.getTime() + ahora.getTimezoneOffset()*60000;
   const col   = new Date(utc + COL*3600000);
@@ -1837,8 +1873,8 @@ function setRangoRapido(tipo){
 
   // Resaltar atajo activo
   document.querySelectorAll(".dr-sc").forEach(b=>b.classList.remove("active"));
-  if(event && event.currentTarget) event.currentTarget.classList.add("active");
-  else if(event && event.target) event.target.classList.add("active");
+  const activeEl = el || (event && (event.currentTarget || event.target));
+  if(activeEl) activeEl.classList.add("active");
 
   log("Rango: "+tipo+" → "+fmt(desde)+" / "+fmt(hasta),"i");
 }
