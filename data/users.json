@@ -3,10 +3,10 @@
     "username": "Hermesadmin",
     "email": "Hermesadmin",
     "name": "Administrador HERMES",
-    "password": "$2b$12$YAzVhXnn39sjI6K1eh8ujO/pVq4LaEU5ZAIAOvPJfBdHwePMNeQ3O",
+    "password": "$2b$12$Rqh1/8OCoJ6I.KB6uxpmMufXTw1CNXdeVU24BCBQZ4Gt0M8CUBCuy",
     "role": "admin",
     "created_at": "2026-06-05T01:05:01.395604",
-    "updated_at": "2026-06-05T02:26:44.972408"
+    "updated_at": "2026-06-08T21:26:20.624466"
   },
   "MINI1.1.8": {
     "username": "MINI1.1.8",
@@ -14,5 +14,13 @@
     "password": "$2b$12$csMNIOwGeTrfwOPZm/RrcuSEGZPunu51P4VgcrTvVYJT0Kwyis.sq",
     "role": "user",
     "created_at": "2026-06-05T02:32:25.774192"
+  },
+  "Para.comercio.25@hotmail.com": {
+    "username": "Para.comercio.25@hotmail.com",
+    "email": "Para.comercio.25@hotmail.com",
+    "name": "Deiver causil",
+    "password": "$2b$12$BA8slJU9F0ySfhvz8qxwbe8naemUVAkxKni5ilwfOjWSlLWiF.d9O",
+    "role": "user",
+    "created_at": "2026-06-08T21:56:05.621800"
   }
 }
