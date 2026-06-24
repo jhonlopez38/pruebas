@@ -24238,5 +24238,35 @@
     "bateria_pct": 0,
     "wifi": "conectado",
     "created_at": "2026-06-24T01:32:17.294514"
+  },
+  {
+    "device": "HERMES-01",
+    "estado": "NUEVA UBICACION",
+    "despertar": 1926,
+    "ciclo_min": 10,
+    "fallos_gps": 0,
+    "lat": 2.560841667,
+    "lon": -72.6481755,
+    "fecha": "24/06/2026",
+    "hora": "20:42:25",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "created_at": "2026-06-24T01:42:32.527864"
+  },
+  {
+    "device": "HERMES-01",
+    "estado": "NUEVA UBICACION",
+    "despertar": 1927,
+    "ciclo_min": 10,
+    "fallos_gps": 0,
+    "lat": 2.5608605,
+    "lon": -72.648169,
+    "fecha": "24/06/2026",
+    "hora": "20:52:41",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "created_at": "2026-06-24T01:52:48.733565"
   }
 ]
