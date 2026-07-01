@@ -40108,5 +40108,20 @@
     "bateria_pct": 0,
     "wifi": "conectado",
     "created_at": "2026-07-01T19:14:56.355594"
+  },
+  {
+    "device": "HERMES-01",
+    "estado": "NUEVA UBICACION",
+    "despertar": 3008,
+    "ciclo_min": 10,
+    "fallos_gps": 0,
+    "lat": 2.560856833,
+    "lon": -72.64815683,
+    "fecha": "01/07/2026",
+    "hora": "14:25:06",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "created_at": "2026-07-01T19:25:14.333134"
   }
 ]
