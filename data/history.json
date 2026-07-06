@@ -148,5 +148,50 @@
     "bateria_pct": 0,
     "wifi": "conectado",
     "created_at": "2026-07-06T04:25:02.786367"
+  },
+  {
+    "device": "HERMES-01",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 3619,
+    "ciclo_min": 10,
+    "fallos_gps": 0,
+    "lat": 2.560853,
+    "lon": -72.64816,
+    "fecha": "06/07/2026",
+    "hora": "23:02:03",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "created_at": "2026-07-06T04:25:07.347692"
+  },
+  {
+    "device": "HERMES-01",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 3619,
+    "ciclo_min": 10,
+    "fallos_gps": 0,
+    "lat": 2.560833,
+    "lon": -72.648169,
+    "fecha": "06/07/2026",
+    "hora": "23:13:05",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "created_at": "2026-07-06T04:25:11.913000"
+  },
+  {
+    "device": "HERMES-01",
+    "estado": "NUEVA UBICACION",
+    "despertar": 3619,
+    "ciclo_min": 10,
+    "fallos_gps": 0,
+    "lat": 2.560855333,
+    "lon": -72.6481595,
+    "fecha": "06/07/2026",
+    "hora": "23:25:15",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "created_at": "2026-07-06T04:25:22.360002"
   }
 ]
