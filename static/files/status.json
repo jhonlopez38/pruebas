@@ -1,17 +1,17 @@
 {
   "HERMES-01": {
     "device": "HERMES-01",
-    "estado": "REENVIO PENDIENTE",
+    "estado": "NUEVA UBICACION",
     "despertar": 5094,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 2.340217,
-    "lon": -72.435909,
+    "lat": 2.340122833,
+    "lon": -72.435718,
     "fecha": "15/07/2026",
-    "hora": "08:25:42",
+    "hora": "08:33:30",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
-    "created_at": "2026-07-15T13:33:27.169741"
+    "created_at": "2026-07-15T13:33:39.582612"
   }
 }
