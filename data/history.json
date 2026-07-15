@@ -20128,5 +20128,20 @@
     "bateria_pct": 0,
     "wifi": "conectado",
     "created_at": "2026-07-15T04:04:13.740614"
+  },
+  {
+    "device": "HERMES-01",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 4999,
+    "ciclo_min": 5,
+    "fallos_gps": 0,
+    "lat": 2.550194,
+    "lon": -72.429921,
+    "fecha": "15/07/2026",
+    "hora": "20:23:19",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "created_at": "2026-07-15T04:04:18.592490"
   }
 ]
