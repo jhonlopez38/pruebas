@@ -5,13 +5,13 @@
     "despertar": 6158,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 2.280691,
-    "lon": -72.409038,
+    "lat": 2.280666,
+    "lon": -72.408999,
     "fecha": "19/07/2026",
-    "hora": "06:43:10",
+    "hora": "06:49:17",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
-    "created_at": "2026-07-19T15:41:38.230669"
+    "created_at": "2026-07-19T15:41:43.198286"
   }
 }
