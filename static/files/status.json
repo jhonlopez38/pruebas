@@ -17,9 +17,9 @@
   "HERMES-02": {
     "device": "HERMES-02",
     "estado": "SIN GPS",
-    "despertar": 3,
+    "despertar": 4,
     "ciclo_min": 5,
-    "fallos_gps": 4,
+    "fallos_gps": 5,
     "lat": 0.0,
     "lon": 0.0,
     "fecha": "",
@@ -27,6 +27,6 @@
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
-    "created_at": "2026-08-05T23:19:46.932644"
+    "created_at": "2026-08-05T23:26:15.778055"
   }
 }
