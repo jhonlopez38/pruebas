@@ -766,3 +766,81 @@ def generar_kml(device: str = None, start: str = None, end: str = None):
 def export_kml(device: str = None, start: str = None, end: str = None):
     return generar_kml(device=device, start=start, end=end)
 
+# ══════════════════════════════════════════════════════════════════════
+#  OTA — Actualización remota de firmware
+# ══════════════════════════════════════════════════════════════════════
+import shutil
+
+FIRMWARE_DIR  = os.path.join(STATIC_DIR, "firmware")
+FIRMWARE_PATH = os.path.join(FIRMWARE_DIR, "hermes.bin")
+FIRMWARE_VER  = os.path.join(FIRMWARE_DIR, "version.txt")
+
+os.makedirs(FIRMWARE_DIR, exist_ok=True)
+
+@app.get("/firmware/hermes.bin")
+def download_firmware():
+    """ESP32 descarga el firmware actualizado."""
+    if not os.path.exists(FIRMWARE_PATH):
+        raise HTTPException(404, "Sin firmware disponible — sube un .bin desde el panel Admin")
+    return FileResponse(FIRMWARE_PATH,
+        media_type="application/octet-stream",
+        filename="hermes.bin",
+        headers={"Cache-Control": "no-cache"})
+
+@app.get("/firmware/version")
+def get_firmware_version():
+    """Retorna la versión del firmware disponible."""
+    if not os.path.exists(FIRMWARE_VER):
+        return {"version": None, "available": False}
+    with open(FIRMWARE_VER) as f:
+        ver = f.read().strip()
+    size = os.path.getsize(FIRMWARE_PATH) if os.path.exists(FIRMWARE_PATH) else 0
+    return {"version": ver, "available": True, "size_kb": round(size/1024, 1)}
+
+@app.post("/firmware/upload")
+async def upload_firmware(request: Request, admin=Depends(require_admin)):
+    """Admin sube nuevo .bin desde la webapp."""
+    try:
+        body = await request.body()
+        if len(body) < 1000:
+            raise HTTPException(400, "Archivo muy pequeño — no parece un firmware válido")
+        if len(body) > 4_000_000:
+            raise HTTPException(400, "Archivo muy grande — máximo 4MB")
+
+        # Guardar .bin
+        with open(FIRMWARE_PATH, "wb") as f:
+            f.write(body)
+
+        # Guardar versión desde header
+        version = request.headers.get("X-Firmware-Version", "unknown")
+        with open(FIRMWARE_VER, "w") as f:
+            f.write(version)
+
+        size_kb = round(len(body) / 1024, 1)
+        print(f"[OTA] Firmware subido: {size_kb} KB v{version}", flush=True)
+
+        # Subir a GitHub también
+        if USE_GITHUB:
+            import base64
+            encoded = base64.b64encode(body).decode("utf-8")
+            t = threading.Thread(target=gh_put_file,
+                args=(f"static/firmware/hermes.bin", encoded,
+                      f"OTA firmware v{version}"), daemon=True)
+            t.start()
+
+        return {"ok": True, "size_kb": size_kb, "version": version,
+                "msg": f"Firmware v{version} ({size_kb} KB) subido correctamente"}
+
+    except HTTPException: raise
+    except Exception as e:
+        raise HTTPException(500, f"Error subiendo firmware: {str(e)}")
+
+@app.delete("/firmware")
+def delete_firmware(admin=Depends(require_admin)):
+    """Eliminar firmware disponible."""
+    if os.path.exists(FIRMWARE_PATH):
+        os.remove(FIRMWARE_PATH)
+    if os.path.exists(FIRMWARE_VER):
+        os.remove(FIRMWARE_VER)
+    return {"ok": True, "msg": "Firmware eliminado"}
+
