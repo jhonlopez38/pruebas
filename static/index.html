@@ -1119,10 +1119,7 @@ async function doLogin(){
   }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
 }
 
-// doRegister eliminado
-  try{
-    const res=await fetch(BASE+"/register",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({username:email,email:email,name:name||email,password:pass})});
+// Registro público eliminado — solo admin crea usuarios
     const d=await res.json();
     if(res.ok){msg.style.color="#00ff88";msg.innerText="Cuenta creada. Inicia sesion.";}
     else{msg.style.color="#ff3355";msg.innerText=d.detail||"Error al registrar";}
