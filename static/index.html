@@ -1120,11 +1120,6 @@ async function doLogin(){
 }
 
 // Registro público eliminado — solo admin crea usuarios
-    const d=await res.json();
-    if(res.ok){msg.style.color="#00ff88";msg.innerText="Cuenta creada. Inicia sesion.";}
-    else{msg.style.color="#ff3355";msg.innerText=d.detail||"Error al registrar";}
-  }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
-}
 
 async function checkSession(){
   if(!TOKEN)return;
