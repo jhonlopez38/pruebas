@@ -423,6 +423,27 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
 .ps-l{font-family:Share Tech Mono,monospace!important;font-size:7px!important;color:#6a8fa8!important;letter-spacing:1px!important;margin-top:2px!important;display:block!important;}
 .kml-dl{width:100%!important;padding:9px!important;background:rgba(0,200,255,.06)!important;color:#00c8ff!important;border:1px solid rgba(0,200,255,.18)!important;border-radius:6px!important;font-family:Rajdhani,sans-serif!important;font-size:11px!important;font-weight:700!important;letter-spacing:2px!important;cursor:pointer!important;margin-top:6px!important;transition:.2s!important;}
 .kml-dl:hover{background:rgba(0,200,255,.12)!important;}
+
+/* ══ OTA FIRMWARE ════════════════════════════════════ */
+.ota-box{background:rgba(255,255,136,.04);border:1px solid rgba(255,255,136,.15);border-radius:8px;padding:12px;margin-top:8px;}
+.ota-title{font-family:Share Tech Mono,monospace;font-size:8px;color:#ffff88;letter-spacing:2px;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.ota-title::before{content:"";width:2px;height:10px;background:#ffff88;border-radius:1px;}
+.ota-ver{font-family:Share Tech Mono,monospace;font-size:10px;color:#c8dff0;margin-bottom:8px;padding:6px 8px;background:rgba(255,255,255,.03);border-radius:5px;border:1px solid rgba(255,255,255,.06);}
+.ota-ver span{color:#00ff88;font-weight:700;}
+.ota-drop{border:2px dashed rgba(255,255,136,.3);border-radius:7px;padding:16px;text-align:center;cursor:pointer;transition:.2s;margin-bottom:8px;background:rgba(255,255,136,.02);}
+.ota-drop:hover{border-color:rgba(255,255,136,.6);background:rgba(255,255,136,.05);}
+.ota-drop-icon{font-size:24px;margin-bottom:4px;}
+.ota-drop-txt{font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;letter-spacing:1px;}
+.ota-drop-file{font-family:Share Tech Mono,monospace;font-size:10px;color:#ffff88;margin-top:4px;}
+.ota-prog{display:none;margin:8px 0;}
+.ota-prog-bar{width:100%;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+.ota-prog-fill{height:100%;background:linear-gradient(90deg,#ffff88,#ffcc00);border-radius:3px;transition:width .3s;}
+.ota-prog-txt{font-family:Share Tech Mono,monospace;font-size:9px;color:#ffff88;text-align:center;margin-top:4px;}
+.ota-msg{font-family:Share Tech Mono,monospace;font-size:10px;min-height:14px;text-align:center;margin-top:6px;}
+.btn-ota-upload{width:100%;padding:9px;background:linear-gradient(135deg,rgba(255,255,136,.15),rgba(255,204,0,.1));color:#ffff88;border:1px solid rgba(255,255,136,.3);border-radius:6px;font-family:Rajdhani,sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:.2s;margin-bottom:5px;}
+.btn-ota-upload:hover{background:linear-gradient(135deg,rgba(255,255,136,.25),rgba(255,204,0,.2));}
+.btn-ota-update{width:100%;padding:9px;background:linear-gradient(135deg,rgba(255,136,0,.15),rgba(255,100,0,.1));color:#ff8800;border:1px solid rgba(255,136,0,.3);border-radius:6px;font-family:Rajdhani,sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:.2s;}
+.btn-ota-update:hover{background:linear-gradient(135deg,rgba(255,136,0,.25),rgba(255,100,0,.2));}
 </style>
 </head>
 <body>
@@ -434,19 +455,51 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   <p>SISTEMA GPS TACTICO</p>
   <input id="loginUser" placeholder="Usuario o correo" autocomplete="username">
   <input id="loginPass" type="password" placeholder="Contrasena" autocomplete="current-password">
-  <div class="l-hint">Admin: Hermesadmin / Colombia2026*</div>
+  <div class="l-hint">Acceso restringido — contacta al administrador</div>
   <p id="loginMsg"></p>
   <button class="btn-login" onclick="doLogin()">INICIAR SESION</button>
-  <button class="btn-reg-t" onclick="toggleReg()">REGISTRAR USUARIO</button>
-  <div id="regBox" style="display:none">
-    <div class="reg-sep"><div class="reg-sep-l">NUEVO USUARIO</div>
-      <input id="regName" placeholder="Nombre completo">
-      <input id="regEmail" placeholder="Correo electronico">
-      <input id="regPass" type="password" placeholder="Contrasena">
-      <button class="btn-reg" onclick="doRegister()">CREAR CUENTA</button>
+  <!-- Registro eliminado del login — solo admin puede crear usuarios -->
+</div>
+  <!-- TAB OTA -->
+  <div class="adm-pane" id="aT-ota">
+    <div class="adm-sec">
+      <div class="ota-box">
+        <div class="ota-title">ACTUALIZACIÓN DE FIRMWARE OTA</div>
+        <!-- Versión actual disponible -->
+        <div class="ota-ver" id="otaVerInfo">Cargando versión...</div>
+        <!-- Drop zone para subir .bin -->
+        <div class="ota-drop" id="otaDrop" onclick="document.getElementById('otaFileInput').click()"
+             ondragover="event.preventDefault();this.style.borderColor='#ffff88'"
+             ondragleave="this.style.borderColor=''"
+             ondrop="otaHandleDrop(event)">
+          <div class="ota-drop-icon">📦</div>
+          <div class="ota-drop-txt">ARRASTRA EL .BIN AQUÍ O HAZ CLIC</div>
+          <div class="ota-drop-file" id="otaFileName">Sin archivo seleccionado</div>
+        </div>
+        <input type="file" id="otaFileInput" accept=".bin" style="display:none" onchange="otaSelectFile(this)">
+        <!-- Versión del nuevo firmware -->
+        <input id="otaNewVer" placeholder="Versión (ej: 1.1.0)" style="margin-bottom:6px">
+        <!-- Barra de progreso -->
+        <div class="ota-prog" id="otaProgBox">
+          <div class="ota-prog-bar"><div class="ota-prog-fill" id="otaProgFill" style="width:0%"></div></div>
+          <div class="ota-prog-txt" id="otaProgTxt">Subiendo...</div>
+        </div>
+        <!-- Botones -->
+        <button class="btn-ota-upload" onclick="otaSubirFirmware()">📤 SUBIR FIRMWARE AL SERVIDOR</button>
+        <button class="btn-ota-update" onclick="otaEnviarComando()">⚡ ENVIAR COMANDO UPDATE AL ESP32</button>
+        <div class="ota-msg" id="otaMsg"></div>
+        <!-- Info -->
+        <div style="font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;margin-top:8px;line-height:1.6">
+          1. Compila el sketch en Arduino IDE → Sketch → Exportar binario compilado<br>
+          2. Sube el .bin con el botón de arriba<br>
+          3. Envía el comando UPDATE al ESP32<br>
+          4. El ESP32 descarga e instala en el próximo despertar (~90 seg)<br>
+          5. También se actualiza automáticamente todos los días a las 00:00
+        </div>
+      </div>
     </div>
   </div>
-</div>
+
 </div>
 
 <!-- ═══ MOVIMIENTO ═══════════════════════════════════════════ -->
@@ -514,6 +567,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
     <div class="adm-tab active" onclick="admTab(this,'aT-devs')"><span class="adm-tab-icon">📡</span>EQUIPOS</div>
     <div class="adm-tab" onclick="admTab(this,'aT-users')"><span class="adm-tab-icon">👤</span>USUARIOS</div>
     <div class="adm-tab" onclick="admTab(this,'aT-assign')"><span class="adm-tab-icon">🔗</span>ASIGNAR</div>
+    <div class="adm-tab" onclick="admTab(this,'aT-ota')"><span class="adm-tab-icon">⬆️</span>OTA</div>
   </div>
 
   <!-- TAB EQUIPOS -->
@@ -521,7 +575,14 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
     <!-- AGREGAR EQUIPO -->
     <div class="adm-sec">
       <div class="adm-sec-title">Agregar equipo</div>
-      <input id="aDevId"   placeholder="ID dispositivo  (ej: HERMES-01)">
+      <div style="display:flex;gap:5px;align-items:center">
+        <input id="aDevId" placeholder="ID dispositivo (ej: HERMES-002)" style="flex:1;margin:0">
+        <button onclick="autoGenId()" title="Generar ID automático"
+          style="padding:8px 10px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.25);
+                 color:#00c8ff;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0">
+          🔢
+        </button>
+      </div>
       <input id="aDevName" placeholder="Nombre del equipo" oninput="updateDevPreview()">
       <!-- Fila emoji + color -->
       <div style="display:flex;gap:8px;margin:6px 0">
@@ -731,6 +792,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   <div class="mtabs">
     <div class="mtab active" onclick="setTile(this,'osm')">Mapa</div>
     <div class="mtab" onclick="setTile(this,'sat')">Satelite</div>
+    <div class="mtab" onclick="setTile(this,'dark')">Dark</div>
   </div>
   <div id="map"></div>
   <div class="moverlay" id="movOv">
@@ -784,7 +846,8 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
       <button class="btn" onclick="envCmd('status')">◉ STATUS</button>
       <button class="btn" onclick="envCmd('kml')">⊞ KML</button>
       <button class="btn" onclick="envCmd('csv')">⊟ CSV</button>
-      <button class="btn d" onclick="envCmd('reset')">⟳ RESET</button>
+      <button class="btn d" id="btnReset" onclick="envCmd('reset')" style="display:none">⟳ RESET</button>
+      <button class="btn" id="btnUpdate" onclick="envCmd('update')" style="display:none;background:rgba(255,255,136,.1);color:#ffff88;border-color:rgba(255,255,136,.3)">⬆️ UPDATE</button>
     </div>
     <div class="cmd-row">
       <input class="cmd-in" id="cmdIn" placeholder="Comando personalizado..." onkeydown="if(event.key==='Enter')envCmdP()">
@@ -921,15 +984,20 @@ function getDevCfg(id){return devConfig[id]||{color:"#00ff88",icon:"circle",name
 // ═══════════════════════════════════════════════════════════
 const map = L.map("map",{zoomControl:false}).setView([4.82,-74.34],13);
 L.control.zoom({position:"bottomright"}).addTo(map);
-const tOSM = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"Hermes GPS"});
-const tSAT = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});
+const tOSM  = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"});
+const tSAT  = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"© Esri"});
+const tDARK = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{maxZoom:19,attribution:"© CartoDB",subdomains:"abcd"});
 tOSM.addTo(map);
 let curTile = "osm";
+const tileLayers = {osm:tOSM, sat:tSAT, dark:tDARK};
 function setTile(el,t){
   document.querySelectorAll(".mtab").forEach(x=>x.classList.remove("active"));
   el.classList.add("active");
-  if(t==="sat"&&curTile!=="sat"){map.removeLayer(tOSM);tSAT.addTo(map);curTile="sat";}
-  if(t==="osm"&&curTile!=="osm"){map.removeLayer(tSAT);tOSM.addTo(map);curTile="osm";}
+  if(t !== curTile){
+    map.removeLayer(tileLayers[curTile]);
+    tileLayers[t].addTo(map);
+    curTile = t;
+  }
 }
 setTimeout(()=>map.invalidateSize(),500);
 
@@ -990,6 +1058,15 @@ function selEmoji(el, emoji){
   const arrow = document.getElementById("emojiPickerArrow");
   if(body){ body.style.display="none"; arrow.innerText="▼"; }
 }
+async function autoGenId(){
+  const inp = document.getElementById("aDevId");
+  if(inp){
+    inp.value = "Generando...";
+    inp.value = await generarNextId();
+    updateDevPreview();
+  }
+}
+
 function quickEmoji(emoji){
   curEmoji = emoji;
   const inp = document.getElementById("aDevIconInput");
@@ -1017,10 +1094,7 @@ function updateDevPreview(){
 // ═══════════════════════════════════════════════════════════
 function authH(){return TOKEN?{"Authorization":"Bearer "+TOKEN}:{};}
 
-function toggleReg(){
-  const b=document.getElementById("regBox");
-  b.style.display=b.style.display==="none"?"block":"none";
-}
+// Registro público eliminado — solo admin crea usuarios
 
 async function doLogin(){
   const raw=document.getElementById("loginUser").value.trim();
@@ -1045,12 +1119,7 @@ async function doLogin(){
   }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
 }
 
-async function doRegister(){
-  const name=document.getElementById("regName").value.trim();
-  const email=document.getElementById("regEmail").value.trim();
-  const pass=document.getElementById("regPass").value;
-  const msg=document.getElementById("loginMsg");
-  if(!email||!pass){msg.style.color="#ff3355";msg.innerText="Correo y contrasena requeridos.";return;}
+// doRegister eliminado
   try{
     const res=await fetch(BASE+"/register",{method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({username:email,email:email,name:name||email,password:pass})});
@@ -1075,8 +1144,12 @@ function postLogin(){
   if(USER&&USER.role==="admin"){
     document.getElementById("adminToggleBtn").style.display="flex";
     document.getElementById("btnFlota").style.display="flex";
+    // RESET y UPDATE solo visibles para admin
+    const btnR = document.getElementById("btnReset");
+    if(btnR) btnR.style.display="flex";
+    const btnU = document.getElementById("btnUpdate");
+    if(btnU) btnU.style.display="flex";
   }
-  // Mostrar usuario en el header del panel admin
   const lbl = document.getElementById("admUserLabel");
   if(lbl && USER) lbl.innerText = (USER.username||USER.email||"").toUpperCase();
   cargarDispositivos();
@@ -1113,7 +1186,26 @@ function admTab(el,pane){
   el.classList.add("active");
   document.getElementById(pane).classList.add("active");
   if(pane==="aT-users")admLoadUsers();
+  if(pane==="aT-ota")otaCargarVersion();
   if(pane==="aT-devs")admLoadDevices();
+}
+
+// Generar siguiente ID consecutivo HERMES-XXX
+async function generarNextId(){
+  try{
+    const devs = await fetch(BASE+"/devices",{headers:authH()}).then(r=>r.json());
+    let max = 1;
+    devs.forEach(d=>{
+      const id = (d.device_id||d.device||"").toUpperCase();
+      const match = id.match(/HERMES[-_]?(\d+)/);
+      if(match){
+        const n = parseInt(match[1]);
+        if(n >= max) max = n + 1;
+      }
+    });
+    // Formato HERMES-001, HERMES-002...
+    return "HERMES-" + String(max).padStart(3,"0");
+  }catch(e){ return "HERMES-002"; }
 }
 
 async function admAddDevice(){
@@ -1468,13 +1560,13 @@ function actualizarCSV_UNUSED(){
         polyln=L.polyline(coords.map(c=>[c.lat,c.lon]),{color:cfg.color||"#00c8ff",weight:3,opacity:.8}).addTo(map);
       coords.slice(0,-1).forEach(c=>{
         const m=L.circleMarker([c.lat,c.lon],{radius:4,color:cfg.color||"#00c8ff",fillColor:"#003a5c",fillOpacity:.9,weight:1})
-          .bindPopup(`<b>#${c.desp}</b><br>${c.fecha} ${c.hora}<br>${c.lat.toFixed(6)}, ${c.lon.toFixed(6)}`).addTo(map);
+          .bindPopup(`<b>#${c.desp}</b><br>${c.fecha} ${c.hora}<br>${c.lat.toFixed(6)}, ${c.lon.toFixed(6)}<br><a href="https://www.google.com/maps?layer=c&cbll=${c.lat},${c.lon}" target="_blank" style="color:#00c8ff;font-size:11px">📷 Street View</a>`).addTo(map);
         dots.push(m);
       });
       const icon=makeIcon(cfg.color||"#00ff88",cfg.icon||"circle");
       if(!mainMk) mainMk=L.marker([u.lat,u.lon],{icon}).addTo(map);
       else mainMk.setLatLng([u.lat,u.lon]).setIcon(icon);
-      mainMk.bindPopup(`<b>${CUR_DEV}</b><br>${u.fecha} ${u.hora}<br>${u.lat.toFixed(6)} N, ${u.lon.toFixed(6)} W`);
+      mainMk.bindPopup(`<b>${CUR_DEV}</b><br>${u.fecha} ${u.hora}<br>${u.lat.toFixed(6)} N, ${u.lon.toFixed(6)} W<br><a href="https://www.google.com/maps?layer=c&cbll=${u.lat},${u.lon}" target="_blank" style="color:#00c8ff;font-size:11px">📷 Street View</a>`);
       if(map.getZoom()<14)map.setView([u.lat,u.lon],14);else map.panTo([u.lat,u.lon]);
       document.getElementById("movOv").style.display="block";
       document.getElementById("ov-name").innerText=CUR_DEV;
@@ -1857,7 +1949,7 @@ async function cargarDesdeHistory(){
     const cfg=getDevCfg(CUR_DEV);
     if(!mainMk)mainMk=L.marker([u.lat,u.lon],{icon:makeIcon(cfg.color,cfg.icon)}).addTo(map);
     else mainMk.setLatLng([u.lat,u.lon]);
-    mainMk.bindPopup(`<b>${CUR_DEV}</b><br>${u.fecha||""} ${u.hora||""}`);
+    mainMk.bindPopup(`<b>${CUR_DEV}</b><br>${u.fecha||""} ${u.hora||""}<br><a href="https://www.google.com/maps?layer=c&cbll=${u.lat},${u.lon}" target="_blank" style="color:#00c8ff;font-size:11px">📷 Street View</a>`);
     map.setView([u.lat,u.lon],14);
     document.getElementById("movOv").style.display="block";
     document.getElementById("ov-dt").innerText=(u.fecha||"")+" "+(u.hora||"");
@@ -2089,6 +2181,96 @@ async function installApp(){
 checkSession();
 reloj();
 setInterval(reloj,1000);
+
+// ══ OTA FIRMWARE ══════════════════════════════════════
+let otaFile = null;
+
+function otaHandleDrop(e){
+  e.preventDefault();
+  document.getElementById("otaDrop").style.borderColor = "";
+  const f = e.dataTransfer.files[0];
+  if(f && f.name.endsWith(".bin")){ otaFile = f; document.getElementById("otaFileName").innerText = f.name + " (" + Math.round(f.size/1024) + " KB)"; }
+  else { showOtaMsg("Solo se aceptan archivos .bin","#ff3355"); }
+}
+
+function otaSelectFile(input){
+  const f = input.files[0];
+  if(f){ otaFile = f; document.getElementById("otaFileName").innerText = f.name + " (" + Math.round(f.size/1024) + " KB)"; }
+}
+
+function showOtaMsg(msg, color="#00ff88"){
+  const el = document.getElementById("otaMsg");
+  if(el){ el.innerText = msg; el.style.color = color; }
+}
+
+async function otaCargarVersion(){
+  try{
+    const r = await fetch(BASE+"/firmware/version");
+    const d = await r.json();
+    const el = document.getElementById("otaVerInfo");
+    if(!el) return;
+    if(d.available){
+      el.innerHTML = "Firmware disponible: <span>v"+d.version+"</span> ("+d.size_kb+" KB)";
+    } else {
+      el.innerHTML = "Sin firmware subido al servidor";
+    }
+  }catch(e){ console.log("OTA version:", e); }
+}
+
+async function otaSubirFirmware(){
+  if(!otaFile){ showOtaMsg("Selecciona un archivo .bin primero","#ff3355"); return; }
+  const ver = document.getElementById("otaNewVer").value.trim() || "unknown";
+  const prog = document.getElementById("otaProgBox");
+  const fill  = document.getElementById("otaProgFill");
+  const txt   = document.getElementById("otaProgTxt");
+  if(prog) prog.style.display = "block";
+  showOtaMsg("Subiendo firmware...", "#ffff88");
+
+  try{
+    const buf = await otaFile.arrayBuffer();
+    const r = await fetch(BASE+"/firmware/upload",{
+      method:"POST",
+      headers:{
+        "Authorization":"Bearer "+TOKEN,
+        "Content-Type":"application/octet-stream",
+        "X-Firmware-Version": ver
+      },
+      body: buf
+    });
+    if(prog) prog.style.display = "none";
+    if(r.ok){
+      const d = await r.json();
+      showOtaMsg("✅ " + d.msg, "#00ff88");
+      otaCargarVersion();
+    } else {
+      const d = await r.json();
+      showOtaMsg("❌ Error: " + (d.detail||r.status), "#ff3355");
+    }
+  }catch(e){
+    if(prog) prog.style.display = "none";
+    showOtaMsg("❌ Error de conexión: "+e.message,"#ff3355");
+  }
+}
+
+async function otaEnviarComando(){
+  showOtaMsg("Enviando comando UPDATE al ESP32...", "#ffff88");
+  try{
+    const r = await fetch(BASE+"/command",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
+      body: JSON.stringify({cmd:"update", device: CUR_DEV})
+    });
+    if(r.ok){
+      showOtaMsg("✅ Comando UPDATE enviado — el ESP32 actualizará en el próximo ciclo (~15 min)", "#00ff88");
+      log("OTA: Comando update enviado a "+CUR_DEV,"ok");
+    } else {
+      showOtaMsg("❌ Error enviando comando","#ff3355");
+    }
+  }catch(e){
+    showOtaMsg("❌ Error: "+e.message,"#ff3355");
+  }
+}
+
 </script>
 </body>
 </html>
