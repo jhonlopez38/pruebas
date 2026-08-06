@@ -1,10 +1,9 @@
 {
   "HERMES-01": {
     "device": "HERMES-01",
-    "cmd": "none",
-    "created_at": "2026-07-20T17:10:35.645771",
-    "attempts": 2,
-    "executed_at": "2026-07-20T22:48:02.707786"
+    "cmd": "kml",
+    "created_at": "2026-08-06T19:20:27.481912",
+    "attempts": 0
   },
   "HERMES-02": {
     "device": "HERMES-02",
