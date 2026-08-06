@@ -45643,5 +45643,20 @@
     "bateria_pct": 0,
     "wifi": "conectado",
     "created_at": "2026-08-06T03:17:51.614516"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "SIN GPS",
+    "despertar": 8,
+    "ciclo_min": 30,
+    "fallos_gps": 25,
+    "lat": 0.0,
+    "lon": 0.0,
+    "fecha": "",
+    "hora": "No disponible",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "created_at": "2026-08-06T03:18:51.112390"
   }
 ]
