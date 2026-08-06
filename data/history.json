@@ -47210,5 +47210,21 @@
     "wifi": "conectado",
     "fw_version": "",
     "created_at": "2026-08-06T21:28:07.283973"
+  },
+  {
+    "device": "HERMES-01",
+    "estado": "NUEVA UBICACION",
+    "despertar": 163,
+    "ciclo_min": 30,
+    "fallos_gps": 0,
+    "lat": 2.199297333,
+    "lon": -72.423522,
+    "fecha": "06/08/2026",
+    "hora": "16:29:10",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "",
+    "created_at": "2026-08-06T21:29:16.638109"
   }
 ]
