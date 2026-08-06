@@ -541,11 +541,12 @@ async def device_status_post(request: Request):
     wifi        = data.get("wifi", "conectado")
     now         = datetime.utcnow().isoformat()
 
+    fw_version = data.get("fw_version", "")
     row = {"device": device, "estado": estado, "despertar": despertar,
            "ciclo_min": ciclo_min, "fallos_gps": fallos_gps,
            "lat": lat, "lon": lon, "fecha": fecha, "hora": hora,
            "bateria_v": bateria_v, "bateria_pct": bateria_pct,
-           "wifi": wifi, "created_at": now}
+           "wifi": wifi, "fw_version": fw_version, "created_at": now}
 
     with _gh_lock:
         # 1. Status local + GitHub
