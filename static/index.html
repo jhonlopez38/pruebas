@@ -700,6 +700,7 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
       <div class="row"><span class="lbl">Fallos GPS</span><span class="val" id="falV">--</span></div>
       <div class="row"><span class="lbl">Backend</span><span class="val ok">CONECTADO</span></div>
       <div class="row"><span class="lbl">WiFi ESP32</span><span class="val info" id="wifiV">--</span></div>
+      <div class="row"><span class="lbl">Firmware</span><span class="val info" id="fwV" style="color:#ffff88">--</span></div>
       <div class="row"><span class="lbl">Ultima conexion</span><span class="val info" id="ultCon">--</span></div>
     </div>
     <div class="sec">
@@ -822,8 +823,8 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
     <div class="btn2">
       <button class="btn g" onclick="statusBackend()">◉ STATUS</button>
       <button class="btn g" onclick="statusDisp()">◎ DISPOSITIVO</button>
-      <button class="btn" onclick="verKML()">⊞ KML</button>
-      <button class="btn" onclick="verCSV()">⊟ CSV</button>
+      <button class="btn" onclick="verKML()" title="Descargar KML de dispositivo activo">⊞ KML</button>
+      <button class="btn" onclick="verCSV()" title="Descargar CSV de dispositivo activo">⊟ CSV</button>
     </div>
     <!-- Solo admin: ver flota completa -->
     <button class="btn" id="btnFlota" style="display:none" onclick="verFlota()">◈ VER FLOTA COMPLETA</button>
@@ -858,8 +859,8 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   </div>
   <div class="sec">
     <div class="sec-t">ARCHIVOS Y DESCARGAS</div>
-    <div class="fc"><span class="fn">📄 gps_log.csv</span><a href="#" onclick="verCSV();return false">Ver / Descargar ↓</a></div>
-    <div class="fc"><span class="fn">📍 ruta.kml</span><a href="#" onclick="verKML();return false">Ver / Descargar ↓</a></div>
+    <div class="fc"><span class="fn">📄 <span id="csvLabel">gps_log.csv</span></span><a href="#" onclick="verCSV();return false">Ver / Descargar ↓</a></div>
+    <div class="fc"><span class="fn">📍 <span id="kmlLabel">ruta.kml</span></span><a href="#" onclick="verKML();return false">Ver / Descargar ↓</a></div>
     <p style="font-size:8px;color:#6a8fa8;font-family:Share Tech Mono,monospace;margin-top:3px">☁ Se actualizan automaticamente en el backend</p>
   </div>
 </div><!-- /rp -->
@@ -1431,6 +1432,11 @@ function onDevChange(){
   CUR_DEV=document.getElementById("devSelect").value;
   document.getElementById("h-unit").innerText=CUR_DEV;
   document.getElementById("dpName").innerText=CUR_DEV;
+  // Actualizar labels de archivos con el device activo
+  const csv = document.getElementById("csvLabel");
+  const kml = document.getElementById("kmlLabel");
+  if(csv) csv.innerText = CUR_DEV.toLowerCase().replace("-","_") + ".csv";
+  if(kml) kml.innerText = "ruta_" + CUR_DEV.toLowerCase().replace("-","_") + ".kml";
   resetPlayState();
   if(CUR_MODE==="live")actualizar();
 }
@@ -1633,6 +1639,8 @@ function statusDisp(){
       document.getElementById("falV").innerText=f;
       document.getElementById("gpsS").innerText=f==0?"Excelente":f<3?"Regular":"Debil";
       document.getElementById("wifiV").innerText=d.wifi||"--";
+      const fwEl=document.getElementById("fwV");
+      if(fwEl) fwEl.innerText=d.fw_version?"v"+d.fw_version:"--";
       document.getElementById("despV").innerText=d.despertar||"--";
       document.getElementById("ultCon").innerText=horaCol();
       const cm=d.ciclo_min||0;
@@ -1995,11 +2003,22 @@ async function cargarDesdeHistory(){
   }catch(e){log("Error cargando historial: "+e.message,"e");}
 }
 function verKML(){
-  window.open(BASE+"/files/ruta.kml?device="+encodeURIComponent(CUR_DEV)+"&t="+Date.now(),"_blank");
+  const dev  = encodeURIComponent(CUR_DEV);
+  const from = document.getElementById("hpFrom")?.value || "";
+  const to   = document.getElementById("hpTo")?.value   || "";
+  let url = BASE+"/files/ruta.kml?device="+dev+"&t="+Date.now();
+  if(from) url += "&start="+encodeURIComponent(from);
+  if(to)   url += "&end="+encodeURIComponent(to);
+  window.open(url,"_blank");
 }
 function verCSV(){
-  // abre el endpoint directo que sirve el CSV con headers correctos
-  window.open(BASE+"/files/gps_log.csv?t="+Date.now(),"_blank");
+  const dev  = encodeURIComponent(CUR_DEV);
+  const from = document.getElementById("hpFrom")?.value || "";
+  const to   = document.getElementById("hpTo")?.value   || "";
+  let url = BASE+"/files/gps_log.csv?device="+dev+"&t="+Date.now();
+  if(from) url += "&start="+encodeURIComponent(from);
+  if(to)   url += "&end="+encodeURIComponent(to);
+  window.open(url,"_blank");
 }
 function centrar(){if(mainMk){map.setView(mainMk.getLatLng(),16);log("CENTRADO","i");}else log("Sin posicion","w");}
 
@@ -2296,4 +2315,4 @@ async function otaEnviarComando(){
 
 </script>
 </body>
-</htm
+</html>
