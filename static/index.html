@@ -1377,25 +1377,54 @@ async function admAssign(){
 // ═══════════════════════════════════════════════════════════
 async function cargarDispositivos(){
   try{
-    const res=await fetch(BASE+"/devices",{headers:authH()});
-    if(!res.ok)return;
-    const devs=await res.json();
-    const sel=document.getElementById("devSelect");
-    // mantener seleccion actual
-    const cur=sel.value;
-    sel.innerHTML="";
-    // siempre agregar HERMES-01
-    const ids=new Set(["HERMES-01"]);
-    devs.forEach(d=>ids.add(d.device_id||d.device));
-    ids.forEach(id=>{
-      const opt=document.createElement("option");
-      opt.value=id; opt.text=getDevCfg(id).name||id;
+    const sel = document.getElementById("devSelect");
+    const cur = sel.value;
+    const ids  = new Set();
+
+    // 1. Dispositivos registrados en el admin
+    try{
+      const r = await fetch(BASE+"/devices",{headers:authH()});
+      if(r.ok){
+        const devs = await r.json();
+        devs.forEach(d=>ids.add(d.device_id||d.device));
+      }
+    }catch(e){}
+
+    // 2. Dispositivos que están reportando (desde /status)
+    // Esto agrega automáticamente cualquier HERMES nuevo
+    // que haya enviado datos aunque no esté registrado en admin
+    try{
+      const r2 = await fetch(BASE+"/status",{headers:authH()});
+      if(r2.ok){
+        const status = await r2.json();
+        Object.keys(status).forEach(id=>ids.add(id));
+      }
+    }catch(e){}
+
+    // Si no hay ninguno, agregar HERMES-01 por defecto
+    if(ids.size === 0) ids.add("HERMES-01");
+
+    // Ordenar alfabéticamente
+    const sorted = [...ids].sort();
+
+    sel.innerHTML = "";
+    sorted.forEach(id=>{
+      const cfg = getDevCfg(id);
+      const opt = document.createElement("option");
+      opt.value = id;
+      // Mostrar emoji + nombre si está configurado, sino solo el ID
+      opt.text  = cfg.icon ? cfg.icon + " " + (cfg.name||id) : id;
       sel.appendChild(opt);
     });
-    if([...ids].includes(cur))sel.value=cur;
-    CUR_DEV=sel.value;
-    document.getElementById("h-unit").innerText=CUR_DEV;
-  }catch(e){}
+
+    // Restaurar selección anterior o usar el primero
+    if(sorted.includes(cur)) sel.value = cur;
+    else sel.value = sorted[0];
+
+    CUR_DEV = sel.value;
+    document.getElementById("h-unit").innerText = CUR_DEV;
+
+  }catch(e){ console.log("cargarDispositivos:", e); }
 }
 
 function onDevChange(){
@@ -1463,7 +1492,9 @@ function clearMapLive(){
 function startPoll(){
   clearInterval(pollTimer);
   actualizar();statusDisp();
+  cargarDispositivos();
   pollTimer=setInterval(()=>{if(CUR_MODE==="live"){actualizar();statusDisp();}},30000);
+  setInterval(cargarDispositivos,120000);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2265,4 +2296,4 @@ async function otaEnviarComando(){
 
 </script>
 </body>
-</html>
+</htm
