@@ -468,14 +468,23 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
         <!-- Versión actual disponible -->
         <div class="ota-ver" id="otaVerInfo">Cargando versión...</div>
         <!-- Drop zone para subir .bin -->
-        <div class="ota-drop" id="otaDrop" onclick="document.getElementById('otaFileInput').click()"
+        <!-- Drop zone -->
+        <div class="ota-drop" id="otaDrop"
              ondragover="event.preventDefault();this.style.borderColor='#ffff88'"
              ondragleave="this.style.borderColor=''"
              ondrop="otaHandleDrop(event)">
           <div class="ota-drop-icon">📦</div>
-          <div class="ota-drop-txt">ARRASTRA EL .BIN AQUÍ O HAZ CLIC</div>
+          <div class="ota-drop-txt">ARRASTRA EL .BIN AQUÍ</div>
           <div class="ota-drop-file" id="otaFileName">Sin archivo seleccionado</div>
         </div>
+        <!-- Botón explícito para seleccionar archivo -->
+        <label for="otaFileInput" style="display:block;width:100%;padding:8px;margin-bottom:6px;
+          background:rgba(255,255,136,.08);color:#ffff88;
+          border:1px solid rgba(255,255,136,.3);border-radius:6px;
+          font-family:Rajdhani,sans-serif;font-size:12px;font-weight:700;
+          letter-spacing:1px;cursor:pointer;text-align:center;transition:.2s">
+          📁 SELECCIONAR ARCHIVO .BIN
+        </label>
         <input type="file" id="otaFileInput" accept=".bin" style="display:none" onchange="otaSelectFile(this)">
         <!-- Versión del nuevo firmware -->
         <input id="otaNewVer" placeholder="Versión (ej: 1.1.0)" style="margin-bottom:6px">
