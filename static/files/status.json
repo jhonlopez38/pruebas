@@ -2,18 +2,18 @@
   "HERMES-01": {
     "device": "HERMES-01",
     "estado": "NUEVA UBICACION",
-    "despertar": 252,
+    "despertar": 253,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 2.1872475,
-    "lon": -72.42739933,
+    "lat": 2.187256,
+    "lon": -72.42733617,
     "fecha": "07/08/2026",
-    "hora": "03:16:05",
+    "hora": "03:21:22",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "",
-    "created_at": "2026-08-07T08:16:11.763165"
+    "created_at": "2026-08-07T08:21:28.897575"
   },
   "HERMES-02": {
     "device": "HERMES-02",
