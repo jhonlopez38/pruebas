@@ -51018,5 +51018,21 @@
     "wifi": "conectado",
     "fw_version": "",
     "created_at": "2026-08-07T05:42:11.752693"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 148,
+    "ciclo_min": 5,
+    "fallos_gps": 0,
+    "lat": 4.823212,
+    "lon": -74.345886,
+    "fecha": "07/08/2026",
+    "hora": "00:37:50",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "",
+    "created_at": "2026-08-07T05:43:08.205755"
   }
 ]
