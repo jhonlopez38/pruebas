@@ -2,33 +2,33 @@
   "HERMES-01": {
     "device": "HERMES-01",
     "estado": "NUEVA UBICACION",
-    "despertar": 207,
+    "despertar": 208,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 2.187236167,
-    "lon": -72.4273655,
-    "fecha": "07/08/2026",
-    "hora": "23:17:18",
+    "lat": 2.1872485,
+    "lon": -72.4273675,
+    "fecha": "",
+    "hora": "No disponible",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "",
-    "created_at": "2026-08-07T04:17:24.371791"
+    "created_at": "2026-08-07T04:22:42.793335"
   },
   "HERMES-02": {
     "device": "HERMES-02",
-    "estado": "NUEVA UBICACION",
-    "despertar": 133,
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 134,
     "ciclo_min": 5,
     "fallos_gps": 0,
     "lat": 4.824237,
-    "lon": -74.34600317,
+    "lon": -74.346003,
     "fecha": "06/08/2026",
     "hora": "23:22:34",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "",
-    "created_at": "2026-08-07T04:22:42.313029"
+    "created_at": "2026-08-07T04:27:53.949859"
   }
 }
