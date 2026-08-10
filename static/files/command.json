@@ -7,8 +7,9 @@
   },
   "HERMES-02": {
     "device": "HERMES-02",
-    "cmd": "ciclo 5",
+    "cmd": "none",
     "created_at": "2026-08-08T16:39:42.263960",
-    "attempts": 1
+    "attempts": 2,
+    "executed_at": "2026-08-10T17:02:58.083819"
   }
 }
