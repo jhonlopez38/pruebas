@@ -67,8 +67,8 @@ PWA_MANIFEST = {
     "background_color": "#0a1628",
     "theme_color": "#0a1628",
     "icons": [
-        {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
-        {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"},
+        {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+        {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
     ],
 }
  
@@ -82,20 +82,58 @@ self.addEventListener('fetch', e => {
 });
 """
  
-# Icono PNG minimo (cuadro con el azul del tema) generado al vuelo, para no
-# depender de ficheros binarios en el repositorio.
+# Iconos PNG generados al vuelo con el logo HERMES (triangulo + circulo), para
+# no depender de ficheros binarios en el repositorio. Se cachean en memoria:
+# solo se dibujan la primera vez que el navegador los pide.
+_ICONOS_CACHE = {}
+ 
 def _icono_png(lado: int) -> bytes:
-    import struct, zlib
-    r, g, b = 0x0A, 0x16, 0x28
-    fila = b"\x00" + bytes([r, g, b] * lado)
-    crudo = fila * lado
-    def _chunk(tipo, datos):
-        c = tipo + datos
-        return struct.pack(">I", len(datos)) + c + struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
-    return (b"\x89PNG\r\n\x1a\n"
-            + _chunk(b"IHDR", struct.pack(">IIBBBBB", lado, lado, 8, 2, 0, 0, 0))
-            + _chunk(b"IDAT", zlib.compress(crudo, 9))
-            + _chunk(b"IEND", b""))
+    if lado in _ICONOS_CACHE: return _ICONOS_CACHE[lado]
+    import struct, zlib, math
+    BG, CYAN, GRN = (0x0A,0x16,0x28), (0x00,0xC8,0xFF), (0x00,0xFF,0x88)
+    OUT = [(20,3),(37.5,36),(2.5,36)]
+    IN  = [(20,10),(31,32),(9,32)]
+    CX, CY, CR, ORB = 20.0, 26.0, 3.6, 8.2
+    SS  = 2
+    def d_seg(px,py,ax,ay,bx,by):
+        vx,vy=bx-ax,by-ay; wx,wy=px-ax,py-ay
+        L=vx*vx+vy*vy
+        t=0.0 if L==0 else max(0.0,min(1.0,(wx*vx+wy*vy)/L))
+        return math.hypot(ax+t*vx-px, ay+t*vy-py)
+    def d_poly(px,py,pts):
+        return min(d_seg(px,py,pts[i][0],pts[i][1],
+                         pts[(i+1)%len(pts)][0],pts[(i+1)%len(pts)][1])
+                   for i in range(len(pts)))
+    esc = 40.0/lado
+    filas = []
+    for y in range(lado):
+        fila = bytearray()
+        for x in range(lado):
+            ac=[0.0,0.0,0.0]
+            for sy in range(SS):
+                for sx in range(SS):
+                    ux=(x+(sx+0.5)/SS)*esc; uy=(y+(sy+0.5)/SS)*esc
+                    col=BG
+                    if abs(math.hypot(ux-20.0,uy-20.0)-ORB) < 0.28:
+                        col=tuple(int(BG[i]+(GRN[i]-BG[i])*0.28) for i in range(3))
+                    if d_poly(ux,uy,IN) < 0.35:
+                        col=tuple(int(BG[i]+(CYAN[i]-BG[i])*0.40) for i in range(3))
+                    if d_poly(ux,uy,OUT) < 1.15: col=CYAN
+                    if math.hypot(ux-CX,uy-CY) < CR: col=CYAN
+                    for i in range(3): ac[i]+=col[i]
+            n=SS*SS
+            fila += bytes([int(ac[0]/n), int(ac[1]/n), int(ac[2]/n)])
+        filas.append(b"\x00"+bytes(fila))
+    crudo=b"".join(filas)
+    def chunk(t,d):
+        c=t+d
+        return struct.pack(">I",len(d))+c+struct.pack(">I",zlib.crc32(c)&0xFFFFFFFF)
+    png = (b"\x89PNG\r\n\x1a\n"
+           + chunk(b"IHDR", struct.pack(">IIBBBBB",lado,lado,8,2,0,0,0))
+           + chunk(b"IDAT", zlib.compress(crudo,9))
+           + chunk(b"IEND", b""))
+    _ICONOS_CACHE[lado]=png
+    return png
  
 @app.get("/manifest.json")
 def pwa_manifest():
@@ -108,11 +146,13 @@ def pwa_service_worker():
  
 @app.get("/icon-192.png")
 def pwa_icon_192():
-    return Response(_icono_png(192), media_type="image/png")
+    return Response(_icono_png(192), media_type="image/png",
+                    headers={"Cache-Control": "public, max-age=604800"})
  
 @app.get("/icon-512.png")
 def pwa_icon_512():
-    return Response(_icono_png(512), media_type="image/png")
+    return Response(_icono_png(512), media_type="image/png",
+                    headers={"Cache-Control": "public, max-age=604800"})
  
 pwd_ctx  = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer(auto_error=False)
