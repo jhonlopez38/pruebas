@@ -21,14 +21,14 @@
     "despertar": 82,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 4.825192,
-    "lon": -74.351857,
+    "lat": 4.825198,
+    "lon": -74.351887,
     "fecha": "12/08/2026",
-    "hora": "13:33:40",
+    "hora": "13:39:47",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.1.2",
-    "created_at": "2026-08-12T20:48:33.039013"
+    "created_at": "2026-08-12T20:48:37.705029"
   }
 }
