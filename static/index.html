@@ -460,54 +460,6 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
   <button class="btn-login" onclick="doLogin()">INICIAR SESION</button>
   <!-- Registro eliminado del login — solo admin puede crear usuarios -->
 </div>
-  <!-- TAB OTA -->
-  <div class="adm-pane" id="aT-ota">
-    <div class="adm-sec">
-      <div class="ota-box">
-        <div class="ota-title">ACTUALIZACIÓN DE FIRMWARE OTA</div>
-        <!-- Versión actual disponible -->
-        <div class="ota-ver" id="otaVerInfo">Cargando versión...</div>
-        <!-- Drop zone para subir .bin -->
-        <!-- Drop zone -->
-        <div class="ota-drop" id="otaDrop"
-             ondragover="event.preventDefault();this.style.borderColor='#ffff88'"
-             ondragleave="this.style.borderColor=''"
-             ondrop="otaHandleDrop(event)">
-          <div class="ota-drop-icon">📦</div>
-          <div class="ota-drop-txt">ARRASTRA EL .BIN AQUÍ</div>
-          <div class="ota-drop-file" id="otaFileName">Sin archivo seleccionado</div>
-        </div>
-        <!-- Botón explícito para seleccionar archivo -->
-        <label for="otaFileInput" style="display:block;width:100%;padding:8px;margin-bottom:6px;
-          background:rgba(255,255,136,.08);color:#ffff88;
-          border:1px solid rgba(255,255,136,.3);border-radius:6px;
-          font-family:Rajdhani,sans-serif;font-size:12px;font-weight:700;
-          letter-spacing:1px;cursor:pointer;text-align:center;transition:.2s">
-          📁 SELECCIONAR ARCHIVO .BIN
-        </label>
-        <input type="file" id="otaFileInput" accept=".bin" style="display:none" onchange="otaSelectFile(this)">
-        <!-- Versión del nuevo firmware -->
-        <input id="otaNewVer" placeholder="Versión (ej: 1.1.0)" style="margin-bottom:6px">
-        <!-- Barra de progreso -->
-        <div class="ota-prog" id="otaProgBox">
-          <div class="ota-prog-bar"><div class="ota-prog-fill" id="otaProgFill" style="width:0%"></div></div>
-          <div class="ota-prog-txt" id="otaProgTxt">Subiendo...</div>
-        </div>
-        <!-- Botones -->
-        <button class="btn-ota-upload" onclick="otaSubirFirmware()">📤 SUBIR FIRMWARE AL SERVIDOR</button>
-        <button class="btn-ota-update" onclick="otaEnviarComando()">⚡ ENVIAR COMANDO UPDATE AL ESP32</button>
-        <div class="ota-msg" id="otaMsg"></div>
-        <!-- Info -->
-        <div style="font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;margin-top:8px;line-height:1.6">
-          1. Compila el sketch en Arduino IDE → Sketch → Exportar binario compilado<br>
-          2. Sube el .bin con el botón de arriba<br>
-          3. Envía el comando UPDATE al ESP32<br>
-          4. El ESP32 descarga e instala en el próximo despertar (~90 seg)<br>
-          5. También se actualiza automáticamente todos los días a las 00:00
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div>
 
@@ -672,6 +624,54 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
       <input id="aAssignUser" placeholder="Usuario o correo">
       <input id="aAssignDev" placeholder="ID dispositivo (HERMES-01)">
       <button class="adm-btn adm-btn-g" onclick="admAssign()">↗ ASIGNAR EQUIPO</button>
+    </div>
+  </div>
+
+  <!-- TAB OTA -->
+  <div class="adm-pane" id="aT-ota">
+    <div class="adm-sec">
+      <div class="ota-box">
+        <div class="ota-title">ACTUALIZACIÓN DE FIRMWARE OTA</div>
+        <!-- Versión actual disponible -->
+        <div class="ota-ver" id="otaVerInfo">Cargando versión...</div>
+        <!-- Drop zone para subir .bin -->
+        <div class="ota-drop" id="otaDrop"
+             ondragover="event.preventDefault();this.style.borderColor='#ffff88'"
+             ondragleave="this.style.borderColor=''"
+             ondrop="otaHandleDrop(event)">
+          <div class="ota-drop-icon">📦</div>
+          <div class="ota-drop-txt">ARRASTRA EL .BIN AQUÍ</div>
+          <div class="ota-drop-file" id="otaFileName">Sin archivo seleccionado</div>
+        </div>
+        <!-- Botón explícito para seleccionar archivo -->
+        <label for="otaFileInput" style="display:block;width:100%;padding:8px;margin-bottom:6px;
+          background:rgba(255,255,136,.08);color:#ffff88;
+          border:1px solid rgba(255,255,136,.3);border-radius:6px;
+          font-family:Rajdhani,sans-serif;font-size:12px;font-weight:700;
+          letter-spacing:1px;cursor:pointer;text-align:center;transition:.2s">
+          📁 SELECCIONAR ARCHIVO .BIN
+        </label>
+        <input type="file" id="otaFileInput" accept=".bin" style="display:none" onchange="otaSelectFile(this)">
+        <!-- Versión del nuevo firmware -->
+        <input id="otaNewVer" placeholder="Versión (ej: 1.1.0)" style="margin-bottom:6px">
+        <!-- Barra de progreso -->
+        <div class="ota-prog" id="otaProgBox">
+          <div class="ota-prog-bar"><div class="ota-prog-fill" id="otaProgFill" style="width:0%"></div></div>
+          <div class="ota-prog-txt" id="otaProgTxt">Subiendo...</div>
+        </div>
+        <!-- Botones -->
+        <button class="btn-ota-upload" onclick="otaSubirFirmware()">📤 SUBIR FIRMWARE AL SERVIDOR</button>
+        <button class="btn-ota-update" onclick="otaEnviarComando()">⚡ ENVIAR COMANDO UPDATE AL ESP32</button>
+        <div class="ota-msg" id="otaMsg"></div>
+        <!-- Info -->
+        <div style="font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;margin-top:8px;line-height:1.6">
+          1. Compila el sketch en Arduino IDE → Sketch → Exportar binario compilado<br>
+          2. Sube el .bin con el botón "SUBIR FIRMWARE AL SERVIDOR"<br>
+          3. Envía el comando UPDATE al equipo seleccionado<br>
+          4. El ESP32 descarga e instala en su próximo despertar y se reinicia solo<br>
+          5. Confirmación por Telegram cuando termina (✅ / ❌)
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2312,7 +2312,7 @@ async function otaEnviarComando(){
       body: JSON.stringify({cmd:"update", device: CUR_DEV})
     });
     if(r.ok){
-      showOtaMsg("✅ Comando UPDATE enviado — el ESP32 actualizará en el próximo ciclo (~15 min)", "#00ff88");
+      showOtaMsg("✅ Comando UPDATE enviado — el ESP32 actualizará en su próximo despertar", "#00ff88");
       log("OTA: Comando update enviado a "+CUR_DEV,"ok");
     } else {
       showOtaMsg("❌ Error enviando comando","#ff3355");
