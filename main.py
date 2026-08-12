@@ -2,7 +2,7 @@ import os, json, csv, sys, base64, threading
 from datetime import datetime, timedelta
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
@@ -51,6 +51,68 @@ app = FastAPI(title="HERMES GPS Backend")
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
     allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+ 
+# ── PWA: manifest y service worker ─────────────────────────────────────
+# Android solo ofrece "Instalar app" si la pagina sirve un manifest valido
+# Y registra un service worker. Sin estos dos endpoints ambos daban 404 y
+# el navegador nunca lanzaba el evento de instalacion.
+PWA_MANIFEST = {
+    "name": "HERMES GPS Tactico",
+    "short_name": "HERMES",
+    "description": "Sistema de rastreo GPS tactico HERMES",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#0a1628",
+    "theme_color": "#0a1628",
+    "icons": [
+        {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+        {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"},
+    ],
+}
+ 
+SW_JS = """
+const CACHE = 'hermes-v1';
+self.addEventListener('install', e => self.skipWaiting());
+self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+self.addEventListener('fetch', e => {
+  // Red primero: los datos GPS deben estar siempre frescos.
+  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+});
+"""
+ 
+# Icono PNG minimo (cuadro con el azul del tema) generado al vuelo, para no
+# depender de ficheros binarios en el repositorio.
+def _icono_png(lado: int) -> bytes:
+    import struct, zlib
+    r, g, b = 0x0A, 0x16, 0x28
+    fila = b"\x00" + bytes([r, g, b] * lado)
+    crudo = fila * lado
+    def _chunk(tipo, datos):
+        c = tipo + datos
+        return struct.pack(">I", len(datos)) + c + struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
+    return (b"\x89PNG\r\n\x1a\n"
+            + _chunk(b"IHDR", struct.pack(">IIBBBBB", lado, lado, 8, 2, 0, 0, 0))
+            + _chunk(b"IDAT", zlib.compress(crudo, 9))
+            + _chunk(b"IEND", b""))
+ 
+@app.get("/manifest.json")
+def pwa_manifest():
+    return JSONResponse(PWA_MANIFEST, media_type="application/manifest+json")
+ 
+@app.get("/sw.js")
+def pwa_service_worker():
+    return Response(SW_JS, media_type="application/javascript",
+                    headers={"Service-Worker-Allowed": "/", "Cache-Control": "no-cache"})
+ 
+@app.get("/icon-192.png")
+def pwa_icon_192():
+    return Response(_icono_png(192), media_type="image/png")
+ 
+@app.get("/icon-512.png")
+def pwa_icon_512():
+    return Response(_icono_png(512), media_type="image/png")
  
 pwd_ctx  = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer(auto_error=False)
@@ -301,6 +363,7 @@ class LoginModel(BaseModel):
  
 class UserCreateModel(BaseModel):
     username: str = ""; email: str = ""; password: str; role: str = "user"
+    devices: list = []   # IDs de equipos a asignar al crear
  
 class DeviceModel(BaseModel):
     device_id: str = ""; device: str = ""; nombre: str = "Sin nombre"
@@ -367,6 +430,7 @@ def register(data: RegisterModel):
     devices = read_json(DEVICES_FILE, {})
     devices.setdefault(username, {})
     write_json(DEVICES_FILE, devices)
+    gh_write_json("data/devices.json", DEVICES_FILE, devices)
     return {"ok": True, "msg": "Usuario creado"}
  
 @app.post("/login")
@@ -417,10 +481,24 @@ def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
     }
     write_json(USERS_FILE, users)
     gh_write_json("data/users.json", USERS_FILE, users)
-    devices = read_json(DEVICES_FILE, {})
-    devices.setdefault(username, {})
+ 
+    # Equipos asignados al crear. Sin esto el usuario entra y no ve NADA,
+    # porque quedaba registrado con la lista de equipos vacia.
+    devices  = read_json(DEVICES_FILE, {})
+    catalogo = {}
+    for asignados in devices.values():
+        if isinstance(asignados, dict): catalogo.update(asignados)
+    propios = {}
+    for did in (data.devices or []):
+        did = str(did).strip()
+        if not did: continue
+        propios[did] = catalogo.get(did, {"nombre": did, "icono": "antenna", "color": "#00c8ff"})
+    devices[username] = propios
     write_json(DEVICES_FILE, devices)
-    return {"ok": True, "msg": "Usuario creado"}
+    # Persistir tambien en GitHub: el disco de Render es efimero y sin esto
+    # las asignaciones se perdian en cada reinicio.
+    gh_write_json("data/devices.json", DEVICES_FILE, devices)
+    return {"ok": True, "msg": "Usuario creado", "devices": list(propios.keys())}
  
 @app.delete("/admin/users/{username}")
 def admin_delete_user(username: str, admin=Depends(require_admin)):
@@ -432,6 +510,7 @@ def admin_delete_user(username: str, admin=Depends(require_admin)):
         gh_write_json("data/users.json", USERS_FILE, users)
     if username in devices:
         del devices[username]; write_json(DEVICES_FILE, devices)
+        gh_write_json("data/devices.json", DEVICES_FILE, devices)
     return {"ok": True}
  
 # ── Dispositivos ───────────────────────────────────────────────────────
