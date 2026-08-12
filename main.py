@@ -8,14 +8,14 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from jose import jwt, JWTError
 from passlib.context import CryptContext
-
+ 
 # ── Config ─────────────────────────────────────────────────────────────
 BASE_URL   = os.getenv("BASE_URL",   "https://gps-backend-pqzg.onrender.com")
 SECRET     = os.getenv("SECRET",     "HERMES_SECRET_2025")
 DEVICE_KEY = os.getenv("DEVICE_KEY", "HERMES_DEVICE_KEY_123")
 ADMIN_USER = os.getenv("ADMIN_USER", "Hermesadmin")
 ADMIN_PASS = os.getenv("ADMIN_PASS", "Colombia2026*")
-
+ 
 # ── GitHub persistencia ────────────────────────────────────────────────
 # Variables de entorno en Render:
 #   GH_TOKEN  = tu personal access token de GitHub (repo scope)
@@ -25,12 +25,12 @@ GH_TOKEN  = os.getenv("GH_TOKEN",  "")
 GH_REPO   = os.getenv("GH_REPO",   "")
 GH_BRANCH = os.getenv("GH_BRANCH", "main")
 USE_GITHUB = bool(GH_TOKEN and GH_REPO)
-
+ 
 if USE_GITHUB:
     print(f"[HERMES] GitHub persistencia: {GH_REPO} ({GH_BRANCH})", file=sys.stderr)
 else:
     print("[HERMES] Sin GitHub — datos en disco local", file=sys.stderr)
-
+ 
 # ── Rutas locales ──────────────────────────────────────────────────────
 STATIC_DIR   = "static"
 FILES_DIR    = "static/files"
@@ -42,24 +42,24 @@ STATUS_FILE  = os.path.join(FILES_DIR, "status.json")
 USERS_FILE   = os.path.join(DATA_DIR,  "users.json")
 DEVICES_FILE = os.path.join(DATA_DIR,  "devices.json")
 HISTORY_FILE = os.path.join(DATA_DIR,  "history.json")
-
+ 
 for d in [STATIC_DIR, FILES_DIR, DATA_DIR]:
     os.makedirs(d, exist_ok=True)
-
+ 
 # ── App ────────────────────────────────────────────────────────────────
 app = FastAPI(title="HERMES GPS Backend")
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
     allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-
+ 
 pwd_ctx  = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer(auto_error=False)
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  GITHUB API — guardar archivos en el repo (persistencia permanente)
 # ══════════════════════════════════════════════════════════════════════
 _gh_lock = threading.Lock()
-
+ 
 def gh_get_file(path: str):
     """Obtener contenido y SHA de un archivo en GitHub."""
     try:
@@ -73,7 +73,7 @@ def gh_get_file(path: str):
             return json.loads(r.read())
     except Exception as e:
         return None
-
+ 
 def gh_put_file(path: str, content: str, message: str = "HERMES data update"):
     """Crear o actualizar archivo en GitHub."""
     if not USE_GITHUB:
@@ -100,7 +100,7 @@ def gh_put_file(path: str, content: str, message: str = "HERMES data update"):
     except Exception as e:
         print(f"[GH] Error guardando {path}: {e}", file=sys.stderr)
         return False
-
+ 
 def gh_read_json(gh_path: str, local_path: str, default):
     """Leer JSON desde GitHub si disponible, sino desde local."""
     if USE_GITHUB:
@@ -116,7 +116,7 @@ def gh_read_json(gh_path: str, local_path: str, default):
         except Exception as e:
             print(f"[GH] Read {gh_path}: {e}", file=sys.stderr)
     return read_json_local(local_path, default)
-
+ 
 def gh_write_json(gh_path: str, local_path: str, data, async_gh: bool = True):
     """Guardar JSON local inmediatamente, GitHub en background."""
     content = json.dumps(data, indent=2, ensure_ascii=False)
@@ -130,7 +130,7 @@ def gh_write_json(gh_path: str, local_path: str, data, async_gh: bool = True):
             t.start()
         else:
             gh_put_file(gh_path, content)
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  HELPERS JSON LOCALES
 # ══════════════════════════════════════════════════════════════════════
@@ -139,14 +139,14 @@ def read_json_local(path, default):
     try:
         with open(path, "r", encoding="utf-8") as f: return json.load(f)
     except: return default
-
+ 
 def read_json(path, default):
     return read_json_local(path, default)
-
+ 
 def write_json(path, data):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  INIT — cargar datos desde GitHub al arrancar
 # ══════════════════════════════════════════════════════════════════════
@@ -172,7 +172,7 @@ def sync_from_github():
                 print(f"[GH] Sincronizado: {gh_path}", file=sys.stderr)
         except Exception as e:
             print(f"[GH] No se pudo sincronizar {gh_path}: {e}", file=sys.stderr)
-
+ 
     # Sincronizar CSV
     try:
         data = gh_get_file("static/files/gps_log.csv")
@@ -183,7 +183,7 @@ def sync_from_github():
             print("[GH] Sincronizado: gps_log.csv", file=sys.stderr)
     except Exception as e:
         print(f"[GH] No se pudo sincronizar CSV: {e}", file=sys.stderr)
-
+ 
 def init_files():
     for path, default in [
         (USERS_FILE, {}), (DEVICES_FILE, {}),
@@ -198,11 +198,11 @@ def init_files():
                 "id","despertar","fecha","hora","lat","lon",
                 "estado","bateria_v","bateria_pct","device","created_at"
             ])
-
+ 
 # Arranque: primero sincronizar desde GitHub, luego init local
 sync_from_github()
 init_files()
-
+ 
 def ensure_admin():
     users = read_json(USERS_FILE, {})
     changed = ADMIN_USER not in users or users[ADMIN_USER].get("role") != "admin"
@@ -217,9 +217,9 @@ def ensure_admin():
     if USE_GITHUB and changed:
         content = json.dumps(users, indent=2, ensure_ascii=False)
         gh_put_file("data/users.json", content)
-
+ 
 ensure_admin()
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  JWT
 # ══════════════════════════════════════════════════════════════════════
@@ -227,7 +227,7 @@ def create_token(username: str, role: str) -> str:
     return jwt.encode(
         {"sub": username, "role": role, "exp": datetime.utcnow() + timedelta(days=30)},
         SECRET, algorithm="HS256")
-
+ 
 def get_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     if not credentials:
         raise HTTPException(401, "Token requerido")
@@ -237,15 +237,15 @@ def get_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
         return {"username": p["sub"], "email": p["sub"], "role": p.get("role","user")}
     except JWTError:
         raise HTTPException(401, "Token invalido")
-
+ 
 def require_admin(user=Depends(get_user)):
     if user["role"] != "admin": raise HTTPException(403, "Solo administrador")
     return user
-
+ 
 def check_device_key(request: Request):
     if request.headers.get("x-device-key") != DEVICE_KEY:
         raise HTTPException(401, "Device key invalida")
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  HELPERS
 # ══════════════════════════════════════════════════════════════════════
@@ -253,7 +253,7 @@ def parse_dt(value):
     if not value: return None
     try: return datetime.fromisoformat(value.replace("Z",""))
     except: return None
-
+ 
 def in_range(created_at, start, end):
     dt = parse_dt(created_at)
     s  = parse_dt(start)
@@ -265,35 +265,35 @@ def in_range(created_at, start, end):
         if e and dt > e.replace(tzinfo=None) + timedelta(seconds=59): return False
     except: pass
     return True
-
+ 
 def valid_point(p):
     try:
         return abs(float(p.get("lat",0) or 0)) > 0.0001 and \
                abs(float(p.get("lon",0) or 0)) > 0.0001
     except: return False
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  MODELOS
 # ══════════════════════════════════════════════════════════════════════
 class RegisterModel(BaseModel):
     username: str = ""; email: str = ""; name: str = ""; password: str
-
+ 
 class LoginModel(BaseModel):
     username: str = ""; email: str = ""; password: str
-
+ 
 class UserCreateModel(BaseModel):
     username: str = ""; email: str = ""; password: str; role: str = "user"
-
+ 
 class DeviceModel(BaseModel):
     device_id: str = ""; device: str = ""; nombre: str = "Sin nombre"
     name: str = ""; icono: str = "antenna"; color: str = "#00c8ff"; owner: str = ""
-
+ 
 class AssignModel(BaseModel):
     user_email: str; device: str
-
+ 
 class CommandModel(BaseModel):
     cmd: str; device: str = "HERMES-01"
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  COMANDOS
 # ══════════════════════════════════════════════════════════════════════
@@ -302,7 +302,7 @@ def read_commands() -> dict:
     if "cmd" in data and isinstance(data.get("cmd"), str):
         return {data.get("device","HERMES-01"): data}
     return data
-
+ 
 def write_command(device: str, cmd: str):
     cmds = read_commands()
     cmds[device] = {"device": device, "cmd": cmd,
@@ -312,10 +312,10 @@ def write_command(device: str, cmd: str):
         t = threading.Thread(target=gh_put_file,
             args=("static/files/command.json", json.dumps(cmds, indent=2)), daemon=True)
         t.start()
-
+ 
 def get_cmd_for_device(device: str) -> dict:
     return read_commands().get(device, {"cmd": "none"})
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  RUTAS
 # ══════════════════════════════════════════════════════════════════════
@@ -323,7 +323,7 @@ def get_cmd_for_device(device: str) -> dict:
 def home():
     p = os.path.join(STATIC_DIR, "index.html")
     return FileResponse(p) if os.path.exists(p) else {"ok": True, "msg": "HERMES Backend"}
-
+ 
 @app.get("/health")
 def health():
     history_count = len(read_json(HISTORY_FILE, []))
@@ -331,7 +331,7 @@ def health():
             "admin": ADMIN_USER, "github": USE_GITHUB,
             "repo": GH_REPO if USE_GITHUB else None,
             "history_points": history_count}
-
+ 
 # ── Auth ───────────────────────────────────────────────────────────────
 @app.post("/register")
 def register(data: RegisterModel):
@@ -350,7 +350,7 @@ def register(data: RegisterModel):
     devices.setdefault(username, {})
     write_json(DEVICES_FILE, devices)
     return {"ok": True, "msg": "Usuario creado"}
-
+ 
 @app.post("/login")
 def login(data: LoginModel):
     username = (data.username or data.email).strip()
@@ -374,17 +374,17 @@ def login(data: LoginModel):
     return {"ok": True, "token": create_token(username, role), "role": role,
             "username": username, "email": username,
             "user": {"username": username, "email": username, "role": role}}
-
+ 
 @app.get("/me")
 def me(user=Depends(get_user)): return user
-
+ 
 # ── Admin usuarios ─────────────────────────────────────────────────────
 @app.get("/admin/users")
 def admin_users(admin=Depends(require_admin)):
     users = read_json(USERS_FILE, {})
     return [{"username": k, "email": v.get("email",k), "role": v.get("role","user"),
              "created_at": v.get("created_at","")} for k,v in users.items()]
-
+ 
 @app.post("/admin/users")
 def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
     users    = read_json(USERS_FILE, {})
@@ -403,7 +403,7 @@ def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
     devices.setdefault(username, {})
     write_json(DEVICES_FILE, devices)
     return {"ok": True, "msg": "Usuario creado"}
-
+ 
 @app.delete("/admin/users/{username}")
 def admin_delete_user(username: str, admin=Depends(require_admin)):
     if username == ADMIN_USER: raise HTTPException(400, "No se puede eliminar el admin")
@@ -415,7 +415,7 @@ def admin_delete_user(username: str, admin=Depends(require_admin)):
     if username in devices:
         del devices[username]; write_json(DEVICES_FILE, devices)
     return {"ok": True}
-
+ 
 # ── Dispositivos ───────────────────────────────────────────────────────
 @app.post("/devices")
 def add_device(data: DeviceModel, user=Depends(get_user)):
@@ -433,12 +433,12 @@ def add_device(data: DeviceModel, user=Depends(get_user)):
     write_json(DEVICES_FILE, devices)
     gh_write_json("data/devices.json", DEVICES_FILE, devices)
     return {"ok": True, "device": devices[owner][device_id]}
-
+ 
 @app.post("/admin/device")
 def admin_add_device(data: DeviceModel, admin=Depends(require_admin)):
     data.owner = data.owner or ADMIN_USER
     return add_device(data, admin)
-
+ 
 @app.post("/admin/assign")
 def admin_assign(data: AssignModel, admin=Depends(require_admin)):
     devices = read_json(DEVICES_FILE, {})
@@ -464,7 +464,7 @@ def admin_assign(data: AssignModel, admin=Depends(require_admin)):
     write_json(DEVICES_FILE, devices)
     gh_write_json("data/devices.json", DEVICES_FILE, devices)
     return {"ok": True, "msg": "Equipo asignado"}
-
+ 
 @app.get("/devices")
 def list_devices(user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
@@ -475,7 +475,7 @@ def list_devices(user=Depends(get_user)):
                 d["owner"] = owner; result.append(d)
         return result
     return list(devices.get(user["username"], {}).values())
-
+ 
 @app.put("/devices/{device_id}")
 def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
@@ -504,7 +504,7 @@ def update_device(device_id: str, data: DeviceModel, user=Depends(get_user)):
         gh_write_json("data/devices.json", DEVICES_FILE, devices)
         return {"ok": True, "device": devices[owner][device_id]}
     raise HTTPException(404, "Dispositivo no encontrado")
-
+ 
 @app.delete("/devices/{device_id}")
 def delete_device(device_id: str, user=Depends(get_user)):
     devices = read_json(DEVICES_FILE, {})
@@ -520,13 +520,13 @@ def delete_device(device_id: str, user=Depends(get_user)):
         gh_write_json("data/devices.json", DEVICES_FILE, devices)
         return {"ok": True}
     raise HTTPException(404, "Dispositivo no encontrado")
-
+ 
 # ── Device status — ESP32 → Backend ────────────────────────────────────
 @app.post("/device-status")
 async def device_status_post(request: Request):
     check_device_key(request)
     data = await request.json()
-
+ 
     device      = data.get("device",     "HERMES-01")
     estado      = data.get("estado",     "SIN ESTADO")
     despertar   = data.get("despertar",  data.get("wake",   0))
@@ -540,21 +540,32 @@ async def device_status_post(request: Request):
     bateria_pct = data.get("bateria_pct", data.get("bat_pct",0))
     wifi        = data.get("wifi", "conectado")
     now         = datetime.utcnow().isoformat()
-
+ 
     fw_version = data.get("fw_version", "")
+ 
+    # Respaldo de marca temporal: si el equipo no logró leer fecha/hora del
+    # satélite, se derivan de la hora del servidor (UTC-5 Colombia) en lugar de
+    # guardar "No disponible", que dejaba huecos en el historial y la ruta.
+    if (not fecha) or (not hora) or hora == "No disponible":
+        _col = datetime.utcnow() - timedelta(hours=5)
+        if not fecha:
+            fecha = _col.strftime("%d/%m/%Y")
+        if (not hora) or hora == "No disponible":
+            hora = _col.strftime("%H:%M:%S")
+ 
     row = {"device": device, "estado": estado, "despertar": despertar,
            "ciclo_min": ciclo_min, "fallos_gps": fallos_gps,
            "lat": lat, "lon": lon, "fecha": fecha, "hora": hora,
            "bateria_v": bateria_v, "bateria_pct": bateria_pct,
            "wifi": wifi, "fw_version": fw_version, "created_at": now}
-
+ 
     with _gh_lock:
         # 1. Status local + GitHub
         all_status = read_json(STATUS_FILE, {})
         all_status[device] = row
         write_json(STATUS_FILE, all_status)
         gh_write_json("static/files/status.json", STATUS_FILE, all_status)
-
+ 
         # 2. History local + GitHub (solo si tiene coordenadas válidas)
         history = read_json(HISTORY_FILE, [])
         history.append(row)
@@ -568,12 +579,12 @@ async def device_status_post(request: Request):
                 args=("data/history.json", content, f"GPS {device} {fecha} {hora}"),
                 daemon=True)
             t.start()
-
+ 
         # 3. CSV append local
         with open(CSV_PATH, "a", encoding="utf-8", newline="") as f:
             csv.writer(f).writerow([len(history), despertar, fecha, hora,
                                      lat, lon, estado, bateria_v, bateria_pct, device, now])
-
+ 
         # 4. Sincronizar CSV completo a GitHub cada 10 puntos
         if USE_GITHUB and len(history) % 10 == 0:
             try:
@@ -584,22 +595,22 @@ async def device_status_post(request: Request):
                     daemon=True)
                 t2.start()
             except: pass
-
+ 
     return {"ok": True, "status": row}
-
+ 
 @app.get("/device-status")
 def device_status_get(device: str = "HERMES-01"):
     return read_json(STATUS_FILE, {}).get(device, {})
-
+ 
 @app.get("/status")
 def get_all_status(): return read_json(STATUS_FILE, {})
-
+ 
 @app.get("/status/{device_id}")
 def get_status(device_id: str):
     s = read_json(STATUS_FILE, {})
     if device_id not in s: raise HTTPException(404, "Dispositivo no encontrado")
     return s[device_id]
-
+ 
 # ── Historial ──────────────────────────────────────────────────────────
 @app.get("/history")
 def get_history(device: str = None, start: str = None, end: str = None):
@@ -610,28 +621,28 @@ def get_history(device: str = None, start: str = None, end: str = None):
         if not valid_point(h): continue
         result.append(h)
     return result
-
+ 
 @app.get("/latest/{device_id}")
 def latest(device_id: str):
     hist = [h for h in read_json(HISTORY_FILE,[])
             if h.get("device")==device_id and valid_point(h)]
     if not hist: raise HTTPException(404, "Sin ubicacion")
     return hist[-1]
-
+ 
 @app.get("/fleet/latest")
 def fleet_latest(devices: str = None):
     status = read_json(STATUS_FILE, {})
     if not devices: return status
     selected = [d.strip() for d in devices.split(",") if d.strip()]
     return {d: status.get(d) for d in selected if d in status}
-
+ 
 # ── Comandos ────────────────────────────────────────────────────────────
 @app.post("/command")
 def set_command(data: CommandModel):
     write_command(data.device or "HERMES-01", data.cmd.strip())
     return {"ok": True, "device": data.device, "cmd": data.cmd,
             "msg": f"Comando guardado para {data.device}. Se aplica en el proximo despertar."}
-
+ 
 @app.get("/command")
 def get_command(device: str = "HERMES-01", clear: bool = False):
     entry = get_cmd_for_device(device)
@@ -640,7 +651,12 @@ def get_command(device: str = "HERMES-01", clear: bool = False):
         cmds = read_commands()
         if device in cmds:
             attempts = cmds[device].get("attempts",0) + 1
-            if attempts >= 2:
+            # update/reset son de un solo disparo: se auto-confirman por Telegram
+            # y por el reinicio del ESP32, así que se limpian en la PRIMERA lectura
+            # para evitar doble flasheo / doble reinicio. Los comandos de ciclo
+            # conservan el reintento (attempts>=2) por si la 1a peticion se pierde.
+            one_shot = cmd in ("update", "reset")
+            if one_shot or attempts >= 2:
                 cmds[device]["cmd"] = "none"
                 cmds[device]["executed_at"] = datetime.utcnow().isoformat()
             cmds[device]["attempts"] = attempts
@@ -650,16 +666,16 @@ def get_command(device: str = "HERMES-01", clear: bool = False):
                     args=("static/files/command.json", json.dumps(cmds,indent=2)), daemon=True)
                 t.start()
     return {"device": device, "cmd": cmd, "created_at": entry.get("created_at","")}
-
+ 
 @app.get("/command/status")
 def command_status(user=Depends(get_user)): return read_commands()
-
+ 
 @app.delete("/command/{device}")
 def clear_device_command(device: str, user=Depends(get_user)):
     cmds = read_commands()
     if device in cmds: cmds[device]["cmd"] = "none"; write_json(COMMAND_FILE, cmds)
     return {"ok": True}
-
+ 
 # ── CSV ─────────────────────────────────────────────────────────────────
 @app.get("/files/gps_log.csv")
 def download_csv(device: str = None, start: str = None, end: str = None):
@@ -687,17 +703,17 @@ def download_csv(device: str = None, start: str = None, end: str = None):
                                     "estado","bateria_v","bateria_pct","device","created_at"])
     return FileResponse(CSV_PATH, media_type="text/csv", filename="gps_log.csv",
                        headers={"Access-Control-Allow-Origin":"*","Cache-Control":"no-cache"})
-
+ 
 @app.get("/csv")
 def csv_alt(device: str = None, start: str = None, end: str = None):
     return download_csv(device=device, start=start, end=end)
-
+ 
 # ── KML ─────────────────────────────────────────────────────────────────
 @app.get("/files/ruta.kml")
 def generar_kml(device: str = None, start: str = None, end: str = None):
     rows = get_history(device=device, start=start, end=end)
     if not rows: raise HTTPException(404, "No hay puntos GPS en el rango seleccionado")
-
+ 
     coords_line = ""
     placemarks  = ""
     count = 0
@@ -720,14 +736,14 @@ def generar_kml(device: str = None, start: str = None, end: str = None):
       <styleUrl>#pointStyle</styleUrl>
       <Point><coordinates>{lon},{lat},0</coordinates></Point>
     </Placemark>"""
-
+ 
     if not coords_line:
         raise HTTPException(404, "Sin coordenadas GPS validas en el rango")
-
+ 
     dev_name = device or "HERMES"
     d_tag    = (start or "")[:10] or datetime.utcnow().strftime("%Y-%m-%d")
     d_tag2   = (end   or "")[:10] or datetime.utcnow().strftime("%Y-%m-%d")
-
+ 
     kml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
 <Document>
@@ -756,28 +772,28 @@ def generar_kml(device: str = None, start: str = None, end: str = None):
 {placemarks}
 </Document>
 </kml>'''
-
+ 
     with open(KML_PATH,"w",encoding="utf-8") as f: f.write(kml)
     fname = f"ruta_{dev_name}_{d_tag}.kml"
     return FileResponse(KML_PATH,
         media_type="application/vnd.google-earth.kml+xml", filename=fname,
         headers={"Access-Control-Allow-Origin":"*","Cache-Control":"no-cache"})
-
+ 
 @app.get("/export/kml")
 def export_kml(device: str = None, start: str = None, end: str = None):
     return generar_kml(device=device, start=start, end=end)
-
+ 
 # ══════════════════════════════════════════════════════════════════════
 #  OTA — Actualización remota de firmware
 # ══════════════════════════════════════════════════════════════════════
 import shutil
-
+ 
 FIRMWARE_DIR  = os.path.join(STATIC_DIR, "firmware")
 FIRMWARE_PATH = os.path.join(FIRMWARE_DIR, "hermes.bin")
 FIRMWARE_VER  = os.path.join(FIRMWARE_DIR, "version.txt")
-
+ 
 os.makedirs(FIRMWARE_DIR, exist_ok=True)
-
+ 
 @app.get("/firmware/hermes.bin")
 def download_firmware():
     """ESP32 descarga el firmware actualizado."""
@@ -787,7 +803,7 @@ def download_firmware():
         media_type="application/octet-stream",
         filename="hermes.bin",
         headers={"Cache-Control": "no-cache"})
-
+ 
 @app.get("/firmware/version")
 def get_firmware_version():
     """Retorna la versión del firmware disponible."""
@@ -797,7 +813,7 @@ def get_firmware_version():
         ver = f.read().strip()
     size = os.path.getsize(FIRMWARE_PATH) if os.path.exists(FIRMWARE_PATH) else 0
     return {"version": ver, "available": True, "size_kb": round(size/1024, 1)}
-
+ 
 @app.post("/firmware/upload")
 async def upload_firmware(request: Request, admin=Depends(require_admin)):
     """Admin sube nuevo .bin desde la webapp."""
@@ -807,19 +823,19 @@ async def upload_firmware(request: Request, admin=Depends(require_admin)):
             raise HTTPException(400, "Archivo muy pequeño — no parece un firmware válido")
         if len(body) > 4_000_000:
             raise HTTPException(400, "Archivo muy grande — máximo 4MB")
-
+ 
         # Guardar .bin
         with open(FIRMWARE_PATH, "wb") as f:
             f.write(body)
-
+ 
         # Guardar versión desde header
         version = request.headers.get("X-Firmware-Version", "unknown")
         with open(FIRMWARE_VER, "w") as f:
             f.write(version)
-
+ 
         size_kb = round(len(body) / 1024, 1)
         print(f"[OTA] Firmware subido: {size_kb} KB v{version}", flush=True)
-
+ 
         # Subir a GitHub también
         if USE_GITHUB:
             import base64
@@ -828,14 +844,14 @@ async def upload_firmware(request: Request, admin=Depends(require_admin)):
                 args=(f"static/firmware/hermes.bin", encoded,
                       f"OTA firmware v{version}"), daemon=True)
             t.start()
-
+ 
         return {"ok": True, "size_kb": size_kb, "version": version,
                 "msg": f"Firmware v{version} ({size_kb} KB) subido correctamente"}
-
+ 
     except HTTPException: raise
     except Exception as e:
         raise HTTPException(500, f"Error subiendo firmware: {str(e)}")
-
+ 
 @app.delete("/firmware")
 def delete_firmware(admin=Depends(require_admin)):
     """Eliminar firmware disponible."""
