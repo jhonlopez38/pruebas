@@ -6,27 +6,47 @@
 <script>
 /* En movil VERTICAL la pantalla es demasiado estrecha para las 3 columnas.
    En lugar de reordenar el tablero, se renderiza a un ancho fijo de escritorio
-   y el navegador lo escala: se conserva la vista completa tipo dashboard.
-   Queda el zoom con los dedos para leer cualquier zona. */
+   y se escala para que quepa entero. Queda el zoom con los dedos.
+
+   IMPORTANTE: solo se toca el viewport cuando el MODO cambia de verdad.
+   Reescribirlo en cada evento provoca un nuevo 'resize' -> se reescribe otra
+   vez -> bucle infinito, que es lo que hacia parpadear la pantalla. Por eso
+   tampoco se escucha 'resize' (en movil se dispara al ocultarse la barra de
+   direcciones); basta con 'orientationchange'. */
 (function(){
+  var ANCHO_TABLERO = 1150;
+  var modoActual = null;
+
   function ajustarViewport(){
     var vp = document.querySelector('meta[name=viewport]');
     if(!vp) return;
-    var vertical = window.innerHeight > window.innerWidth;
-    var estrecha = Math.min(window.innerWidth, window.innerHeight) <= 820;
-    if(vertical && estrecha){
-      vp.setAttribute('content','width=1150,user-scalable=yes,maximum-scale=5');
+    var w = window.screen.width, h = window.screen.height;
+    var vertical = (window.orientation === 0 || window.orientation === 180)
+                 || (window.innerHeight > window.innerWidth);
+    var estrecha = Math.min(w, h) <= 820;
+    var modo = (vertical && estrecha) ? 'tablero' : 'nativo';
+    if(modo === modoActual) return;          // sin cambios -> no tocar nada
+    modoActual = modo;
+    if(modo === 'tablero'){
+      // Escala explicita para que el tablero completo entre en la pantalla.
+      var escala = Math.min(1, (vertical ? Math.min(w,h) : Math.max(w,h)) / ANCHO_TABLERO);
+      vp.setAttribute('content',
+        'width='+ANCHO_TABLERO+',initial-scale='+escala.toFixed(3)+
+        ',user-scalable=yes,maximum-scale=5');
     }else{
-      vp.setAttribute('content','width=device-width,initial-scale=1.0,user-scalable=yes,maximum-scale=5');
+      vp.setAttribute('content',
+        'width=device-width,initial-scale=1.0,user-scalable=yes,maximum-scale=5');
     }
   }
+
   ajustarViewport();
-  window.addEventListener('orientationchange', function(){ setTimeout(ajustarViewport, 250); });
-  window.addEventListener('resize', function(){ setTimeout(ajustarViewport, 250); });
+  window.addEventListener('orientationchange', function(){ setTimeout(ajustarViewport, 350); });
 })();
 </script>
 <title>HERMES GPS Tactico</title>
 <link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <meta name="theme-color" content="#00c8ff">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1081,15 +1101,20 @@ function setTile(el,t){
 }
 setTimeout(()=>map.invalidateSize(),500);
 
-// Al girar el movil o cambiar el tamano, Leaflet no recalcula solo el area
-// del mapa y queda cortado o en gris. Se fuerza el redibujado.
-let _rsTmr=null;
-function _redibujarMapa(){
+// Al girar el movil Leaflet no recalcula solo el area del mapa y queda
+// cortado o en gris. Se fuerza el redibujado, pero SOLO si el tamano cambio
+// de verdad: en movil el evento 'resize' salta tambien al ocultarse la barra
+// de direcciones, y redibujar en cada uno provocaba parpadeo.
+let _rsTmr=null, _ultimoAncho=window.innerWidth, _ultimoAlto=window.innerHeight;
+function _redibujarMapa(forzar){
+  if(!forzar && Math.abs(window.innerWidth-_ultimoAncho)<60
+             && Math.abs(window.innerHeight-_ultimoAlto)<120) return;
+  _ultimoAncho=window.innerWidth; _ultimoAlto=window.innerHeight;
   clearTimeout(_rsTmr);
-  _rsTmr=setTimeout(()=>{ try{ map.invalidateSize(); }catch(e){} },250);
+  _rsTmr=setTimeout(()=>{ try{ map.invalidateSize(); }catch(e){} },300);
 }
-window.addEventListener("resize",_redibujarMapa);
-window.addEventListener("orientationchange",()=>setTimeout(_redibujarMapa,300));
+window.addEventListener("resize",()=>_redibujarMapa(false));
+window.addEventListener("orientationchange",()=>setTimeout(()=>_redibujarMapa(true),400));
 
 // marcadores live
 let mainMk=null, polyln=null, dots=[];
