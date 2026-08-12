@@ -2,7 +2,29 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes,maximum-scale=5">
+<script>
+/* En movil VERTICAL la pantalla es demasiado estrecha para las 3 columnas.
+   En lugar de reordenar el tablero, se renderiza a un ancho fijo de escritorio
+   y el navegador lo escala: se conserva la vista completa tipo dashboard.
+   Queda el zoom con los dedos para leer cualquier zona. */
+(function(){
+  function ajustarViewport(){
+    var vp = document.querySelector('meta[name=viewport]');
+    if(!vp) return;
+    var vertical = window.innerHeight > window.innerWidth;
+    var estrecha = Math.min(window.innerWidth, window.innerHeight) <= 820;
+    if(vertical && estrecha){
+      vp.setAttribute('content','width=1150,user-scalable=yes,maximum-scale=5');
+    }else{
+      vp.setAttribute('content','width=device-width,initial-scale=1.0,user-scalable=yes,maximum-scale=5');
+    }
+  }
+  ajustarViewport();
+  window.addEventListener('orientationchange', function(){ setTimeout(ajustarViewport, 250); });
+  window.addEventListener('resize', function(){ setTimeout(ajustarViewport, 250); });
+})();
+</script>
 <title>HERMES GPS Tactico</title>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#00c8ff">
@@ -253,46 +275,16 @@ body{background:var(--bg);color:var(--text);font-family:Exo 2,sans-serif;height:
 .lp::-webkit-scrollbar,.rp::-webkit-scrollbar{width:2px;}
 .lp::-webkit-scrollbar-thumb,.rp::-webkit-scrollbar-thumb{background:#1a3a5c;}
 
-/* ── RESPONSIVE: MOVIL VERTICAL ───────────────────────────
-   Las 3 columnas fijas (260+280px) no caben en pantalla estrecha
-   y aplastan el mapa. Solo en VERTICAL se apilan en una columna.
-   La condicion de orientacion es imprescindible: sin ella esta
-   regla tambien se activaba en apaisado y chocaba con la de abajo
-   (areas de 1 columna + 3 columnas = todo apretado a la izquierda). */
-@media (max-width:820px) and (orientation:portrait){
-  body{height:auto;min-height:100vh;overflow-y:auto;overflow-x:hidden;}
-  .main{grid-template-columns:1fr;grid-template-areas:"m" "l" "r";}
-  .mc{grid-area:m;height:56vh;min-height:320px;}
-  .lp{grid-area:l;border-right:none;border-top:1px solid #1a3a5c;overflow:visible;}
-  .rp{grid-area:r;border-left:none;border-top:1px solid #1a3a5c;overflow:visible;}
-  .conwrap{height:106px;}
-  .con{height:70px;}
-  .moverlay{bottom:120px;min-width:0;max-width:58%;padding:7px 9px;}
-  .moverlay h4{font-size:10px;}
-  .mor{font-size:9px;}
-  .mcbtn{bottom:120px;}
-  .hdr{height:auto;min-height:56px;flex-wrap:wrap;gap:6px;padding:6px 10px;}
-  .hstats{flex-wrap:wrap;gap:5px;}
-}
-
-/* Vertical muy estrecho: mapa algo mas bajo */
-@media (max-width:420px) and (orientation:portrait){
-  .mc{height:50vh;min-height:285px;}
-  .moverlay{max-width:66%;}
-}
-
-/* ── RESPONSIVE: MOVIL HORIZONTAL ──────────────────────────
-   En apaisado se CONSERVA el dashboard de 3 columnas: solo se
-   estrechan los laterales y se compacta cabecera/consola para
-   que el mapa gane area. Se anulan expresamente las areas y
-   alturas de la regla vertical. */
+/* ── RESPONSIVE ────────────────────────────────────────────
+   En VERTICAL no se reordena nada: el script de viewport
+   renderiza el tablero a 1150px y el navegador lo escala, con
+   lo que se conserva la vista completa tipo dashboard.
+   En HORIZONTAL si hay ancho real, pero falta alto: se estrechan
+   los laterales y se compacta cabecera/consola para que el mapa
+   gane area util, manteniendo las 3 columnas. */
 @media (orientation:landscape) and (max-height:600px){
   body{height:100vh;overflow:hidden;}
-  .main{grid-template-columns:180px 1fr 200px;grid-template-areas:none;}
-  .lp,.mc,.rp{grid-area:auto;}
-  .mc{height:auto;min-height:0;}
-  .lp{border-right:1px solid #1a3a5c;border-top:none;overflow-y:auto;}
-  .rp{border-left:1px solid #1a3a5c;border-top:none;overflow-y:auto;}
+  .main{grid-template-columns:180px 1fr 200px;}
   .hdr{height:44px;min-height:0;padding:0 8px;flex-wrap:nowrap;}
   .conwrap{height:76px;padding:5px 9px;}
   .con{height:44px;font-size:9px;line-height:1.5;}
@@ -530,6 +522,8 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
       <div class="ci-val" id="cred-user">--</div>
       <span class="ci-lbl" style="margin-top:10px;display:block">CONTRASEÑA</span>
       <div class="ci-val" id="cred-pass">--</div>
+      <span class="ci-lbl" style="margin-top:10px;display:block">EQUIPOS ASIGNADOS</span>
+      <div class="ci-val" id="cred-devs">--</div>
     </div>
     <p style="font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;margin-bottom:10px">Comparte estas credenciales con el usuario. La contraseña no se puede recuperar después.</p>
     <button class="cred-copy" onclick="copiarCredenciales()">📋 COPIAR CREDENCIALES</button>
@@ -660,6 +654,14 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
         <option value="user">Usuario normal</option>
         <option value="admin">Administrador</option>
       </select>
+      <div style="margin-top:6px">
+        <div style="font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;margin-bottom:3px">
+          EQUIPOS ASIGNADOS (sin esto el usuario no vera ninguno)
+        </div>
+        <div id="aUsrDevs" style="max-height:96px;overflow-y:auto;border:1px solid #1a3a5c;border-radius:3px;padding:5px;background:#0d1f38">
+          <span style="font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8">Cargando equipos...</span>
+        </div>
+      </div>
       <button class="adm-btn adm-btn-c" onclick="admCreateUser()">+ CREAR USUARIO</button>
     </div>
     <div class="adm-sec">
@@ -1265,7 +1267,7 @@ function admTab(el,pane){
   document.querySelectorAll(".adm-pane").forEach(x=>x.classList.remove("active"));
   el.classList.add("active");
   document.getElementById(pane).classList.add("active");
-  if(pane==="aT-users")admLoadUsers();
+  if(pane==="aT-users"){admLoadUsers();admLlenarEquiposUsuario();}
   if(pane==="aT-ota")otaCargarVersion();
   if(pane==="aT-devs")admLoadDevices();
 }
@@ -1310,16 +1312,35 @@ async function admAddDevice(){
   }catch(e){msg.style.color="#ff3355";msg.innerText="Error de conexion";}
 }
 
+// Llena la lista de equipos disponibles para asignar al crear un usuario.
+function admLlenarEquiposUsuario(){
+  const cont=document.getElementById("aUsrDevs");
+  if(!cont) return;
+  const ids=Array.from(document.getElementById("devSelect").options).map(o=>o.value).filter(Boolean);
+  if(!ids.length){
+    cont.innerHTML='<span style="font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8">No hay equipos registrados</span>';
+    return;
+  }
+  cont.innerHTML=ids.map(id=>
+    `<label style="display:flex;align-items:center;gap:6px;font-family:Share Tech Mono,monospace;font-size:10px;color:#c6d4e0;padding:2px 0;cursor:pointer">
+       <input type="checkbox" class="aUsrDevChk" value="${id}" style="width:auto;margin:0"> ${id}
+     </label>`).join("");
+}
+
 async function admCreateUser(){
   const usr=document.getElementById("aUsr").value.trim();
   const pass=document.getElementById("aUsrPass").value;
   const role=document.getElementById("aUsrRole").value;
   const msg=document.getElementById("adminMsg");
+  const devs=Array.from(document.querySelectorAll(".aUsrDevChk:checked")).map(c=>c.value);
   if(!usr||!pass){msg.style.color="#ff3355";msg.innerText="Usuario y contrasena requeridos";return;}
+  if(role==="user" && !devs.length){
+    if(!confirm("No asignaste ningun equipo.\n\nEl usuario podra iniciar sesion pero NO vera ningun dispositivo.\n\n¿Crear de todos modos?")) return;
+  }
   try{
     const res=await fetch(BASE+"/admin/users",{method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
-      body:JSON.stringify({username:usr,email:usr,password:pass,role})});
+      body:JSON.stringify({username:usr,email:usr,password:pass,role,devices:devs})});
     const d=await res.json();
     if(res.ok){
       msg.style.color="#00ff88";
@@ -1328,10 +1349,12 @@ async function admCreateUser(){
       // mostrar credenciales en modal
       document.getElementById("cred-user").innerText=usr;
       document.getElementById("cred-pass").innerText=pass;
+      document.getElementById("cred-devs").innerText=devs.length?devs.join(", "):"NINGUNO";
       document.getElementById("credModal").classList.add("show");
       // limpiar campos
       document.getElementById("aUsr").value="";
       document.getElementById("aUsrPass").value="";
+      document.querySelectorAll(".aUsrDevChk:checked").forEach(c=>c.checked=false);
     } else {
       msg.style.color="#ff3355";
       msg.innerText=d.detail||"Error";
@@ -1343,15 +1366,34 @@ function cerrarCredModal(){document.getElementById("credModal").classList.remove
 function copiarCredenciales(){
   const user=document.getElementById("cred-user").innerText;
   const pass=document.getElementById("cred-pass").innerText;
-  const txt=`HERMES GPS - Credenciales de acceso
+  const devs=document.getElementById("cred-devs").innerText;
+  const txt =
+`HERMES — SISTEMA GPS TACTICO
+Acceso a la plataforma de seguimiento
+
+ENLACE
+${BASE}
+
+CREDENCIALES
 Usuario: ${user}
-Contraseña: ${pass}
-Acceso: https://gps-backend-pqzg.onrender.com`;
+Contrasena: ${pass}
+
+EQUIPOS ASIGNADOS
+${devs}
+
+COMO INGRESAR
+1. Abre el enlace en Chrome (Android) o Safari (iPhone).
+2. Ingresa el usuario y la contrasena de arriba.
+3. Opcional: toca "INSTALAR APP" para anadirla a la pantalla de inicio.
+
+NOTA: la primera carga puede tardar hasta 1 minuto si el servidor
+estaba en reposo. Cambia la contrasena tras el primer ingreso y no
+compartas estos datos con terceros.`;
   navigator.clipboard.writeText(txt).then(()=>{
     const btn=document.querySelector(".cred-copy");
     btn.innerText="✅ COPIADO";
     setTimeout(()=>btn.innerText="📋 COPIAR CREDENCIALES",2000);
-  });
+  }).catch(()=>alert("No se pudo copiar automaticamente:\n\n"+txt));
 }
 
 async function admDeleteUser(username){
@@ -2296,13 +2338,32 @@ async function guardarEditDev(){
 
 if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
 let deferredPrompt=null;
-window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;});
+window.addEventListener("beforeinstallprompt",e=>{
+  e.preventDefault(); deferredPrompt=e;
+  const b=document.getElementById("installAppBtn");
+  if(b){ b.style.borderColor="#00ff88"; b.style.color="#00ff88"; b.title="Listo para instalar"; }
+});
+// Si ya esta instalada, el boton sobra.
+window.addEventListener("appinstalled",()=>{
+  deferredPrompt=null;
+  const b=document.getElementById("installAppBtn"); if(b) b.style.display="none";
+  log("Aplicacion instalada","s");
+});
+if(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches){
+  document.addEventListener("DOMContentLoaded",()=>{
+    const b=document.getElementById("installAppBtn"); if(b) b.style.display="none";
+  });
+}
 async function installApp(){
   if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;return;}
   const ua=navigator.userAgent;
-  if(/iPad|iPhone|iPod/.test(ua))alert("iPhone: Compartir → Agregar a pantalla de inicio");
-  else if(/Android/.test(ua))alert("Android: Menu 3 puntos → Agregar a pantalla de inicio");
-  else alert("PC Chrome/Edge: Icono de instalacion en barra de direcciones");
+  if(/iPad|iPhone|iPod/.test(ua)){
+    alert("iPhone/iPad:\n\n1. Abre esta pagina en Safari (no funciona en Chrome iOS)\n2. Toca el boton Compartir\n3. Elige 'Agregar a pantalla de inicio'");
+  }else if(/Android/.test(ua)){
+    alert("Android:\n\n1. Usa Chrome\n2. Menu de 3 puntos (arriba a la derecha)\n3. Elige 'Instalar aplicacion' o 'Agregar a pantalla de inicio'\n\nSi no aparece la opcion, recarga la pagina y espera unos segundos.");
+  }else{
+    alert("PC (Chrome o Edge):\n\nIcono de instalacion en la barra de direcciones,\no Menu → Guardar y compartir → Instalar.");
+  }
 }
 
 // ═══════════════════════════════════════════════════════════
