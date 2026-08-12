@@ -255,45 +255,53 @@ body{background:var(--bg);color:var(--text);font-family:Exo 2,sans-serif;height:
 
 /* ── RESPONSIVE: MOVIL VERTICAL ───────────────────────────
    Las 3 columnas fijas (260+280px) no caben en pantalla estrecha
-   y aplastan el mapa. Se apilan en una sola columna, con el mapa
-   arriba y altura propia, y la pagina pasa a poder desplazarse. */
-@media (max-width:820px){
+   y aplastan el mapa. Solo en VERTICAL se apilan en una columna.
+   La condicion de orientacion es imprescindible: sin ella esta
+   regla tambien se activaba en apaisado y chocaba con la de abajo
+   (areas de 1 columna + 3 columnas = todo apretado a la izquierda). */
+@media (max-width:820px) and (orientation:portrait){
   body{height:auto;min-height:100vh;overflow-y:auto;overflow-x:hidden;}
   .main{grid-template-columns:1fr;grid-template-areas:"m" "l" "r";}
-  .mc{grid-area:m;height:58vh;min-height:330px;}
+  .mc{grid-area:m;height:56vh;min-height:320px;}
   .lp{grid-area:l;border-right:none;border-top:1px solid #1a3a5c;overflow:visible;}
   .rp{grid-area:r;border-left:none;border-top:1px solid #1a3a5c;overflow:visible;}
-  .conwrap{height:112px;}
-  .con{height:74px;}
-  .moverlay{bottom:126px;min-width:0;max-width:58%;padding:7px 9px;}
+  .conwrap{height:106px;}
+  .con{height:70px;}
+  .moverlay{bottom:120px;min-width:0;max-width:58%;padding:7px 9px;}
   .moverlay h4{font-size:10px;}
   .mor{font-size:9px;}
-  .mcbtn{bottom:126px;}
+  .mcbtn{bottom:120px;}
   .hdr{height:auto;min-height:56px;flex-wrap:wrap;gap:6px;padding:6px 10px;}
   .hstats{flex-wrap:wrap;gap:5px;}
 }
 
-/* ── RESPONSIVE: MOVIL HORIZONTAL (pantalla baja) ──────────
-   En apaisado sobra ancho pero falta alto: se estrechan las
-   columnas laterales y se compacta consola/cabecera para que
-   el mapa conserve area util. */
-@media (orientation:landscape) and (max-height:560px){
-  .main{grid-template-columns:190px 1fr 210px;}
-  .hdr{height:46px;padding:0 8px;}
-  .conwrap{height:84px;padding:5px 9px;}
-  .con{height:50px;font-size:9px;line-height:1.5;}
-  .moverlay{bottom:96px;min-width:0;max-width:44%;padding:6px 8px;}
-  .moverlay h4{font-size:10px;margin-bottom:2px;}
-  .mor{font-size:9px;margin:1px 0;}
-  .mcbtn{bottom:96px;}
-  .mtab{padding:5px 11px;}
-  .lp,.rp{padding:8px;}
+/* Vertical muy estrecho: mapa algo mas bajo */
+@media (max-width:420px) and (orientation:portrait){
+  .mc{height:50vh;min-height:285px;}
+  .moverlay{max-width:66%;}
 }
 
-/* Pantallas muy estrechas: aun mas compacto */
-@media (max-width:420px){
-  .mc{height:52vh;min-height:290px;}
-  .moverlay{max-width:66%;}
+/* ── RESPONSIVE: MOVIL HORIZONTAL ──────────────────────────
+   En apaisado se CONSERVA el dashboard de 3 columnas: solo se
+   estrechan los laterales y se compacta cabecera/consola para
+   que el mapa gane area. Se anulan expresamente las areas y
+   alturas de la regla vertical. */
+@media (orientation:landscape) and (max-height:600px){
+  body{height:100vh;overflow:hidden;}
+  .main{grid-template-columns:180px 1fr 200px;grid-template-areas:none;}
+  .lp,.mc,.rp{grid-area:auto;}
+  .mc{height:auto;min-height:0;}
+  .lp{border-right:1px solid #1a3a5c;border-top:none;overflow-y:auto;}
+  .rp{border-left:1px solid #1a3a5c;border-top:none;overflow-y:auto;}
+  .hdr{height:44px;min-height:0;padding:0 8px;flex-wrap:nowrap;}
+  .conwrap{height:76px;padding:5px 9px;}
+  .con{height:44px;font-size:9px;line-height:1.5;}
+  .moverlay{bottom:88px;min-width:0;max-width:42%;padding:6px 8px;}
+  .moverlay h4{font-size:10px;margin-bottom:2px;}
+  .mor{font-size:9px;margin:1px 0;}
+  .mcbtn{bottom:88px;}
+  .mtab{padding:4px 10px;}
+  .lp,.rp{padding:7px;}
 }
 .sec{margin-bottom:11px;}
 .sec-t{font-family:Rajdhani,sans-serif;font-size:9px;letter-spacing:3px;color:#00c8ff;border-bottom:1px solid #1a3a5c;padding-bottom:3px;margin-bottom:6px;font-weight:600;}
