@@ -27,20 +27,31 @@
     var modo = (vertical && estrecha) ? 'tablero' : 'nativo';
     if(modo === modoActual) return;          // sin cambios -> no tocar nada
     modoActual = modo;
+    var raiz = document.documentElement;
     if(modo === 'tablero'){
+      raiz.classList.add('vp-tablero');
       // Escala explicita para que el tablero completo entre en la pantalla.
       var escala = Math.min(1, (vertical ? Math.min(w,h) : Math.max(w,h)) / ANCHO_TABLERO);
       vp.setAttribute('content',
         'width='+ANCHO_TABLERO+',initial-scale='+escala.toFixed(3)+
         ',user-scalable=yes,maximum-scale=5');
     }else{
+      raiz.classList.remove('vp-tablero');
       vp.setAttribute('content',
         'width=device-width,initial-scale=1.0,user-scalable=yes,maximum-scale=5');
     }
   }
 
   ajustarViewport();
-  window.addEventListener('orientationchange', function(){ setTimeout(ajustarViewport, 350); });
+  window.addEventListener('orientationchange', function(){
+    setTimeout(function(){
+      ajustarViewport();
+      // Leaflet debe recalcular tras el cambio de altura del tablero.
+      if(window.map && window.map.invalidateSize){
+        setTimeout(function(){ try{ window.map.invalidateSize(); }catch(e){} }, 250);
+      }
+    }, 350);
+  });
 })();
 </script>
 <title>HERMES GPS Tactico</title>
@@ -61,6 +72,13 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:Exo 2,sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
+
+/* Movil vertical con el tablero escalado: la pantalla del telefono es mucho
+   mas alta que ancha, y estirar el tablero a 100vh dejaba el mapa como una
+   franja enorme. Se fija una altura de proporcion de monitor; el espacio
+   sobrante queda como fondo. La clase la pone el script del viewport. */
+html.vp-tablero{background:#060d18;}
+html.vp-tablero body{height:760px;min-height:760px;}
 
 /* ── LOGIN ──────────────────────────────────────────────── */
 #loginScreen{position:fixed;inset:0;background:#060d18;z-index:99999;display:flex;align-items:center;justify-content:center;}
