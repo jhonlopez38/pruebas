@@ -254,6 +254,24 @@ def parse_dt(value):
     try: return datetime.fromisoformat(value.replace("Z",""))
     except: return None
  
+def capture_dt(p):
+    """Fecha/hora REAL de captura del punto (Colombia) convertida a UTC naive.
+ 
+    Se usa para filtrar y ordenar el historial. Es distinto de 'created_at',
+    que es cuando el backend RECIBIO el dato: en un reenvio pendiente pueden
+    diferir dias, lo que dejaba los puntos fuera de su rango y fuera de orden.
+    Si la fecha/hora no es utilizable, se recurre a created_at.
+    """
+    f = (p.get("fecha") or "").strip()
+    h = (p.get("hora")  or "").strip()
+    if len(f) == 10 and len(h) >= 5 and h.lower() != "no disponible":
+        try:
+            d = datetime.strptime(f + " " + h[:8], "%d/%m/%Y %H:%M:%S")
+            return d + timedelta(hours=5)   # Colombia (UTC-5) -> UTC
+        except Exception:
+            pass
+    return parse_dt(p.get("created_at", "")) or datetime.min
+ 
 def in_range(created_at, start, end):
     dt = parse_dt(created_at)
     s  = parse_dt(start)
@@ -617,9 +635,14 @@ def get_history(device: str = None, start: str = None, end: str = None):
     result = []
     for h in read_json(HISTORY_FILE, []):
         if device and h.get("device") != device: continue
-        if not in_range(h.get("created_at",""), start, end): continue
+        # Se filtra por la hora REAL de captura (no por la de llegada), para que
+        # un reenvio pendiente aparezca en el dia en que se capturo.
+        if not in_range(capture_dt(h).isoformat(), start, end): continue
         if not valid_point(h): continue
         result.append(h)
+    # Orden cronologico real: sin esto los reenvios quedaban al final del
+    # recorrido y la ruta dibujaba saltos hacia atras (distancia inflada).
+    result.sort(key=capture_dt)
     return result
  
 @app.get("/latest/{device_id}")
@@ -627,7 +650,9 @@ def latest(device_id: str):
     hist = [h for h in read_json(HISTORY_FILE,[])
             if h.get("device")==device_id and valid_point(h)]
     if not hist: raise HTTPException(404, "Sin ubicacion")
-    return hist[-1]
+    # El mas reciente por hora de CAPTURA. Usar el ultimo insertado devolvia
+    # una posicion antigua cuando acababa de llegar un reenvio pendiente.
+    return max(hist, key=capture_dt)
  
 @app.get("/fleet/latest")
 def fleet_latest(devices: str = None):
