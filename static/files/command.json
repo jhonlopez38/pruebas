@@ -7,8 +7,9 @@
   },
   "HERMES-02": {
     "device": "HERMES-02",
-    "cmd": "update",
+    "cmd": "none",
     "created_at": "2026-08-13T20:19:02.562253",
-    "attempts": 0
+    "attempts": 1,
+    "executed_at": "2026-08-13T20:20:15.527688"
   }
 }
