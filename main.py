@@ -1,4 +1,3 @@
-
 import os, json, csv, sys, base64, threading
 from datetime import datetime, timedelta
 from fastapi import FastAPI, Request, HTTPException, Depends
@@ -356,6 +355,22 @@ def parse_dt(value):
     if not value: return None
     try: return datetime.fromisoformat(value.replace("Z",""))
     except: return None
+ 
+def equipos_de(user):
+    """IDs de equipos asignados al usuario."""
+    devices = read_json(DEVICES_FILE, {})
+    return set((devices.get(user.get("username")) or {}).keys())
+ 
+def exigir_acceso(user, device):
+    """Un admin ve todo; un usuario normal, solo sus equipos asignados."""
+    if not device: return
+    if user.get("role") == "admin": return
+    if device not in equipos_de(user):
+        raise HTTPException(403, "Sin acceso a ese equipo")
+ 
+def permitidos(user):
+    """None = sin restriccion (admin). Conjunto = equipos visibles."""
+    return None if user.get("role") == "admin" else equipos_de(user)
  
 def capture_dt(p):
     """Fecha/hora REAL de captura del punto (Colombia) convertida a UTC naive.
@@ -808,7 +823,8 @@ async def device_status_post(request: Request):
     return {"ok": True, "status": row}
  
 @app.get("/device-status")
-def device_status_get(device: str = "HERMES-01"):
+def device_status_get(device: str = "HERMES-01", user=Depends(get_user)):
+    exigir_acceso(user, device)
     return read_json(STATUS_FILE, {}).get(device, {})
  
 @app.get("/status")
@@ -821,11 +837,14 @@ def get_status(device_id: str):
     return s[device_id]
  
 # ── Historial ──────────────────────────────────────────────────────────
-@app.get("/history")
-def get_history(device: str = None, start: str = None, end: str = None):
+def _historial(device=None, start=None, end=None, visibles=None):
+    """Consulta interna del historial. 'visibles' limita los equipos
+    (None = sin restriccion). No expone nada por si sola."""
     result = []
     for h in read_json(HISTORY_FILE, []):
-        if device and h.get("device") != device: continue
+        dev = h.get("device")
+        if device and dev != device: continue
+        if visibles is not None and dev not in visibles: continue
         # Se filtra por la hora REAL de captura (no por la de llegada), para que
         # un reenvio pendiente aparezca en el dia en que se capturo.
         if not in_range(capture_dt(h).isoformat(), start, end): continue
@@ -836,8 +855,15 @@ def get_history(device: str = None, start: str = None, end: str = None):
     result.sort(key=capture_dt)
     return result
  
+@app.get("/history")
+def get_history_api(device: str = None, start: str = None, end: str = None,
+                    user=Depends(get_user)):
+    exigir_acceso(user, device)
+    return _historial(device, start, end, permitidos(user))
+ 
 @app.get("/latest/{device_id}")
-def latest(device_id: str):
+def latest(device_id: str, user=Depends(get_user)):
+    exigir_acceso(user, device_id)
     hist = [h for h in read_json(HISTORY_FILE,[])
             if h.get("device")==device_id and valid_point(h)]
     if not hist: raise HTTPException(404, "Sin ubicacion")
@@ -846,16 +872,23 @@ def latest(device_id: str):
     return max(hist, key=capture_dt)
  
 @app.get("/fleet/latest")
-def fleet_latest(devices: str = None):
+def fleet_latest(devices: str = None, user=Depends(get_user)):
     status = read_json(STATUS_FILE, {})
+    vis = permitidos(user)
+    if vis is not None:                      # usuario normal: solo lo suyo
+        status = {k: v for k, v in status.items() if k in vis}
     if not devices: return status
     selected = [d.strip() for d in devices.split(",") if d.strip()]
     return {d: status.get(d) for d in selected if d in status}
  
 # ── Comandos ────────────────────────────────────────────────────────────
 @app.post("/command")
-def set_command(data: CommandModel):
-    write_command(data.device or "HERMES-01", data.cmd.strip())
+def set_command(data: CommandModel, user=Depends(get_user)):
+    # Enviar comandos (reset, update, cambio de ciclo) altera el equipo en
+    # campo: exige sesion y que el equipo sea del usuario.
+    device = data.device or "HERMES-01"
+    exigir_acceso(user, device)
+    write_command(device, data.cmd.strip())
     return {"ok": True, "device": data.device, "cmd": data.cmd,
             "msg": f"Comando guardado para {data.device}. Se aplica en el proximo despertar."}
  
@@ -894,9 +927,11 @@ def clear_device_command(device: str, user=Depends(get_user)):
  
 # ── CSV ─────────────────────────────────────────────────────────────────
 @app.get("/files/gps_log.csv")
-def download_csv(device: str = None, start: str = None, end: str = None):
+def download_csv(device: str = None, start: str = None, end: str = None,
+                 user=Depends(get_user)):
+    exigir_acceso(user, device)
     if device or start or end:
-        rows = get_history(device=device, start=start, end=end)
+        rows = _historial(device, start, end, permitidos(user))
         if not rows: raise HTTPException(404, "Sin datos en el rango seleccionado")
         lines = ["id,despertar,fecha,hora,lat,lon,estado,bateria_v,bateria_pct,device,created_at"]
         for i,r in enumerate(rows,1):
@@ -926,8 +961,10 @@ def csv_alt(device: str = None, start: str = None, end: str = None):
  
 # ── KML ─────────────────────────────────────────────────────────────────
 @app.get("/files/ruta.kml")
-def generar_kml(device: str = None, start: str = None, end: str = None):
-    rows = get_history(device=device, start=start, end=end)
+def generar_kml(device: str = None, start: str = None, end: str = None,
+                user=Depends(get_user)):
+    exigir_acceso(user, device)
+    rows = _historial(device, start, end, permitidos(user))
     if not rows: raise HTTPException(404, "No hay puntos GPS en el rango seleccionado")
  
     coords_line = ""
