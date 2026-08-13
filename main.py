@@ -467,7 +467,14 @@ def get_cmd_for_device(device: str) -> dict:
 @app.get("/")
 def home():
     p = os.path.join(STATIC_DIR, "index.html")
-    return FileResponse(p) if os.path.exists(p) else {"ok": True, "msg": "HERMES Backend"}
+    if not os.path.exists(p):
+        return {"ok": True, "msg": "HERMES Backend"}
+    # Sin cache: si el navegador conserva un index.html viejo junto a un
+    # backend nuevo, la webapp deja de enviar el token y todo falla con
+    # "Token requerido". Forzar recarga evita ese desajuste tras cada deploy.
+    return FileResponse(p, headers={
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache", "Expires": "0"})
  
 @app.get("/health")
 def health():
