@@ -22,13 +22,13 @@
     "ciclo_min": 5,
     "fallos_gps": 0,
     "lat": 4.733985,
-    "lon": -74.24544,
+    "lon": -74.245491,
     "fecha": "12/08/2026",
-    "hora": "20:03:26",
+    "hora": "20:09:32",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.1.2",
-    "created_at": "2026-08-13T13:28:33.580303"
+    "created_at": "2026-08-13T13:28:38.076402"
   }
 }
