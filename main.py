@@ -1,3 +1,4 @@
+
 import os, json, csv, sys, base64, threading
 from datetime import datetime, timedelta
 from fastapi import FastAPI, Request, HTTPException, Depends
@@ -405,6 +406,14 @@ class UserCreateModel(BaseModel):
     username: str = ""; email: str = ""; password: str; role: str = "user"
     devices: list = []   # IDs de equipos a asignar al crear
  
+class UserEditModel(BaseModel):
+    role: str = ""       # "admin" | "user" | "" (sin cambio)
+    password: str = ""   # vacio = no cambiar
+ 
+class UserDevicesModel(BaseModel):
+    username: str
+    devices: list = []   # lista COMPLETA de equipos del usuario
+ 
 class DeviceModel(BaseModel):
     device_id: str = ""; device: str = ""; nombre: str = "Sin nombre"
     name: str = ""; icono: str = "antenna"; color: str = "#00c8ff"; owner: str = ""
@@ -503,9 +512,72 @@ def me(user=Depends(get_user)): return user
 # ── Admin usuarios ─────────────────────────────────────────────────────
 @app.get("/admin/users")
 def admin_users(admin=Depends(require_admin)):
-    users = read_json(USERS_FILE, {})
+    users   = read_json(USERS_FILE, {})
+    devices = read_json(DEVICES_FILE, {})
     return [{"username": k, "email": v.get("email",k), "role": v.get("role","user"),
-             "created_at": v.get("created_at","")} for k,v in users.items()]
+             "created_at": v.get("created_at",""),
+             # Equipos asignados: necesarios para poder editarlos desde el panel.
+             "devices": sorted(list((devices.get(k) or {}).keys()))}
+            for k,v in users.items()]
+ 
+@app.put("/admin/users/{username}")
+def admin_edit_user(username: str, data: UserEditModel, admin=Depends(require_admin)):
+    """Cambia el rol y/o la contrasena de un usuario existente."""
+    users = read_json(USERS_FILE, {})
+    if username not in users: raise HTTPException(404, "Usuario no existe")
+    actual = admin.get("username") if isinstance(admin, dict) else str(admin)
+    if data.role in ("admin", "user"):
+        # Evitar que un admin se quite a si mismo el rol y pierda el acceso.
+        if username == actual and data.role != "admin":
+            raise HTTPException(400, "No puedes quitarte tu propio rol de admin")
+        users[username]["role"] = data.role
+    if data.password:
+        users[username]["password"] = pwd_ctx.hash(data.password)
+    write_json(USERS_FILE, users)
+    gh_write_json("data/users.json", USERS_FILE, users)
+    return {"ok": True, "msg": "Usuario actualizado"}
+ 
+@app.post("/admin/user-devices")
+def admin_set_user_devices(data: UserDevicesModel, admin=Depends(require_admin)):
+    """Reemplaza la lista COMPLETA de equipos de un usuario.
+ 
+    Semantica de reemplazo: el panel envia todos los equipos marcados, asi
+    agregar y quitar son la misma operacion y no hacen falta dos endpoints.
+    """
+    users = read_json(USERS_FILE, {})
+    if data.username not in users: raise HTTPException(404, "Usuario no existe")
+    devices = read_json(DEVICES_FILE, {})
+    catalogo = {}
+    for devs in devices.values():
+        if isinstance(devs, dict): catalogo.update(devs)
+    nuevos = {}
+    for did in (data.devices or []):
+        did = str(did).strip()
+        if not did: continue
+        meta = dict(catalogo.get(did, {
+            "device_id": did, "device": did, "nombre": did, "name": did,
+            "icono": "antenna", "color": "#00c8ff",
+            "created_at": datetime.utcnow().isoformat()}))
+        meta["owner"] = data.username
+        nuevos[did] = meta
+    devices[data.username] = nuevos
+    write_json(DEVICES_FILE, devices)
+    gh_write_json("data/devices.json", DEVICES_FILE, devices)
+    return {"ok": True, "devices": sorted(nuevos.keys())}
+ 
+@app.get("/admin/all-devices")
+def admin_all_devices(admin=Depends(require_admin)):
+    """Catalogo de todos los equipos conocidos, para poblar el selector."""
+    devices = read_json(DEVICES_FILE, {})
+    catalogo = {}
+    for devs in devices.values():
+        if isinstance(devs, dict):
+            for did, meta in devs.items():
+                catalogo[did] = {"id": did, "nombre": meta.get("nombre", did)}
+    for h in read_json(HISTORY_FILE, []):
+        d = h.get("device")
+        if d and d not in catalogo: catalogo[d] = {"id": d, "nombre": d}
+    return sorted(catalogo.values(), key=lambda x: x["id"])
  
 @app.post("/admin/users")
 def admin_create_user(data: UserCreateModel, admin=Depends(require_admin)):
