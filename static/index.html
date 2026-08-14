@@ -803,6 +803,20 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
         </div>
       </div>
 
+      <!-- Respaldo automatico -->
+      <div class="ota-box" style="margin-top:10px">
+        <div class="ota-title">RESPALDO AUTOMATICO</div>
+        <div class="ota-ver" id="bkEstado">Consultando...</div>
+        <div style="font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;margin:6px 0;line-height:1.6">
+          Cada dia a las 22:00 (Colombia) se genera un KML y un CSV con los
+          puntos NUEVOS desde el respaldo anterior. Se guardan en GitHub
+          (backups/) y se envian al bot. Si un dia no se pudo ejecutar, el
+          siguiente recoge todo lo pendiente sin dejar huecos.
+        </div>
+        <button class="btn-ota-upload" onclick="bkForzar()">💾 GENERAR RESPALDO AHORA</button>
+        <div class="ota-msg" id="bkMsg"></div>
+      </div>
+
       <!-- Recuperar marcaciones perdidas -->
       <div class="ota-box" style="margin-top:10px">
         <div class="ota-title">RECUPERAR MARCACIONES</div>
@@ -1049,6 +1063,14 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
     <div class="fc"><span class="fn">📄 <span id="csvLabel">gps_log.csv</span></span><a href="#" onclick="verCSV();return false">Ver / Descargar ↓</a></div>
     <div class="fc"><span class="fn">📍 <span id="kmlLabel">ruta.kml</span></span><a href="#" onclick="verKML();return false">Ver / Descargar ↓</a></div>
     <p style="font-size:8px;color:#6a8fa8;font-family:Share Tech Mono,monospace;margin-top:3px">☁ Se actualizan automaticamente en el backend</p>
+
+    <div class="sec-t" style="margin-top:11px">
+      RESPALDOS GUARDADOS
+      <span style="float:right;cursor:pointer;color:#00c8ff" onclick="cargarRespaldos()" title="Actualizar">↻</span>
+    </div>
+    <div id="bkLista">
+      <p style="font-size:8px;color:#6a8fa8;font-family:Share Tech Mono,monospace">Cargando...</p>
+    </div>
   </div>
 </div><!-- /rp -->
 
@@ -1366,6 +1388,7 @@ function postLogin(){
   const lbl = document.getElementById("admUserLabel");
   if(lbl && USER) lbl.innerText = (USER.username||USER.email||"").toUpperCase();
   cargarDispositivos();
+  cargarRespaldos();
   startPoll();
 }
 
@@ -1398,6 +1421,7 @@ function admTab(el,pane){
   document.querySelectorAll(".adm-pane").forEach(x=>x.classList.remove("active"));
   el.classList.add("active");
   document.getElementById(pane).classList.add("active");
+  if(pane==="aT-ota"){ otaCargarVersion&&otaCargarVersion(); bkCargarEstado(); }
   if(pane==="aT-users"){admLoadUsers();admLlenarEquiposUsuario();}
   if(pane==="aT-ota")otaCargarVersion();
   if(pane==="aT-devs")admLoadDevices();
@@ -2786,6 +2810,79 @@ async function otaCargarVersion(){
       el.innerHTML = "Sin firmware subido al servidor";
     }
   }catch(e){ console.log("OTA version:", e); }
+}
+
+// ─── Carpeta de respaldos guardados ──────────────────────────
+async function cargarRespaldos(){
+  const el=document.getElementById("bkLista");
+  if(!el) return;
+  el.innerHTML='<p style="font-size:8px;color:#6a8fa8;font-family:Share Tech Mono,monospace">Cargando...</p>';
+  try{
+    const r=await fetch(BASE+"/backups",{headers:authH()});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const lista=await r.json();
+    if(!lista.length){
+      el.innerHTML='<p style="font-size:8px;color:#6a8fa8;font-family:Share Tech Mono,monospace">Aun no hay respaldos generados</p>';
+      return;
+    }
+    // Agrupar por fecha para que sea facil de leer
+    const porFecha={};
+    lista.forEach(b=>{ (porFecha[b.fecha]=porFecha[b.fecha]||[]).push(b); });
+    el.innerHTML=Object.keys(porFecha).sort().reverse().map(f=>{
+      const items=porFecha[f].map(b=>{
+        const kb=(b.tamano/1024).toFixed(0);
+        const icono=b.tipo==="KML"?"📍":"📄";
+        return `<div class="fc">
+          <span class="fn">${icono} ${b.device} · ${b.tipo} <span style="color:#6a8fa8">(${kb} KB)</span></span>
+          <a href="#" onclick="descargarRespaldo('${b.nombre}');return false">Descargar ↓</a>
+        </div>`;
+      }).join("");
+      return `<div style="font-family:Share Tech Mono,monospace;font-size:8px;color:#00c8ff;
+                margin:6px 0 2px;letter-spacing:1px">${f}</div>${items}`;
+    }).join("");
+  }catch(e){
+    el.innerHTML='<p style="font-size:8px;color:#ff3355;font-family:Share Tech Mono,monospace">No se pudo cargar la lista</p>';
+  }
+}
+
+function descargarRespaldo(nombre){
+  _descargarArchivo(BASE+"/backups/"+encodeURIComponent(nombre), nombre);
+}
+
+// ─── Respaldo automatico ─────────────────────────────────────
+async function bkCargarEstado(){
+  const el=document.getElementById("bkEstado");
+  if(!el) return;
+  try{
+    const r=await fetch(BASE+"/admin/backup",{headers:authH()});
+    if(!r.ok){ el.innerText="No disponible"; return; }
+    const d=await r.json();
+    if(!d.ultimo){
+      el.innerText="Sin respaldos aun · se hara en el proximo reporte";
+      el.style.color="#ffcc44"; return;
+    }
+    const f=v=>new Date(v).toLocaleString("es-CO",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+    const pts=(d.equipos||[]).map(e=>
+      e.puntos ? `${e.device}: ${e.puntos} pts (${e.periodo||"--"})` : `${e.device}: sin nuevos`
+    ).join("<br>");
+    el.innerHTML=`Ultimo: <b>${f(d.ultimo)}</b> · Proximo: ${f(d.proximo)}<br>`+
+                 `<span style="color:#6a8fa8">${pts||"--"}${d.telegram?"":"<br>Telegram no configurado"}</span>`;
+    el.style.color="#00ff88";
+  }catch(e){ el.innerText="Error consultando estado"; }
+}
+
+async function bkForzar(){
+  const msg=document.getElementById("bkMsg");
+  msg.style.color="#00c8ff"; msg.innerText="Generando respaldo (puede tardar)...";
+  try{
+    const r=await fetchReintento(BASE+"/admin/backup",{method:"POST",headers:authH()});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.detail||"HTTP "+r.status);
+    const pts=(d.equipos||[]).map(e=>`${e.device}: ${e.puntos} puntos`).join(" · ");
+    msg.style.color="#00ff88"; msg.innerText="✅ Respaldo generado — "+pts;
+    log("Respaldo generado y enviado","ok");
+    bkCargarEstado(); cargarRespaldos();
+  }catch(e){ msg.style.color="#ff3355"; msg.innerText="Error: "+(e.message||"conexion"); }
 }
 
 // ─── Recuperar marcaciones desde copia previa ────────────────
