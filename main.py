@@ -1,3 +1,4 @@
+
 import os, json, csv, sys, base64, threading
 from datetime import datetime, timedelta
 from fastapi import FastAPI, Request, HTTPException, Depends
@@ -24,6 +25,16 @@ ADMIN_PASS = os.getenv("ADMIN_PASS", "Colombia2026*")
 GH_TOKEN  = os.getenv("GH_TOKEN",  "")
 GH_REPO   = os.getenv("GH_REPO",   "")
 GH_BRANCH = os.getenv("GH_BRANCH", "main")
+ 
+# ── Respaldo automatico ────────────────────────────────────────────────
+# Cada N dias se genera un KML y un CSV con todo el historial, se guardan en
+# GitHub (carpeta backups/) y se envian al bot de Telegram. El disparo se
+# engancha a la llegada de reportes del equipo: una tarea programada dentro
+# de Render no seria fiable porque el servicio se suspende por inactividad.
+BACKUP_DIAS   = int(os.getenv("BACKUP_DIAS", "1"))   # cada cuantos dias
+BACKUP_HORA   = int(os.getenv("BACKUP_HORA", "22"))  # hora Colombia (0-23)
+BACKUP_BOT    = os.getenv("BACKUP_BOT_TOKEN", "")   # token del bot para respaldos
+BACKUP_CHAT   = os.getenv("BACKUP_CHAT_ID",  "866739056")
 USE_GITHUB = bool(GH_TOKEN and GH_REPO)
  
 if USE_GITHUB:
@@ -516,6 +527,17 @@ def home():
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Pragma": "no-cache", "Expires": "0"})
  
+@app.on_event("startup")
+def _al_arrancar():
+    """Comprobacion de respaldo al iniciar el servicio.
+ 
+    Es la red de seguridad para el caso de que el equipo este apagado: sin
+    reportes no habria ningun disparo, y los ultimos puntos registrados antes
+    del apagado se quedarian sin copia de respaldo.
+    """
+    try: quizas_respaldar()
+    except Exception as e: print("[BACKUP] arranque:", e)
+ 
 @app.get("/health")
 def health():
     history_count = len(read_json(HISTORY_FILE, []))
@@ -657,6 +679,68 @@ async def admin_import_history(request: Request, admin=Depends(require_admin)):
         gh_push_history(history)
     return {"ok": True, "agregados": agregados,
             "descartados": len(nuevos) - agregados, "total": len(history)}
+ 
+@app.get("/backups")
+def listar_respaldos(user=Depends(get_user)):
+    """Lista los respaldos guardados en GitHub (carpeta backups/)."""
+    if not USE_GITHUB: return []
+    try:
+        import urllib.request
+        url = f"https://api.github.com/repos/{GH_REPO}/contents/backups?ref={GH_BRANCH}"
+        req = urllib.request.Request(url, headers={
+            "Authorization": f"token {GH_TOKEN}",
+            "Accept": "application/vnd.github.v3+json"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            items = json.loads(r.read())
+    except Exception:
+        return []                      # aun no existe la carpeta
+    vis = permitidos(user)
+    salida = []
+    for it in items:
+        if it.get("type") != "file": continue
+        nombre = it.get("name","")
+        # nombre: AAAA-MM-DD_DISPOSITIVO.ext
+        dev = ""
+        if "_" in nombre:
+            dev = nombre.split("_",1)[1].rsplit(".",1)[0]
+        if vis is not None and dev and dev not in vis: continue
+        salida.append({"nombre": nombre, "device": dev,
+                       "fecha": nombre.split("_",1)[0],
+                       "tamano": it.get("size",0),
+                       "tipo": nombre.rsplit(".",1)[-1].upper()})
+    salida.sort(key=lambda x: x["nombre"], reverse=True)
+    return salida
+ 
+@app.get("/backups/{nombre}")
+def descargar_respaldo(nombre: str, user=Depends(get_user)):
+    """Descarga un respaldo concreto."""
+    if "/" in nombre or ".." in nombre: raise HTTPException(400, "Nombre invalido")
+    dev = nombre.split("_",1)[1].rsplit(".",1)[0] if "_" in nombre else ""
+    if dev: exigir_acceso(user, dev)
+    data = gh_get_file(f"backups/{nombre}")
+    if not data or not data.get("content"): raise HTTPException(404, "Respaldo no encontrado")
+    import base64
+    contenido = base64.b64decode(data["content"]).decode("utf-8", errors="replace")
+    tipo = "application/vnd.google-earth.kml+xml" if nombre.endswith(".kml") else "text/csv"
+    return Response(contenido, media_type=tipo,
+                    headers={"Content-Disposition": f"attachment; filename={nombre}"})
+ 
+@app.post("/admin/backup")
+def admin_backup(admin=Depends(require_admin)):
+    """Fuerza un respaldo inmediato (KML + CSV a GitHub y Telegram)."""
+    hechos = ejecutar_respaldo(forzado=True)
+    if hechos is None: raise HTTPException(500, "No se pudo generar el respaldo")
+    return {"ok": True, "equipos": hechos}
+ 
+@app.get("/admin/backup")
+def admin_backup_estado(admin=Depends(require_admin)):
+    """Fecha del ultimo respaldo y cuando toca el proximo."""
+    estado = read_json(BACKUP_ESTADO, {})
+    ultimo = parse_dt(estado.get("ultimo",""))
+    prox = (ultimo + timedelta(days=BACKUP_DIAS)).isoformat() if ultimo else None
+    return {"ultimo": estado.get("ultimo",""), "proximo": prox,
+            "cada_dias": BACKUP_DIAS, "equipos": estado.get("equipos",[]),
+            "telegram": bool(BACKUP_BOT)}
  
 @app.get("/admin/all-devices")
 def admin_all_devices(admin=Depends(require_admin)):
@@ -879,6 +963,7 @@ async def device_status_post(request: Request):
         if USE_GITHUB:
             t = threading.Thread(target=gh_push_history, args=(list(history),), daemon=True)
             t.start()
+            quizas_respaldar()
  
         # 3. CSV append local
         with open(CSV_PATH, "a", encoding="utf-8", newline="") as f:
@@ -912,6 +997,147 @@ def get_status(device_id: str):
     if device_id not in s: raise HTTPException(404, "Dispositivo no encontrado")
     return s[device_id]
  
+ 
+# ── Respaldo automatico (KML + CSV a GitHub y Telegram) ────────────────
+BACKUP_ESTADO = os.path.join(FILES_DIR, "backup_estado.json")
+ 
+def _kml_de(rows, titulo):
+    """Genera el contenido KML de una lista de puntos."""
+    pm = []
+    for i, p in enumerate(rows, 1):
+        desc = f"{p.get('fecha','')} {p.get('hora','')} | Estado: {p.get('estado','')} | Bat: {p.get('bateria_pct',0)}%"
+        pm.append(f"""    <Placemark>
+      <n>#{i} {p.get('device','')}</n>
+      <description>{desc}</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>{p.get('lon')},{p.get('lat')},0</coordinates></Point>
+    </Placemark>""")
+    linea = " ".join(f"{p.get('lon')},{p.get('lat')},0" for p in rows)
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+  <n>{titulo}</n>
+  <Style id="pointStyle"><IconStyle><color>ff00c8ff</color><scale>0.8</scale></IconStyle></Style>
+  <Placemark><n>Ruta</n><LineString><tessellate>1</tessellate>
+    <coordinates>{linea}</coordinates></LineString></Placemark>
+{chr(10).join(pm)}
+</Document></kml>"""
+ 
+def _csv_de(rows):
+    lineas = ["id,despertar,fecha,hora,lat,lon,estado,bateria_v,bateria_pct,device,created_at"]
+    for i, r in enumerate(rows, 1):
+        lineas.append(",".join([str(i), str(r.get("despertar","")), str(r.get("fecha","")),
+            str(r.get("hora","")), str(r.get("lat","")), str(r.get("lon","")),
+            str(r.get("estado","")), str(r.get("bateria_v","")), str(r.get("bateria_pct","")),
+            str(r.get("device","")), str(r.get("created_at",""))]))
+    return "\n".join(lineas)
+ 
+def _tg_documento(nombre, contenido, leyenda):
+    """Envia un archivo al bot de Telegram."""
+    if not BACKUP_BOT: return False
+    try:
+        import urllib.request, uuid
+        lim = uuid.uuid4().hex
+        datos = contenido.encode("utf-8")
+        cuerpo = (
+            f"--{lim}\r\nContent-Disposition: form-data; name=\"chat_id\"\r\n\r\n{BACKUP_CHAT}\r\n"
+            f"--{lim}\r\nContent-Disposition: form-data; name=\"caption\"\r\n\r\n{leyenda}\r\n"
+            f"--{lim}\r\nContent-Disposition: form-data; name=\"document\"; filename=\"{nombre}\"\r\n"
+            f"Content-Type: application/octet-stream\r\n\r\n"
+        ).encode() + datos + f"\r\n--{lim}--\r\n".encode()
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{BACKUP_BOT}/sendDocument", data=cuerpo,
+            headers={"Content-Type": f"multipart/form-data; boundary={lim}"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return r.status == 200
+    except Exception as e:
+        print("[BACKUP] Telegram:", e); return False
+ 
+def ejecutar_respaldo(forzado=False):
+    """Respaldo INCREMENTAL: cada archivo cubre solo desde el corte anterior.
+ 
+    Se guarda el instante del ultimo punto respaldado por equipo ('corte'),
+    de modo que el siguiente respaldo arranca en el punto siguiente y no
+    repite lo ya guardado. Asi los archivos no crecen indefinidamente.
+    """
+    try:
+        estado = read_json(BACKUP_ESTADO, {})
+        ahora  = datetime.utcnow()
+        if not forzado:
+            # Programado a una hora fija (Colombia). Si por cualquier motivo no
+            # se ejecuto ese dia (equipo apagado, servicio suspendido), se hace
+            # en cuanto haya oportunidad: el corte es por ULTIMO PUNTO
+            # respaldado, no por ventana de fechas, asi que un respaldo
+            # atrasado recoge todo lo pendiente sin dejar huecos.
+            col      = ahora - timedelta(hours=5)
+            prog_col = col.replace(hour=BACKUP_HORA, minute=0, second=0, microsecond=0)
+            if col < prog_col:
+                return None                       # hoy aun no llega la hora
+            ultimo = parse_dt(estado.get("ultimo",""))
+            if ultimo:
+                ultimo_col = ultimo - timedelta(hours=5)
+                if ultimo_col >= prog_col:
+                    return None                   # ya se hizo despues de la hora de hoy
+                if (col - ultimo_col).total_seconds() < (BACKUP_DIAS-1)*86400:
+                    return None                   # aun no se cumple el intervalo
+        historia = read_json(HISTORY_FILE, [])
+        if not historia: return None
+        equipos = sorted({h.get("device") for h in historia if h.get("device")})
+        cortes  = estado.get("cortes", {})        # device -> ISO del ultimo punto
+        sello   = ahora.strftime("%Y-%m-%d")
+        hechos  = []
+ 
+        for dev in equipos:
+            todas = sorted([h for h in historia
+                            if h.get("device") == dev and valid_point(h)], key=capture_dt)
+            if not todas: continue
+ 
+            # Solo los puntos POSTERIORES al corte anterior de este equipo
+            corte = parse_dt(cortes.get(dev, ""))
+            filas = [h for h in todas if corte is None or capture_dt(h) > corte] if corte \
+                    else todas
+            if not filas:
+                hechos.append({"device": dev, "puntos": 0, "nota": "sin puntos nuevos"})
+                continue
+ 
+            desde = filas[0].get("fecha","")
+            hasta = filas[-1].get("fecha","")
+            periodo = desde if desde == hasta else f"{desde} a {hasta}"
+            titulo  = f"{dev} {periodo}"
+            kml     = _kml_de(filas, f"Respaldo {titulo}")
+            csv_txt = _csv_de(filas)
+            base = f"backups/{sello}_{dev}"
+            gh_put_file(f"{base}.kml", kml, f"Respaldo {dev} {sello} ({len(filas)} pts)")
+            gh_put_file(f"{base}.csv", csv_txt, f"Respaldo {dev} {sello} ({len(filas)} pts)")
+            leyenda = (f"Respaldo HERMES - {dev}\n{len(filas)} puntos nuevos\n"
+                       f"Periodo: {periodo}")
+            _tg_documento(f"{sello}_{dev}.kml", kml, leyenda)
+            _tg_documento(f"{sello}_{dev}.csv", csv_txt, leyenda)
+ 
+            cortes[dev] = capture_dt(filas[-1]).isoformat()   # nuevo corte
+            hechos.append({"device": dev, "puntos": len(filas), "periodo": periodo})
+ 
+        estado = {"ultimo": ahora.isoformat(), "cortes": cortes, "equipos": hechos}
+        write_json(BACKUP_ESTADO, estado)
+        gh_write_json("static/files/backup_estado.json", BACKUP_ESTADO, estado)
+        print(f"[BACKUP] Generado: {hechos}")
+        return hechos
+    except Exception as e:
+        print("[BACKUP] Error:", e); return None
+ 
+_ultimo_chequeo = [0.0]
+def quizas_respaldar():
+    """Lanza la comprobacion de respaldo sin bloquear ni repetirse.
+ 
+    Se invoca desde VARIOS sitios (reporte del equipo, arranque del servicio y
+    consultas de la webapp) porque enganchar el respaldo solo a los reportes
+    dejaria sin copia los ultimos puntos si el equipo se apaga.
+    """
+    import time
+    if time.time() - _ultimo_chequeo[0] < 300:   # como mucho cada 5 min
+        return
+    _ultimo_chequeo[0] = time.time()
+    threading.Thread(target=ejecutar_respaldo, daemon=True).start()
+ 
 # ── Historial ──────────────────────────────────────────────────────────
 def _historial(device=None, start=None, end=None, visibles=None):
     """Consulta interna del historial. 'visibles' limita los equipos
@@ -935,6 +1161,7 @@ def _historial(device=None, start=None, end=None, visibles=None):
 def get_history_api(device: str = None, start: str = None, end: str = None,
                     user=Depends(get_user)):
     exigir_acceso(user, device)
+    quizas_respaldar()   # la webapp tambien dispara la comprobacion
     return _historial(device, start, end, permitidos(user))
  
 @app.get("/latest/{device_id}")
