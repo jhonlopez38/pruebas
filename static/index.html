@@ -1965,7 +1965,9 @@ async function verFlota(){
           <span style="color:#6a8fa8">Bat:</span> ${d.bateria_v||"--"}V (${d.bateria_pct||"--"}%)<br>
           <span style="color:#6a8fa8">GPS Fallos:</span> ${d.fallos_gps||0}<br>
           <span style="color:#6a8fa8">Despertar:</span> ${d.despertar||"--"}<br>
-          <span style="color:#6a8fa8">Ciclo:</span> ${d.ciclo_min||"--"} min
+          <span style="color:#6a8fa8">Ciclo:</span> ${d.ciclo_min||"--"} min<br>
+          <a href="https://www.google.com/maps?layer=c&cbll=${parseFloat(d.lat)},${parseFloat(d.lon)}"
+             target="_blank" style="color:#00c8ff;font-size:11px">📷 Street View</a>
         </div>`;
       mk.bindPopup(popHtml,{maxWidth:220});
       mk.on("click",()=>{
@@ -2011,6 +2013,27 @@ async function consultarRecorrido(){
     const cfg=getDevCfg(CUR_DEV);
     histPolyln=L.polyline(playCoords.map(p=>[parseFloat(p.lat),parseFloat(p.lon)]),
       {color:cfg.color||"#00c8ff",weight:2,opacity:.3,dashArray:"5,5"}).addTo(map);
+
+    // Marcar en ROJO cada punto de la consulta sobre la ruta.
+    playCoords.forEach((p,i)=>{
+      const la=parseFloat(p.lat), lo=parseFloat(p.lon);
+      const esReenvio=(p.estado||"").toUpperCase().includes("REENVIO");
+      const m=L.circleMarker([la,lo],{
+        radius:4, color:"#ff3355", fillColor:"#ff3355",
+        fillOpacity: esReenvio?0.45:0.95,   // reenvios algo mas tenues
+        weight:1
+      }).bindPopup(
+        `<div style="font-family:Share Tech Mono,monospace;font-size:11px;line-height:1.6">
+          <b style="color:#ff3355">#${i+1} · ${p.despertar||"--"}</b><br>
+          ${p.fecha||""} ${p.hora||""}<br>
+          ${la.toFixed(6)}, ${lo.toFixed(6)}<br>
+          <span style="color:#6a8fa8">Estado:</span> ${p.estado||"--"}<br>
+          <a href="https://www.google.com/maps?layer=c&cbll=${la},${lo}"
+             target="_blank" style="color:#00c8ff">📷 Street View</a>
+        </div>`,{maxWidth:230}).addTo(map);
+      histDots.push(m);
+    });
+
     map.fitBounds(histPolyln.getBounds().pad(0.1));
     // calcular stats
     let dist=0;
@@ -2241,7 +2264,7 @@ async function cargarDesdeHistory(){
     if(coords.length>=2) polyln=L.polyline(coords.map(c=>[c.lat,c.lon]),{color:"#00c8ff",weight:3,opacity:.8}).addTo(map);
     coords.slice(0,-1).forEach(c=>{
       const m=L.circleMarker([c.lat,c.lon],{radius:4,color:"#00c8ff",fillColor:"#003a5c",fillOpacity:.9,weight:1})
-        .bindPopup(`#${c.desp||""} ${c.fecha||""} ${c.hora||""}`).addTo(map);
+        .bindPopup(`<b>#${c.desp||""}</b><br>${c.fecha||""} ${c.hora||""}<br>${c.lat.toFixed(6)}, ${c.lon.toFixed(6)}<br><a href="https://www.google.com/maps?layer=c&cbll=${c.lat},${c.lon}" target="_blank" style="color:#00c8ff;font-size:11px">📷 Street View</a>`).addTo(map);
       dots.push(m);
     });
     const cfg=getDevCfg(CUR_DEV);
