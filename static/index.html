@@ -802,6 +802,26 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
           5. Confirmación por Telegram cuando termina (✅ / ❌)
         </div>
       </div>
+
+      <!-- Recuperar marcaciones perdidas -->
+      <div class="ota-box" style="margin-top:10px">
+        <div class="ota-title">RECUPERAR MARCACIONES</div>
+        <div style="font-family:Share Tech Mono,monospace;font-size:8px;color:#6a8fa8;margin-bottom:7px;line-height:1.6">
+          Reimporta puntos desde una copia previa (.json). Se fusionan con el
+          historial: no se borra ni se duplica nada.
+        </div>
+        <label for="impFileInput" style="display:block;width:100%;padding:8px;margin-bottom:6px;
+          background:rgba(0,255,136,.08);color:#00ff88;
+          border:1px solid rgba(0,255,136,.3);border-radius:6px;
+          font-family:Rajdhani,sans-serif;font-size:12px;font-weight:700;
+          letter-spacing:1px;cursor:pointer;text-align:center">
+          📁 SELECCIONAR ARCHIVO .JSON
+        </label>
+        <input type="file" id="impFileInput" accept=".json" style="display:none" onchange="impSelect(this)">
+        <div class="ota-ver" id="impInfo">Sin archivo seleccionado</div>
+        <button class="btn-ota-upload" style="margin-top:6px" onclick="impImportar()">⬆ IMPORTAR AL HISTORIAL</button>
+        <div class="ota-msg" id="impMsg"></div>
+      </div>
     </div>
   </div>
 
@@ -2766,6 +2786,50 @@ async function otaCargarVersion(){
       el.innerHTML = "Sin firmware subido al servidor";
     }
   }catch(e){ console.log("OTA version:", e); }
+}
+
+// ─── Recuperar marcaciones desde copia previa ────────────────
+let impDatos=null;
+function impSelect(input){
+  const f=input.files&&input.files[0];
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const j=JSON.parse(e.target.result);
+      if(!Array.isArray(j)) throw new Error("El archivo debe contener una lista de puntos");
+      impDatos=j;
+      const info=document.getElementById("impInfo");
+      info.innerText=`${f.name} — ${j.length} puntos listos`;
+      info.style.color="#00ff88";
+    }catch(err){
+      impDatos=null;
+      const info=document.getElementById("impInfo");
+      info.innerText="Archivo invalido: "+err.message;
+      info.style.color="#ff3355";
+    }
+  };
+  r.readAsText(f);
+}
+
+async function impImportar(){
+  const msg=document.getElementById("impMsg");
+  if(!impDatos){ msg.style.color="#ff3355"; msg.innerText="Selecciona un archivo .json"; return; }
+  msg.style.color="#00c8ff"; msg.innerText="Importando y fusionando...";
+  try{
+    const r=await fetchReintento(BASE+"/admin/import-history",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
+      body:JSON.stringify(impDatos)});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.detail||"HTTP "+r.status);
+    msg.style.color="#00ff88";
+    msg.innerText=`✅ ${d.agregados} puntos agregados · ${d.descartados} ya existian · total ${d.total}`;
+    log(`Historial: +${d.agregados} puntos recuperados`,"ok");
+  }catch(e){
+    msg.style.color="#ff3355";
+    msg.innerText="Error: "+(e.message||"conexion");
+  }
 }
 
 async function otaSubirFirmware(){
