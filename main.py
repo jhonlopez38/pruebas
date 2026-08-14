@@ -627,6 +627,37 @@ def admin_set_user_devices(data: UserDevicesModel, admin=Depends(require_admin))
     gh_write_json("data/devices.json", DEVICES_FILE, devices)
     return {"ok": True, "devices": sorted(nuevos.keys())}
  
+@app.post("/admin/import-history")
+async def admin_import_history(request: Request, admin=Depends(require_admin)):
+    """Reimporta puntos al historial FUSIONANDO (no borra nada).
+ 
+    Sirve para recuperar marcaciones perdidas a partir de una copia previa
+    (por ejemplo un KML o CSV ya descargado). Los duplicados se descartan.
+    """
+    try:
+        nuevos = await request.json()
+    except Exception:
+        raise HTTPException(400, "JSON invalido")
+    if not isinstance(nuevos, list):
+        raise HTTPException(400, "Se espera una lista de puntos")
+ 
+    history = read_json(HISTORY_FILE, [])
+    vistos = {_clave_punto(p) for p in history}
+    agregados = 0
+    for p in nuevos:
+        if not isinstance(p, dict) or not valid_point(p): continue
+        k = _clave_punto(p)
+        if k in vistos: continue
+        vistos.add(k); history.append(p); agregados += 1
+ 
+    history.sort(key=capture_dt)
+    if len(history) > 50000: history = history[-50000:]
+    write_json(HISTORY_FILE, history)
+    if USE_GITHUB:
+        gh_push_history(history)
+    return {"ok": True, "agregados": agregados,
+            "descartados": len(nuevos) - agregados, "total": len(history)}
+ 
 @app.get("/admin/all-devices")
 def admin_all_devices(admin=Depends(require_admin)):
     """Catalogo de todos los equipos conocidos, para poblar el selector."""
