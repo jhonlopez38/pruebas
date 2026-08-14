@@ -492,6 +492,33 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
 .dr-sc:hover{border-color:rgba(0,200,255,.4)!important;color:#00c8ff!important;background:rgba(0,200,255,.08)!important;}
 .dr-sc.active{border-color:#00c8ff!important;color:#fff!important;background:rgba(0,200,255,.15)!important;}
 .dr-inputs{padding:7px 8px 9px!important;}
+
+/* Selector de rango: fecha con flechas + hora en barra deslizable */
+.dr-blk{background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);
+  border-radius:6px;padding:7px 8px;margin-bottom:7px;}
+.dr-blk-t{font-family:Share Tech Mono,monospace;font-size:8px;color:#00c8ff;
+  letter-spacing:2px;margin-bottom:5px;}
+.dr-fecha-row{display:flex;align-items:center;gap:5px;}
+.dr-nav{width:26px;height:28px;flex-shrink:0;background:rgba(0,200,255,.08);
+  border:1px solid rgba(0,200,255,.25);border-radius:5px;color:#00c8ff;
+  font-size:16px;line-height:1;cursor:pointer;transition:.15s;}
+.dr-nav:hover{background:rgba(0,200,255,.2);}
+.dr-date{flex:1;min-width:0;padding:6px 7px;background:#0a1628;color:#fff;
+  border:1px solid rgba(0,200,255,.2);border-radius:5px;outline:none;
+  font-family:Share Tech Mono,monospace;font-size:12px;text-align:center;}
+.dr-date:focus{border-color:#00c8ff;}
+.dr-hora-row{display:flex;align-items:center;gap:8px;margin-top:7px;}
+.dr-hora-val{font-family:Share Tech Mono,monospace;font-size:15px;font-weight:700;
+  color:#00ff88;min-width:48px;text-align:center;}
+.dr-slider{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;
+  background:linear-gradient(90deg,rgba(0,200,255,.5),rgba(0,255,136,.5));outline:none;}
+.dr-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;
+  border-radius:50%;background:#00ff88;border:2px solid #0a1628;cursor:pointer;
+  box-shadow:0 0 6px rgba(0,255,136,.6);}
+.dr-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;
+  background:#00ff88;border:2px solid #0a1628;cursor:pointer;}
+.dr-resumen{font-family:Share Tech Mono,monospace;font-size:9px;color:#6a8fa8;
+  text-align:center;padding:5px 0 1px;line-height:1.5;}
 .dr-row{display:flex!important;align-items:center!important;gap:8px!important;margin-bottom:6px!important;}
 .dr-lbl{font-family:Share Tech Mono,monospace!important;font-size:8px!important;color:#6a8fa8!important;width:32px!important;flex-shrink:0!important;text-align:right!important;}
 .dr-input{flex:1!important;padding:8px 10px!important;background:rgba(255,255,255,.04)!important;color:#fff!important;border:1px solid rgba(255,255,255,.08)!important;outline:none!important;border-radius:6px!important;font-family:Share Tech Mono,monospace!important;font-size:11px!important;color-scheme:dark!important;}
@@ -852,16 +879,44 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
           <div class="dr-sc" onclick="setRangoRapido('mes',this)">MES</div>
           <div class="dr-sc" onclick="setRangoRapido('ultimas6h',this)">6 H</div>
           <div class="dr-sc" onclick="setRangoRapido('ultimo1h',this)">1 H</div>
+          <div class="dr-sc" onclick="setRangoRapido('todo',this)"
+               style="border-color:rgba(0,255,136,.4);color:#00ff88">TODO</div>
         </div>
         <div class="dr-inputs">
-          <div class="dr-row">
-            <span class="dr-lbl">DESDE</span>
-            <input type="datetime-local" id="hpFrom" class="dr-input">
+          <!-- DESDE -->
+          <div class="dr-blk">
+            <div class="dr-blk-t">DESDE</div>
+            <div class="dr-fecha-row">
+              <button class="dr-nav" onclick="ajustarDia('From',-1)" title="Día anterior">‹</button>
+              <input type="date" id="hpFromDate" class="dr-date" onchange="sincronizarRango()">
+              <button class="dr-nav" onclick="ajustarDia('From',1)" title="Día siguiente">›</button>
+            </div>
+            <div class="dr-hora-row">
+              <span class="dr-hora-val" id="hpFromHoraTxt">00:00</span>
+              <input type="range" id="hpFromHora" class="dr-slider" min="0" max="1439" step="15"
+                     value="0" oninput="sincronizarRango()">
+            </div>
           </div>
-          <div class="dr-row">
-            <span class="dr-lbl">HASTA</span>
-            <input type="datetime-local" id="hpTo" class="dr-input">
+
+          <!-- HASTA -->
+          <div class="dr-blk">
+            <div class="dr-blk-t">HASTA</div>
+            <div class="dr-fecha-row">
+              <button class="dr-nav" onclick="ajustarDia('To',-1)" title="Día anterior">‹</button>
+              <input type="date" id="hpToDate" class="dr-date" onchange="sincronizarRango()">
+              <button class="dr-nav" onclick="ajustarDia('To',1)" title="Día siguiente">›</button>
+            </div>
+            <div class="dr-hora-row">
+              <span class="dr-hora-val" id="hpToHoraTxt">23:59</span>
+              <input type="range" id="hpToHora" class="dr-slider" min="0" max="1439" step="15"
+                     value="1439" oninput="sincronizarRango()">
+            </div>
           </div>
+
+          <div class="dr-resumen" id="drResumen">Selecciona un rango</div>
+          <!-- Campos reales que consulta el sistema (ocultos) -->
+          <input type="datetime-local" id="hpFrom" style="display:none">
+          <input type="datetime-local" id="hpTo" style="display:none">
         </div>
       </div>
       <button class="btn a" onclick="consultarRecorrido()"
@@ -1153,6 +1208,7 @@ let fleetMks={};
 // play historial
 let playCoords=[], playIdx=0, playTimer=null, playPaused=false;
 let histPolyln=null, histDots=[], playMk=null;
+let _encuadreHecho=false;   // el mapa se ajusta a toda la ruta solo la 1a vez
 
 // ── Crear icono con emoji + burbuja de color ──────────────
 function makeIcon(color, emoji){
@@ -1750,6 +1806,9 @@ function inicializarFechasHoy(){
 
   document.getElementById("hpFrom").value = fmt(desde);
   document.getElementById("hpTo").value   = fmt(hasta);
+  _aplicarAControles("hpFromDate","hpFromHora", fmt(desde));
+  _aplicarAControles("hpToDate",  "hpToHora",   fmt(hasta));
+  sincronizarRango();
 
   // Marcar atajo HOY como activo
   document.querySelectorAll(".dr-sc").forEach(b=>{
@@ -1992,7 +2051,8 @@ async function verFlota(){
 async function consultarRecorrido(){
   const from=document.getElementById("hpFrom").value;
   const to=document.getElementById("hpTo").value;
-  if(!from||!to){log("Selecciona fecha desde y hasta","w");return;}
+  // Sin fechas se consulta TODO el historial (boton TODO). Antes era
+  // obligatorio indicar ambas y no habia forma de ver el recorrido completo.
   resetPlayState();
   // datetime-local da "2026-06-04T14:30" — convertir a ISO completo
   const toISO = v => v ? new Date(v).toISOString() : null;
@@ -2052,7 +2112,11 @@ async function consultarRecorrido(){
     document.getElementById("hp-spd").innerText=dist>0&&dur!=="--"?calcSpeed(dist,playCoords):"--";
     const sl=document.getElementById("playSlider");
     sl.max=playCoords.length-1; sl.value=0;
-    document.getElementById("playInfo").innerText=`${playCoords.length} puntos listos · Toca Play`;
+    // Indicar el periodo realmente cargado, para saber que se esta viendo.
+    const f1=playCoords[0].fecha||"", f2=playCoords[playCoords.length-1].fecha||"";
+    const periodo = (f1 && f2) ? (f1===f2 ? f1 : f1+" a "+f2) : "";
+    document.getElementById("playInfo").innerText =
+      `${playCoords.length} puntos${periodo?" · "+periodo:""} · Toca Play`;
     log(`HISTORIAL: ${playCoords.length} puntos cargados`,"ok");
   }catch(e){log("Error cargando historial: "+e.message,"e");}
 }
@@ -2261,7 +2325,13 @@ async function verComandosPendientes(){
   }catch(e){ log("Error consultando comandos: "+e.message,"e"); }
 }
 
-function verRuta(){actualizar();log("RUTA COMPLETA","ok");}
+function verRuta(){
+  // Forzar reencuadre para que se vea el recorrido completo, aunque el
+  // usuario haya acercado el mapa o el equipo se haya desplazado lejos.
+  _encuadreHecho=false;
+  actualizar();
+  log("RUTA COMPLETA","ok");
+}
 
 async function cargarDesdeHistory(){
   try{
@@ -2290,7 +2360,19 @@ async function cargarDesdeHistory(){
     if(!mainMk)mainMk=L.marker([u.lat,u.lon],{icon:makeIcon(cfg.color,cfg.icon)}).addTo(map);
     else mainMk.setLatLng([u.lat,u.lon]);
     mainMk.bindPopup(`<b>${CUR_DEV}</b><br>${u.fecha||""} ${u.hora||""}<br><a href="https://www.google.com/maps?layer=c&cbll=${u.lat},${u.lon}" target="_blank" style="color:#00c8ff;font-size:11px">📷 Street View</a>`);
-    map.setView([u.lat,u.lon],14);
+    // Encuadre: la primera vez se ajusta a TODO el recorrido. Con zoom fijo
+    // en el ultimo punto, los tramos lejanos (p. ej. Facatativa -> Madrid)
+    // quedaban fuera de la pantalla y parecian perdidos.
+    if(!_encuadreHecho && coords.length>1){
+      try{
+        map.fitBounds(L.latLngBounds(coords.map(c=>[c.lat,c.lon])).pad(0.15));
+        _encuadreHecho=true;
+      }catch(e){ map.setView([u.lat,u.lon],14); }
+    } else if(!_encuadreHecho){
+      map.setView([u.lat,u.lon],14); _encuadreHecho=true;
+    } else {
+      map.panTo([u.lat,u.lon]);   // refrescos posteriores: no alterar el zoom
+    }
     document.getElementById("movOv").style.display="block";
     document.getElementById("ov-name").innerText=CUR_DEV;
     document.getElementById("ov-dt").innerText=(u.fecha||"")+" "+(u.hora||"");
@@ -2338,9 +2420,14 @@ async function _descargarArchivo(url, nombre){
 function _rangoQS(){
   const from = document.getElementById("hpFrom")?.value || "";
   const to   = document.getElementById("hpTo")?.value   || "";
+  // Misma conversion a UTC que usa la consulta de historial. Antes se enviaba
+  // la hora local sin convertir y el rango quedaba desplazado 5 horas, lo que
+  // recortaba puntos en los extremos del periodo.
+  const toISO = v => { try{ return v ? new Date(v).toISOString() : ""; }catch(e){ return ""; } };
   let qs = "";
-  if(from) qs += "&start="+encodeURIComponent(from);
-  if(to)   qs += "&end="+encodeURIComponent(to);
+  const f = toISO(from), t = toISO(to);
+  if(f) qs += "&start="+encodeURIComponent(f);
+  if(t) qs += "&end="+encodeURIComponent(t);
   return qs;
 }
 
@@ -2376,6 +2463,58 @@ function reloj(){
 // ═══════════════════════════════════════════════════════════
 //  SELECTOR DE FECHAS — ATAJOS RÁPIDOS
 // ═══════════════════════════════════════════════════════════
+// ─── Selector de rango: fecha + hora deslizable ───────────────
+function _minAHora(m){
+  const h=Math.floor(m/60), mi=m%60;
+  return String(h).padStart(2,"0")+":"+String(mi).padStart(2,"0");
+}
+
+// Une fecha (AAAA-MM-DD) y minutos del dia en el formato que consulta el sistema
+function sincronizarRango(){
+  const fd=document.getElementById("hpFromDate").value;
+  const td=document.getElementById("hpToDate").value;
+  const fm=parseInt(document.getElementById("hpFromHora").value||"0",10);
+  const tm=parseInt(document.getElementById("hpToHora").value||"1439",10);
+
+  document.getElementById("hpFromHoraTxt").innerText=_minAHora(fm);
+  document.getElementById("hpToHoraTxt").innerText=_minAHora(tm);
+
+  document.getElementById("hpFrom").value = fd ? fd+"T"+_minAHora(fm) : "";
+  document.getElementById("hpTo").value   = td ? td+"T"+_minAHora(tm) : "";
+
+  // Resumen legible + aviso si el rango esta invertido
+  const res=document.getElementById("drResumen");
+  if(!fd||!td){ res.innerText="Sin fechas: se consultara TODO el historial";
+                res.style.color="#00ff88"; return; }
+  const ini=new Date(fd+"T"+_minAHora(fm)), fin=new Date(td+"T"+_minAHora(tm));
+  if(fin<=ini){ res.innerText="⚠ La fecha HASTA debe ser posterior a DESDE";
+                res.style.color="#ff3355"; return; }
+  const horas=(fin-ini)/3600000;
+  const dur = horas<24 ? horas.toFixed(1)+" horas" : (horas/24).toFixed(1)+" dias";
+  const f=d=>d.toLocaleDateString("es-CO",{day:"2-digit",month:"short"});
+  res.innerText=`${f(ini)} ${_minAHora(fm)}  →  ${f(fin)} ${_minAHora(tm)}   (${dur})`;
+  res.style.color="#6a8fa8";
+}
+
+// Flechas para avanzar o retroceder un dia
+function ajustarDia(cual, delta){
+  const el=document.getElementById("hp"+cual+"Date");
+  const base=el.value?new Date(el.value+"T12:00"):new Date();
+  base.setDate(base.getDate()+delta);
+  const p=n=>String(n).padStart(2,"0");
+  el.value=`${base.getFullYear()}-${p(base.getMonth()+1)}-${p(base.getDate())}`;
+  sincronizarRango();
+}
+
+// Vuelca un valor "AAAA-MM-DDTHH:MM" a los controles visuales
+function _aplicarAControles(idDate, idHora, valor){
+  const d=document.getElementById(idDate), h=document.getElementById(idHora);
+  if(!valor){ d.value=""; return; }
+  const [fecha,hora]=valor.split("T");
+  d.value=fecha;
+  if(hora){ const [hh,mm]=hora.split(":").map(Number); h.value=hh*60+mm; }
+}
+
 function setRangoRapido(tipo, el){
   const ahora = new Date();
   const utc   = ahora.getTime() + ahora.getTimezoneOffset()*60000;
@@ -2387,6 +2526,20 @@ function setRangoRapido(tipo, el){
   };
 
   let desde, hasta;
+
+  // "TODO": sin filtro de fechas — se vacian los campos y la consulta trae
+  // el historial completo del equipo.
+  if(tipo==="todo"){
+    document.getElementById("hpFrom").value="";
+    document.getElementById("hpTo").value="";
+    document.getElementById("hpFromDate").value="";
+    document.getElementById("hpToDate").value="";
+    sincronizarRango();
+    document.querySelectorAll(".dr-sc").forEach(x=>x.classList.remove("active"));
+    if(el) el.classList.add("active");
+    log("Rango: TODO el historial","i");
+    return;
+  }
 
   if(tipo==="hoy"){
     desde = new Date(col); desde.setHours(0,0,0,0);
@@ -2410,6 +2563,9 @@ function setRangoRapido(tipo, el){
 
   document.getElementById("hpFrom").value = fmt(desde);
   document.getElementById("hpTo").value   = fmt(hasta);
+  _aplicarAControles("hpFromDate","hpFromHora", fmt(desde));
+  _aplicarAControles("hpToDate",  "hpToHora",   fmt(hasta));
+  sincronizarRango();
 
   // Resaltar atajo activo
   document.querySelectorAll(".dr-sc").forEach(b=>b.classList.remove("active"));
