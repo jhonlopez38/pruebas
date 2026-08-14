@@ -176,6 +176,46 @@ def gh_get_file(path: str):
     except Exception as e:
         return None
  
+def _clave_punto(p):
+    """Identidad de un punto para deduplicar al fusionar historiales."""
+    return (p.get("device",""), p.get("created_at",""),
+            str(p.get("lat","")), str(p.get("lon","")))
+ 
+def gh_push_history(local_hist):
+    """Guarda el historial en GitHub FUSIONANDO con lo que ya hay alli.
+ 
+    El disco de Render es efimero: tras un reinicio se recarga history.json
+    desde GitHub. Si esa copia llegaba incompleta y despues se subia el
+    historial local tal cual, se SOBRESCRIBIA la version buena y se perdian
+    dias enteros de marcaciones. Fusionando, ningun punto se pierde.
+    """
+    if not USE_GITHUB: return
+    try:
+        remoto = []
+        data = gh_get_file("data/history.json")
+        if data and data.get("content"):
+            import base64
+            crudo = base64.b64decode(data["content"]).decode("utf-8")
+            remoto = json.loads(crudo) if crudo.strip() else []
+        if not isinstance(remoto, list): remoto = []
+ 
+        vistos, fusion = set(), []
+        for p in remoto + list(local_hist):
+            k = _clave_punto(p)
+            if k in vistos: continue
+            vistos.add(k); fusion.append(p)
+        fusion.sort(key=capture_dt)
+        if len(fusion) > 50000: fusion = fusion[-50000:]
+ 
+        añadidos = len(fusion) - len(remoto)
+        gh_put_file("data/history.json",
+                    json.dumps(fusion, indent=2, ensure_ascii=False),
+                    f"GPS +{añadidos} ({len(fusion)} puntos)")
+        # Dejar el archivo local igual al fusionado, para no volver a perderlo
+        write_json(HISTORY_FILE, fusion)
+    except Exception as e:
+        print("[GH] Error fusionando history.json:", e)
+ 
 def gh_put_file(path: str, content: str, message: str = "HERMES data update"):
     """Crear o actualizar archivo en GitHub."""
     if not USE_GITHUB:
@@ -803,12 +843,10 @@ async def device_status_post(request: Request):
         if len(history) > 50000:
             history = history[-50000:]
         write_json(HISTORY_FILE, history)
-        # GitHub history: async para no bloquear la respuesta al ESP32
+        # GitHub history: fusion en segundo plano (no bloquea al ESP32) para
+        # que un historial local incompleto no borre lo ya guardado.
         if USE_GITHUB:
-            content = json.dumps(history, indent=2, ensure_ascii=False)
-            t = threading.Thread(target=gh_put_file,
-                args=("data/history.json", content, f"GPS {device} {fecha} {hora}"),
-                daemon=True)
+            t = threading.Thread(target=gh_push_history, args=(list(history),), daemon=True)
             t.start()
  
         # 3. CSV append local
@@ -918,10 +956,19 @@ def get_command(device: str = "HERMES-01", clear: bool = False):
             cmds[device]["attempts"] = attempts
             write_json(COMMAND_FILE, cmds)
             if USE_GITHUB:
-                t = threading.Thread(target=gh_put_file,
-                    args=("static/files/command.json", json.dumps(cmds,indent=2)), daemon=True)
-                t.start()
-    return {"device": device, "cmd": cmd, "created_at": entry.get("created_at","")}
+                if one_shot:
+                    # SINCRONO para update/reset: si el guardado en GitHub queda
+                    # en segundo plano y Render se reinicia antes de terminar,
+                    # sync_from_github() restaura el comando ya ejecutado y el
+                    # equipo vuelve a actualizarse/reiniciarse en bucle.
+                    try: gh_put_file("static/files/command.json", json.dumps(cmds, indent=2))
+                    except Exception as e: print("[GH] Error guardando command.json:", e)
+                else:
+                    t = threading.Thread(target=gh_put_file,
+                        args=("static/files/command.json", json.dumps(cmds,indent=2)), daemon=True)
+                    t.start()
+    return {"device": device, "cmd": cmd, "created_at": entry.get("created_at",""),
+            "cmd_id": entry.get("created_at","")}
  
 @app.get("/command/status")
 def command_status(user=Depends(get_user)): return read_commands()
@@ -937,30 +984,27 @@ def clear_device_command(device: str, user=Depends(get_user)):
 def download_csv(device: str = None, start: str = None, end: str = None,
                  user=Depends(get_user)):
     exigir_acceso(user, device)
-    if device or start or end:
-        rows = _historial(device, start, end, permitidos(user))
-        if not rows: raise HTTPException(404, "Sin datos en el rango seleccionado")
-        lines = ["id,despertar,fecha,hora,lat,lon,estado,bateria_v,bateria_pct,device,created_at"]
-        for i,r in enumerate(rows,1):
-            lines.append(",".join([
-                str(i), str(r.get("despertar","")), str(r.get("fecha","")),
-                str(r.get("hora","")), str(r.get("lat","")), str(r.get("lon","")),
-                str(r.get("estado","")), str(r.get("bateria_v","")),
-                str(r.get("bateria_pct","")), str(r.get("device","")),
-                str(r.get("created_at",""))
-            ]))
-        content = "\n".join(lines)
-        d_tag = (start or "")[:10] or datetime.utcnow().strftime("%Y-%m-%d")
-        fname = f"hermes_{device or 'todos'}_{d_tag}.csv"
-        return Response(content, media_type="text/csv",
-                       headers={"Content-Disposition": f"attachment; filename={fname}",
-                                "Access-Control-Allow-Origin": "*"})
-    if not os.path.exists(CSV_PATH):
-        with open(CSV_PATH,"w",encoding="utf-8",newline="") as f:
-            csv.writer(f).writerow(["id","despertar","fecha","hora","lat","lon",
-                                    "estado","bateria_v","bateria_pct","device","created_at"])
-    return FileResponse(CSV_PATH, media_type="text/csv", filename="gps_log.csv",
-                       headers={"Access-Control-Allow-Origin":"*","Cache-Control":"no-cache"})
+    # SIEMPRE se genera desde el historial. Antes, si no se pasaba 'device' ni
+    # fechas, se devolvia el archivo gps_log.csv del disco: un fichero efimero
+    # que Render restaura desde el repositorio en cada despliegue, por lo que
+    # aparecian solo unas pocas filas antiguas en vez del recorrido real.
+    rows = _historial(device, start, end, permitidos(user))
+    if not rows: raise HTTPException(404, "Sin datos en el rango seleccionado")
+    lines = ["id,despertar,fecha,hora,lat,lon,estado,bateria_v,bateria_pct,device,created_at"]
+    for i,r in enumerate(rows,1):
+        lines.append(",".join([
+            str(i), str(r.get("despertar","")), str(r.get("fecha","")),
+            str(r.get("hora","")), str(r.get("lat","")), str(r.get("lon","")),
+            str(r.get("estado","")), str(r.get("bateria_v","")),
+            str(r.get("bateria_pct","")), str(r.get("device","")),
+            str(r.get("created_at",""))
+        ]))
+    content = "\n".join(lines)
+    d_tag = (start or "")[:10] or datetime.utcnow().strftime("%Y-%m-%d")
+    fname = f"hermes_{device or 'todos'}_{d_tag}.csv"
+    return Response(content, media_type="text/csv",
+                   headers={"Content-Disposition": f"attachment; filename={fname}",
+                            "Access-Control-Allow-Origin": "*"})
  
 @app.get("/csv")
 def csv_alt(device: str = None, start: str = None, end: str = None):
