@@ -2008,8 +2008,13 @@ async function consultarRecorrido(){
     playCoords=data.filter(p=>p.lat&&p.lon&&parseFloat(p.lat)!==0);
     if(!playCoords.length){log("Sin coordenadas GPS validas en el rango","w");return;}
     // dibujar ruta completa tenue
+    // Limpieza total del recorrido anterior (puntos, ruta, rastro y marcador
+    // de reproduccion), para que no queden capas de la consulta previa.
+    if(playTimer){clearInterval(playTimer);playTimer=null;}
+    playPaused=false; playIdx=0;
     histDots.forEach(m=>map.removeLayer(m));histDots=[];
     if(histPolyln){map.removeLayer(histPolyln);histPolyln=null;}
+    if(playMk){map.removeLayer(playMk);playMk=null;}
     const cfg=getDevCfg(CUR_DEV);
     histPolyln=L.polyline(playCoords.map(p=>[parseFloat(p.lat),parseFloat(p.lon)]),
       {color:cfg.color||"#00c8ff",weight:2,opacity:.3,dashArray:"5,5"}).addTo(map);
@@ -2072,6 +2077,16 @@ function resetPlayState(){
   if(playMk){map.removeLayer(playMk);playMk=null;}
   histDots.forEach(m=>map.removeLayer(m));histDots=[];
   if(histPolyln){map.removeLayer(histPolyln);histPolyln=null;}
+  // Barrido de seguridad: elimina cualquier linea o punto que haya quedado
+  // suelto en el mapa sin referencia. Respeta las capas del modo EN VIVO
+  // (ruta, puntos y marcador principal) y las capas base del mapa.
+  const conservar=new Set([polyln,mainMk,...dots].filter(Boolean));
+  map.eachLayer(l=>{
+    if(conservar.has(l)) return;
+    if(l instanceof L.Polyline || l instanceof L.CircleMarker){
+      try{ map.removeLayer(l); }catch(e){}
+    }
+  });
   document.getElementById("playSlider").value=0;
   document.getElementById("playInfo").innerText="Sin recorrido cargado";
 }
@@ -2099,8 +2114,12 @@ function playRecorrido(){
     // dibujar rastro
     if(playIdx>0){
       const prev=playCoords[playIdx-1];
-      L.polyline([[parseFloat(prev.lat),parseFloat(prev.lon)],[lat,lon]],
+      // El rastro se guarda en histDots para poder borrarlo despues: antes se
+      // anadia al mapa sin referencia y quedaba dibujado en las consultas
+      // siguientes.
+      const seg=L.polyline([[parseFloat(prev.lat),parseFloat(prev.lon)],[lat,lon]],
         {color:cfg.color||"#00c8ff",weight:3,opacity:.9}).addTo(map);
+      histDots.push(seg);
     }
     // mover marcador
     if(!playMk) playMk=L.marker([lat,lon],{icon}).addTo(map);
