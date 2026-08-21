@@ -782,5 +782,37 @@
     "wifi": "conectado",
     "fw_version": "1.1.6",
     "created_at": "2026-08-21T14:41:37.862241"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 1276,
+    "ciclo_min": 5,
+    "fallos_gps": 0,
+    "lat": 4.132371,
+    "lon": -73.599544,
+    "fecha": "21/08/2026",
+    "hora": "09:11:14",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.1.6",
+    "created_at": "2026-08-21T14:41:39.525685"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 1276,
+    "ciclo_min": 5,
+    "fallos_gps": 0,
+    "lat": 4.132384,
+    "lon": -73.599516,
+    "fecha": "21/08/2026",
+    "hora": "09:23:28",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.1.6",
+    "created_at": "2026-08-21T14:41:42.276010"
   }
 ]
