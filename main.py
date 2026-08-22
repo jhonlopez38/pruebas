@@ -1,3 +1,4 @@
+
 import os, json, csv, sys, base64, threading
 from datetime import datetime, timedelta
 from fastapi import FastAPI, Request, HTTPException, Depends
@@ -665,9 +666,15 @@ async def admin_delete_points(request: Request, admin=Depends(require_admin)):
  
     device = d.get("device")
     ids    = set(d.get("created_at") or [])
+    # Identificacion alternativa por fecha+hora+coordenadas: 'created_at' no
+    # siempre esta disponible en el frontend, y sin el no se borraba nada.
+    marcas = set()
+    for m in (d.get("marcas") or []):
+        marcas.add((str(m.get("fecha","")), str(m.get("hora","")),
+                    round(float(m.get("lat", 0)), 5), round(float(m.get("lon", 0)), 5)))
     start  = d.get("start"); end = d.get("end")
-    if not device or (not ids and not (start and end)):
-        raise HTTPException(400, "Indica 'created_at' o un rango 'start'/'end'")
+    if not device or (not ids and not marcas and not (start and end)):
+        raise HTTPException(400, "Indica 'created_at', 'marcas' o un rango 'start'/'end'")
  
     history = read_json(HISTORY_FILE, [])
     conservados, borrados = [], []
@@ -676,6 +683,13 @@ async def admin_delete_points(request: Request, admin=Depends(require_admin)):
         if p.get("device") == device:
             if ids and p.get("created_at") in ids:
                 quitar = True
+            elif marcas:
+                try:
+                    k = (str(p.get("fecha","")), str(p.get("hora","")),
+                         round(float(p.get("lat", 0)), 5), round(float(p.get("lon", 0)), 5))
+                    if k in marcas: quitar = True
+                except Exception:
+                    pass
             elif start and end and in_range(capture_dt(p).isoformat(), start, end):
                 quitar = True
         (borrados if quitar else conservados).append(p)
