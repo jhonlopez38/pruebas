@@ -4469,14 +4469,14 @@
     "despertar": 1589,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 4.16582,
-    "lon": -73.623667,
+    "lat": 4.165829,
+    "lon": -73.623659,
     "fecha": "22/08/2026",
-    "hora": "16:19:25",
+    "hora": "16:25:39",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.1.8",
-    "created_at": "2026-08-22T22:22:10.124500"
+    "created_at": "2026-08-22T22:22:11.414343"
   }
 ]
