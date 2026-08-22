@@ -2148,7 +2148,7 @@ async function consultarRecorrido(){
           <span style="color:#6a8fa8">Estado:</span> ${p.estado||"--"}<br>
           <a href="https://www.google.com/maps?layer=c&cbll=${la},${lo}"
              target="_blank" style="color:#00c8ff">📷 Street View</a>
-          ${(USER&&USER.role==="admin")?`<br><a href="#" onclick="borrarPunto('${p.created_at||""}','${(p.fecha||"")+" "+(p.hora||"")}');return false"
+          ${(USER&&USER.role==="admin")?`<br><a href="#" onclick="borrarPunto('${p.created_at||""}','${(p.fecha||"")+" "+(p.hora||"")}','${p.fecha||""}','${p.hora||""}',${la},${lo});return false"
              style="color:#ff3355">🗑 Eliminar este punto</a>`:""}
         </div>`,{maxWidth:230}).addTo(map);
       histDots.push(m);
@@ -2897,15 +2897,20 @@ async function bkForzar(){
 }
 
 // ─── Eliminar puntos erroneos del historial ──────────────────
-async function borrarPunto(createdAt, etiqueta){
-  if(!createdAt){ log("Ese punto no tiene identificador","w"); return; }
+async function borrarPunto(createdAt, etiqueta, fecha, hora, lat, lon){
   if(!confirm(`Eliminar este punto?\n\n${etiqueta}\n\nSe guarda una copia en los respaldos por si hay que revertir.`)) return;
+  // Se envian las DOS formas de identificacion: por created_at si existe y
+  // por fecha+hora+coordenadas, que siempre estan disponibles.
+  const cuerpo = {device:CUR_DEV};
+  if(createdAt) cuerpo.created_at=[createdAt];
+  cuerpo.marcas=[{fecha:fecha, hora:hora, lat:lat, lon:lon}];
   try{
     const r=await fetchReintento(BASE+"/admin/delete-points",{method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
-      body:JSON.stringify({device:CUR_DEV, created_at:[createdAt]})});
+      body:JSON.stringify(cuerpo)});
     const d=await r.json();
     if(!r.ok) throw new Error(d.detail||"HTTP "+r.status);
+    if(!d.borrados){ log("No se encontro el punto en el historial","w"); return; }
     log(`Punto eliminado (${d.borrados}) · quedan ${d.restantes}`,"ok");
     map.closePopup();
     consultarRecorrido();          // redibujar sin el punto borrado
