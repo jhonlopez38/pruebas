@@ -4581,14 +4581,14 @@
     "despertar": 1589,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 4.165803,
+    "lat": 4.165824,
     "lon": -73.623655,
     "fecha": "22/08/2026",
-    "hora": "17:03:04",
+    "hora": "17:09:18",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.1.8",
-    "created_at": "2026-08-22T22:22:19.074608"
+    "created_at": "2026-08-22T22:22:20.355738"
   }
 ]
