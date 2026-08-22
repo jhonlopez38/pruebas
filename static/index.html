@@ -959,6 +959,12 @@ footer{height:26px;background:#0a1628;border-top:1px solid #1a3a5c;padding:0 16p
                border-color:rgba(0,200,255,.35)">
         🔍 CONSULTAR RECORRIDO
       </button>
+      <button class="btn" id="btnBorrarRango" onclick="borrarRango()"
+        style="display:none;margin-top:5px;padding:8px;font-size:10px;letter-spacing:1px;
+               border-radius:6px;color:#ff3355;border-color:rgba(255,51,85,.3);
+               background:rgba(255,51,85,.06)">
+        🗑 ELIMINAR PUNTOS DEL RANGO
+      </button>
     </div>
     <div class="play-bar">
       <div class="play-speed">
@@ -1384,6 +1390,9 @@ function postLogin(){
     if(btnR) btnR.style.display="flex";
     const btnU = document.getElementById("btnUpdate");
     if(btnU) btnU.style.display="flex";
+    // Eliminar puntos del historial: solo administrador
+    const btnB = document.getElementById("btnBorrarRango");
+    if(btnB) btnB.style.display="block";
   }
   const lbl = document.getElementById("admUserLabel");
   if(lbl && USER) lbl.innerText = (USER.username||USER.email||"").toUpperCase();
@@ -2003,7 +2012,7 @@ function statusBackend(){
     .catch(()=>log("ERROR backend","e"));
 }
 function statusDisp(){
-  fetch(BASE+"/device-status?device="+CUR_DEV+"&t="+Date.now(),{headers:authH()})
+  fetchReintento(BASE+"/device-status?device="+CUR_DEV+"&t="+Date.now(),{headers:authH()})
     .then(r=>r.json()).then(d=>{
       const pct=d.bateria_pct||0;
       document.getElementById("batV").innerText=pct+"%";
@@ -2139,6 +2148,8 @@ async function consultarRecorrido(){
           <span style="color:#6a8fa8">Estado:</span> ${p.estado||"--"}<br>
           <a href="https://www.google.com/maps?layer=c&cbll=${la},${lo}"
              target="_blank" style="color:#00c8ff">📷 Street View</a>
+          ${(USER&&USER.role==="admin")?`<br><a href="#" onclick="borrarPunto('${p.created_at||""}','${(p.fecha||"")+" "+(p.hora||"")}');return false"
+             style="color:#ff3355">🗑 Eliminar este punto</a>`:""}
         </div>`,{maxWidth:230}).addTo(map);
       histDots.push(m);
     });
@@ -2379,7 +2390,7 @@ function verRuta(){
 
 async function cargarDesdeHistory(){
   try{
-    const res=await fetch(BASE+"/history?device="+encodeURIComponent(CUR_DEV)+"&t="+Date.now(),{headers:authH()});
+    const res=await fetchReintento(BASE+"/history?device="+encodeURIComponent(CUR_DEV)+"&t="+Date.now(),{headers:authH()});
     if(!res.ok)return;
     const data=await res.json();
     if(!data||!data.length){log("Sin datos GPS en historial todavia","w");return;}
@@ -2883,6 +2894,40 @@ async function bkForzar(){
     log("Respaldo generado y enviado","ok");
     bkCargarEstado(); cargarRespaldos();
   }catch(e){ msg.style.color="#ff3355"; msg.innerText="Error: "+(e.message||"conexion"); }
+}
+
+// ─── Eliminar puntos erroneos del historial ──────────────────
+async function borrarPunto(createdAt, etiqueta){
+  if(!createdAt){ log("Ese punto no tiene identificador","w"); return; }
+  if(!confirm(`Eliminar este punto?\n\n${etiqueta}\n\nSe guarda una copia en los respaldos por si hay que revertir.`)) return;
+  try{
+    const r=await fetchReintento(BASE+"/admin/delete-points",{method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
+      body:JSON.stringify({device:CUR_DEV, created_at:[createdAt]})});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.detail||"HTTP "+r.status);
+    log(`Punto eliminado (${d.borrados}) · quedan ${d.restantes}`,"ok");
+    map.closePopup();
+    consultarRecorrido();          // redibujar sin el punto borrado
+  }catch(e){ log("Error al eliminar: "+(e.message||"conexion"),"e"); }
+}
+
+// Elimina TODOS los puntos del rango de fechas seleccionado
+async function borrarRango(){
+  const from=document.getElementById("hpFrom").value;
+  const to  =document.getElementById("hpTo").value;
+  if(!from||!to){ log("Selecciona un rango de fechas primero","w"); return; }
+  const toISO = v => { try{ return new Date(v).toISOString(); }catch(e){ return ""; } };
+  if(!confirm(`Eliminar TODOS los puntos de ${CUR_DEV} en el rango seleccionado?\n\nDesde: ${from}\nHasta: ${to}\n\nSe guarda una copia en los respaldos.`)) return;
+  try{
+    const r=await fetchReintento(BASE+"/admin/delete-points",{method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},
+      body:JSON.stringify({device:CUR_DEV, start:toISO(from), end:toISO(to)})});
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.detail||"HTTP "+r.status);
+    log(`Eliminados ${d.borrados} puntos · quedan ${d.restantes}`,"ok");
+    consultarRecorrido();
+  }catch(e){ log("Error al eliminar: "+(e.message||"conexion"),"e"); }
 }
 
 // ─── Recuperar marcaciones desde copia previa ────────────────
