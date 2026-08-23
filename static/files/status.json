@@ -18,17 +18,17 @@
   "HERMES-02": {
     "device": "HERMES-02",
     "estado": "ULTIMA UBICACION",
-    "despertar": 1724,
+    "despertar": 1726,
     "ciclo_min": 5,
-    "fallos_gps": 35,
+    "fallos_gps": 36,
     "lat": 4.132199833,
     "lon": -73.59982333,
     "fecha": "23/08/2026",
-    "hora": "09:09:21",
+    "hora": "09:17:59",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
-    "fw_version": "1.1.8",
-    "created_at": "2026-08-23T14:09:24.976067"
+    "fw_version": "1.2.0",
+    "created_at": "2026-08-23T14:18:25.684361"
   }
 }
