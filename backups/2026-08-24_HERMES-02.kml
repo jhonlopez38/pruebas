@@ -1,0 +1,2215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+  <n>Respaldo HERMES-02 20/08/2026 a 23/08/2026</n>
+  <Style id="pointStyle"><IconStyle><color>ff00c8ff</color><scale>0.8</scale></IconStyle></Style>
+  <Placemark><n>Ruta</n><LineString><tessellate>1</tessellate>
+    <coordinates>-73.622042,4.135658,0 -73.622056,4.135667,0 -73.617392,4.122093,0 -73.600179,4.133211,0 -73.59935,4.132303,0 -73.62095,4.115196,0 -73.602168,4.1317,0 -73.599594,4.132353,0 -73.59957317,4.1323405,0 -73.599604,4.132367,0 -73.599596,4.132356667,0 -73.59960233,4.1323935,0 -73.59957117,4.132349,0 -73.5996065,4.132361833,0 -73.59959233,4.132359333,0 -73.59967383,4.132396,0 -73.599596,4.132368833,0 -73.59960117,4.132359833,0 -73.5996235,4.132335,0 -73.5995875,4.1323525,0 -73.599508,4.132344,0 -73.59955233,4.132468833,0 -73.59956717,4.132334333,0 -73.59958133,4.132342667,0 -73.59962217,4.132390333,0 -73.59960367,4.132388167,0 -73.59965383,4.132464333,0 -73.59960867,4.1323905,0 -73.59959733,4.132385,0 -73.59958567,4.1323565,0 -73.59961233,4.132354,0 -73.5996435,4.1323925,0 -73.599615,4.132359,0 -73.5995945,4.132359,0 -73.59952483,4.132342,0 -73.59959,4.132391,0 -73.5996,4.132372,0 -73.599544,4.132371,0 -73.599519,4.132411,0 -73.599516,4.132384,0 -73.599622,4.132442,0 -73.599568,4.132425,0 -73.599579,4.132394833,0 -73.59956283,4.132394333,0 -73.59960767,4.132414333,0 -73.599596,4.132442,0 -73.59958767,4.1323965,0 -73.5995755,4.1324515,0 -73.5995515,4.132347167,0 -73.60478067,4.136657833,0 -73.5994995,4.132811833,0 -73.599374,4.132674,0 -73.599673,4.132658333,0 -73.5998005,4.132617333,0 -73.59954633,4.132462667,0 -73.5995985,4.132348667,0 -73.60195183,4.134092167,0 -73.60197833,4.134237,0 -73.600245,4.133720167,0 -73.59960683,4.132373667,0 -73.59961,4.132404,0 -73.599602,4.132453333,0 -73.59960283,4.1323905,0 -73.59966317,4.132371,0 -73.59965217,4.132385833,0 -73.59961633,4.132330667,0 -73.59965483,4.132395,0 -73.599611,4.1323425,0 -73.599648,4.132362333,0 -73.59961483,4.13236,0 -73.59965233,4.132381,0 -73.59962917,4.132327,0 -73.59962633,4.132390167,0 -73.59970917,4.132405833,0 -73.59972283,4.1324185,0 -73.59969983,4.132409833,0 -73.59968683,4.13239,0 -73.59968633,4.132357,0 -73.59963933,4.132427833,0 -73.59964567,4.132385333,0 -73.59962433,4.132353333,0 -73.59960917,4.132379833,0 -73.59954,4.132429,0 -73.59966317,4.1322355,0 -73.59961733,4.132184,0 -73.59958,4.13188,0 -73.599785,4.132204,0 -73.59965667,4.132271333,0 -73.599523,4.132313,0 -73.599826,4.132238,0 -73.599651,4.132307,0 -73.599813,4.132202,0 -73.599797,4.132217,0 -73.599754,4.132342,0 -73.599533,4.132488,0 -73.599621,4.13233,0 -73.599668,4.132275,0 -73.599605,4.132305,0 -73.599649,4.13228,0 -73.599636,4.132369,0 -73.599623,4.132341,0 -73.599542,4.132393,0 -73.59974817,4.132177167,0 -73.59960583,4.132313333,0 -73.59963033,4.1322905,0 -73.5997085,4.132232833,0 -73.59972733,4.1322625,0 -73.60296167,4.138469,0 -73.61744183,4.122248833,0 -73.629598,4.133463,0 -73.63493883,4.139601167,0 -73.6390005,4.139772,0 -73.63902017,4.140075667,0 -73.638219,4.137088,0 -73.637233,4.136869,0 -73.638156,4.137097,0 -73.638141,4.137126,0 -73.63815,4.137134,0 -73.638139,4.137134,0 -73.638121,4.137123,0 -73.638106,4.137132,0 -73.638133,4.137143,0 -73.638152,4.137132,0 -73.638136,4.137118,0 -73.638108,4.137134,0 -73.63778217,4.1371555,0 -73.63817167,4.139841833,0 -73.638226,4.139915,0 -73.638192,4.139902,0 -73.638209,4.13994,0 -73.638272,4.139933,0 -73.638274,4.139941,0 -73.638124,4.139922,0 -73.638156,4.139919,0 -73.638217,4.139905,0 -73.638096,4.139963,0 -73.638199,4.139917,0 -73.638256,4.139933,0 -73.638258,4.139926,0 -73.638227,4.139965,0 -73.638259,4.139939,0 -73.638196,4.139946,0 -73.638212,4.139939,0 -73.638228,4.13994,0 -73.638226,4.139903,0 -73.63822,4.139941,0 -73.638217,4.139923,0 -73.63823,4.139908,0 -73.63823,4.139914,0 -73.638199,4.139953,0 -73.638198,4.139932,0 -73.638236,4.139916,0 -73.638205,4.139936,0 -73.638233,4.139956,0 -73.638194,4.139948,0 -73.638186,4.139939,0 -73.638199,4.139881,0 -73.638166,4.139913,0 -73.638232,4.139898,0 -73.638199,4.139903,0 -73.6382,4.139884,0 -73.638229,4.139905,0 -73.638222,4.139919,0 -73.638205,4.139923,0 -73.638256,4.139923,0 -73.638217,4.139935,0 -73.638223,4.139897,0 -73.638195,4.139917,0 -73.638135,4.139921,0 -73.638182,4.13992,0 -73.638245,4.139869,0 -73.638202,4.139895,0 -73.638192,4.139898,0 -73.638239,4.139894,0 -73.638225,4.1399,0 -73.638208,4.139905,0 -73.638211,4.139882,0 -73.638215,4.139969,0 -73.63822,4.139904,0 -73.638222,4.139912,0 -73.638213,4.139878,0 -73.638216,4.139895,0 -73.63821,4.139886,0 -73.638257,4.139884,0 -73.607631,4.145799,0 -73.599566,4.132399,0 -73.59957083,4.132399167,0 -73.599599,4.132357833,0 -73.59957967,4.132401333,0 -73.59954033,4.132449167,0 -73.59955617,4.132449,0 -73.59960433,4.132504667,0 -73.59951967,4.132460333,0 -73.59956867,4.132394,0 -73.599519,4.132537,0 -73.59953267,4.132508333,0 -73.59961167,4.132382833,0 -73.59959533,4.132459,0 -73.5996,4.132362667,0 -73.599603,4.132409167,0 -73.59958817,4.132393833,0 -73.599573,4.132394,0 -73.5995865,4.1323755,0 -73.59967667,4.132322667,0 -73.59957933,4.132478,0 -73.5996125,4.1324095,0 -73.59956917,4.132492667,0 -73.59960667,4.132497667,0 -73.59960017,4.132383167,0 -73.59961483,4.132419167,0 -73.5996485,4.1325045,0 -73.59964,4.132446,0 -73.5996245,4.132522167,0 -73.59954317,4.132618,0 -73.599554,4.132549833,0 -73.59952083,4.132488333,0 -73.59954967,4.132573667,0 -73.59952883,4.132712167,0 -73.599569,4.132671333,0 -73.5996135,4.132678833,0 -73.5995415,4.1326825,0 -73.59957583,4.1326165,0 -73.59954933,4.132591167,0 -73.59958567,4.132505167,0 -73.5995425,4.1324885,0 -73.59958717,4.132412833,0 -73.59964833,4.132391,0 -73.59964967,4.132342333,0 -73.599635,4.132375333,0 -73.5995395,4.132525333,0 -73.59958567,4.132557167,0 -73.5995435,4.132543667,0 -73.59952767,4.132544667,0 -73.59956367,4.132535,0 -73.599535,4.1324545,0 -73.599558,4.1324875,0 -73.599636,4.132362167,0 -73.599602,4.132459,0 -73.5996065,4.132471667,0 -73.59962767,4.132400667,0 -73.59959983,4.132421333,0 -73.59972333,4.132339167,0 -73.59962467,4.132390667,0 -73.59955567,4.132439167,0 -73.59953633,4.132456333,0 -73.59957417,4.132413333,0 -73.59957117,4.132493833,0 -73.599601,4.132408,0 -73.599631,4.132531,0 -73.599626,4.132546,0 -73.59961,4.132353,0 -73.599592,4.13247,0 -73.59957,4.132602,0 -73.599574,4.132395,0 -73.599644,4.132427,0 -73.599569,4.132536,0 -73.599638,4.132392,0 -73.599602,4.132406,0 -73.599617,4.132379,0 -73.599615,4.132373,0 -73.599595,4.132361,0 -73.599578,4.132339,0 -73.599579,4.132359,0 -73.59958,4.13238,0 -73.599585,4.132374,0 -73.5997325,4.132325333,0 -73.599495,4.132527,0 -73.600047,4.131653,0 -73.6232515,4.105559333,0 -73.58874967,4.145773333,0 -73.59729483,4.137663,0 -73.5993975,4.132149167,0 -73.59964783,4.132307167,0 -73.6000115,4.132205167,0 -73.59973633,4.1326825,0 -73.59979,4.132266333,0 -73.61295,4.146256333,0 -73.62832367,4.1522635,0 -73.623621,4.165814,0 -73.623667,4.16582,0 -73.623659,4.165829,0 -73.623671,4.165843,0 -73.623635,4.165811,0 -73.623613,4.165797,0 -73.623638,4.165802,0 -73.623643,4.165798,0 -73.623655,4.165803,0 -73.62363,4.165806,0 -73.62360983,4.165792667,0 -73.629954,4.1579705,0 -73.62442633,4.148202667,0 -73.61090083,4.146254833,0 -73.6032415,4.1310845,0 -73.60178733,4.134224,0 -73.60583883,4.121875333,0 -73.59950783,4.132551,0 -73.5994565,4.132324,0 -73.599538,4.132457167,0 -73.59982333,4.132199833,0 -73.59960383,4.132487,0 -73.59959217,4.132486833,0 -73.59953533,4.132335333,0 -73.59962,4.132402,0 -73.599626,4.132381,0 -73.599647,4.132395,0 -73.599638,4.132378,0 -73.5996,4.132412,0 -73.5996285,4.132385,0 -73.59961133,4.132394667,0 -73.599627,4.132378333,0 -73.59960033,4.132373333,0 -73.59960167,4.132379667,0 -73.59960567,4.132390167,0 -73.60599533,4.1450335,0 -73.63631383,4.155326667,0 -73.63934,4.15425,0 -73.639285,4.154153,0 -73.639286,4.15426,0 -73.639298,4.154273,0 -73.639304,4.15422,0 -73.639313,4.15425,0 -73.639346,4.154282,0 -73.63582117,4.146183167,0 -73.618591,4.123659,0 -73.60036467,4.133476667,0 -73.59960133,4.132319167,0 -73.59960183,4.132332167,0 -73.59959383,4.132328833,0 -73.59962,4.132333,0 -73.599643,4.132312,0 -73.59960833,4.132319333,0 -73.59962,4.132321,0 -73.599608,4.132321,0 -73.599602,4.132316,0 -73.599612,4.132337,0 -73.599601,4.13234,0 -73.599602,4.132346,0 -73.599583,4.132333,0 -73.599594,4.132331,0 -73.599593,4.132331,0 -73.599598,4.132321,0 -73.599613,4.13232,0 -73.599616,4.132328,0 -73.59958467,4.1323195,0 -73.59959517,4.132321167,0 -73.59960133,4.132317667,0 -73.4164615,4.311778667,0 -73.44731483,4.277848,0 -73.599575,4.132493,0 -73.599586,4.132588,0 -73.599625,4.132486,0 -73.599576,4.132535,0 -73.599581,4.132413,0 -73.6099295,4.169234333,0 -73.700209,4.2427935,0 -73.71636067,4.356076,0 -73.54178133,4.3692585,0 -73.59029833,4.452179833,0 -73.55988417,4.697214,0 -73.599621,4.132383,0 -73.60035833,4.134144167,0 -73.609053,4.126126667,0 -73.63125983,4.119190167,0 -73.63669017,4.123509167,0 -73.636674,4.123535833,0 -73.6366655,4.123524,0 -73.63667733,4.123510167,0 -73.6367025,4.1235135,0</coordinates></LineString></Placemark>
+    <Placemark>
+      <n>#1 HERMES-02</n>
+      <description>20/08/2026 22:00:11 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.622042,4.135658,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#2 HERMES-02</n>
+      <description>20/08/2026 22:06:18 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.622056,4.135667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#3 HERMES-02</n>
+      <description>20/08/2026 22:12:24 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.617392,4.122093,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#4 HERMES-02</n>
+      <description>20/08/2026 22:18:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.600179,4.133211,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#5 HERMES-02</n>
+      <description>20/08/2026 22:56:42 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59935,4.132303,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#6 HERMES-02</n>
+      <description>20/08/2026 23:02:49 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.62095,4.115196,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#7 HERMES-02</n>
+      <description>20/08/2026 23:08:58 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.602168,4.1317,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#8 HERMES-02</n>
+      <description>21/08/2026 06:01:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599594,4.132353,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#9 HERMES-02</n>
+      <description>21/08/2026 06:08:18 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957317,4.1323405,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#10 HERMES-02</n>
+      <description>21/08/2026 06:14:05 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599604,4.132367,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#11 HERMES-02</n>
+      <description>21/08/2026 06:19:32 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599596,4.132356667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#12 HERMES-02</n>
+      <description>21/08/2026 06:25:00 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960233,4.1323935,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#13 HERMES-02</n>
+      <description>21/08/2026 06:30:27 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957117,4.132349,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#14 HERMES-02</n>
+      <description>21/08/2026 06:35:54 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996065,4.132361833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#15 HERMES-02</n>
+      <description>21/08/2026 06:41:23 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59959233,4.132359333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#16 HERMES-02</n>
+      <description>21/08/2026 06:47:19 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59967383,4.132396,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#17 HERMES-02</n>
+      <description>21/08/2026 06:52:47 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599596,4.132368833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#18 HERMES-02</n>
+      <description>21/08/2026 06:58:15 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960117,4.132359833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#19 HERMES-02</n>
+      <description>21/08/2026 07:03:43 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996235,4.132335,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#20 HERMES-02</n>
+      <description>21/08/2026 07:09:11 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995875,4.1323525,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#21 HERMES-02</n>
+      <description>21/08/2026 07:14:40 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599508,4.132344,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#22 HERMES-02</n>
+      <description>21/08/2026 07:20:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59955233,4.132468833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#23 HERMES-02</n>
+      <description>21/08/2026 07:25:36 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59956717,4.132334333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#24 HERMES-02</n>
+      <description>21/08/2026 07:31:03 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958133,4.132342667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#25 HERMES-02</n>
+      <description>21/08/2026 07:36:30 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962217,4.132390333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#26 HERMES-02</n>
+      <description>21/08/2026 07:41:59 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960367,4.132388167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#27 HERMES-02</n>
+      <description>21/08/2026 07:47:27 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59965383,4.132464333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#28 HERMES-02</n>
+      <description>21/08/2026 07:52:54 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960867,4.1323905,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#29 HERMES-02</n>
+      <description>21/08/2026 07:58:21 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59959733,4.132385,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#30 HERMES-02</n>
+      <description>21/08/2026 08:03:49 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958567,4.1323565,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#31 HERMES-02</n>
+      <description>21/08/2026 08:09:16 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961233,4.132354,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#32 HERMES-02</n>
+      <description>21/08/2026 08:14:44 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996435,4.1323925,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#33 HERMES-02</n>
+      <description>21/08/2026 08:20:12 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599615,4.132359,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#34 HERMES-02</n>
+      <description>21/08/2026 08:25:40 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995945,4.132359,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#35 HERMES-02</n>
+      <description>21/08/2026 08:31:10 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59952483,4.132342,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#36 HERMES-02</n>
+      <description>21/08/2026 08:59:01 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59959,4.132391,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#37 HERMES-02</n>
+      <description>21/08/2026 09:05:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996,4.132372,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#38 HERMES-02</n>
+      <description>21/08/2026 09:11:14 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599544,4.132371,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#39 HERMES-02</n>
+      <description>21/08/2026 09:17:21 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599519,4.132411,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#40 HERMES-02</n>
+      <description>21/08/2026 09:23:28 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599516,4.132384,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#41 HERMES-02</n>
+      <description>21/08/2026 09:29:34 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599622,4.132442,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#42 HERMES-02</n>
+      <description>21/08/2026 09:35:41 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599568,4.132425,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#43 HERMES-02</n>
+      <description>21/08/2026 09:41:47 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599579,4.132394833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#44 HERMES-02</n>
+      <description>21/08/2026 09:47:19 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59956283,4.132394333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#45 HERMES-02</n>
+      <description>21/08/2026 09:52:50 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960767,4.132414333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#46 HERMES-02</n>
+      <description>21/08/2026 09:58:19 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599596,4.132442,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#47 HERMES-02</n>
+      <description>21/08/2026 10:03:49 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958767,4.1323965,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#48 HERMES-02</n>
+      <description>21/08/2026 10:09:20 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995755,4.1324515,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#49 HERMES-02</n>
+      <description>21/08/2026 10:14:49 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995515,4.132347167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#50 HERMES-02</n>
+      <description>21/08/2026 11:42:00 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60478067,4.136657833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#51 HERMES-02</n>
+      <description>21/08/2026 11:47:29 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5994995,4.132811833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#52 HERMES-02</n>
+      <description>21/08/2026 11:52:59 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599374,4.132674,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#53 HERMES-02</n>
+      <description>21/08/2026 11:58:29 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599673,4.132658333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#54 HERMES-02</n>
+      <description>21/08/2026 12:09:53 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5998005,4.132617333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#55 HERMES-02</n>
+      <description>21/08/2026 12:15:23 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59954633,4.132462667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#56 HERMES-02</n>
+      <description>21/08/2026 12:20:53 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995985,4.132348667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#57 HERMES-02</n>
+      <description>21/08/2026 14:39:48 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60195183,4.134092167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#58 HERMES-02</n>
+      <description>21/08/2026 14:45:26 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60197833,4.134237,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#59 HERMES-02</n>
+      <description>21/08/2026 14:51:13 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.600245,4.133720167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#60 HERMES-02</n>
+      <description>21/08/2026 14:57:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960683,4.132373667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#61 HERMES-02</n>
+      <description>21/08/2026 15:02:54 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961,4.132404,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#62 HERMES-02</n>
+      <description>21/08/2026 15:08:25 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599602,4.132453333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#63 HERMES-02</n>
+      <description>21/08/2026 15:14:00 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960283,4.1323905,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#64 HERMES-02</n>
+      <description>21/08/2026 15:19:29 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59966317,4.132371,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#65 HERMES-02</n>
+      <description>21/08/2026 15:24:56 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59965217,4.132385833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#66 HERMES-02</n>
+      <description>21/08/2026 15:30:23 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961633,4.132330667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#67 HERMES-02</n>
+      <description>21/08/2026 15:35:50 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59965483,4.132395,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#68 HERMES-02</n>
+      <description>21/08/2026 15:41:17 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599611,4.1323425,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#69 HERMES-02</n>
+      <description>21/08/2026 15:46:47 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599648,4.132362333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#70 HERMES-02</n>
+      <description>21/08/2026 15:52:19 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961483,4.13236,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#71 HERMES-02</n>
+      <description>21/08/2026 15:57:47 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59965233,4.132381,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#72 HERMES-02</n>
+      <description>21/08/2026 16:03:15 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962917,4.132327,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#73 HERMES-02</n>
+      <description>21/08/2026 16:08:42 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962633,4.132390167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#74 HERMES-02</n>
+      <description>21/08/2026 16:14:09 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59970917,4.132405833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#75 HERMES-02</n>
+      <description>21/08/2026 16:19:36 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59972283,4.1324185,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#76 HERMES-02</n>
+      <description>21/08/2026 16:25:04 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59969983,4.132409833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#77 HERMES-02</n>
+      <description>21/08/2026 16:30:32 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59968683,4.13239,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#78 HERMES-02</n>
+      <description>21/08/2026 16:35:59 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59968633,4.132357,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#79 HERMES-02</n>
+      <description>21/08/2026 16:41:32 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59963933,4.132427833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#80 HERMES-02</n>
+      <description>21/08/2026 16:46:59 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59964567,4.132385333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#81 HERMES-02</n>
+      <description>21/08/2026 16:52:29 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962433,4.132353333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#82 HERMES-02</n>
+      <description>21/08/2026 16:57:55 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960917,4.132379833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#83 HERMES-02</n>
+      <description>21/08/2026 17:03:23 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59954,4.132429,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#84 HERMES-02</n>
+      <description>21/08/2026 17:08:51 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59966317,4.1322355,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#85 HERMES-02</n>
+      <description>21/08/2026 17:14:32 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961733,4.132184,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#86 HERMES-02</n>
+      <description>21/08/2026 17:20:20 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958,4.13188,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#87 HERMES-02</n>
+      <description>21/08/2026 17:32:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599785,4.132204,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#88 HERMES-02</n>
+      <description>21/08/2026 17:38:39 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59965667,4.132271333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#89 HERMES-02</n>
+      <description>21/08/2026 17:49:48 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599523,4.132313,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#90 HERMES-02</n>
+      <description>21/08/2026 17:55:55 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599826,4.132238,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#91 HERMES-02</n>
+      <description>21/08/2026 18:02:03 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599651,4.132307,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#92 HERMES-02</n>
+      <description>21/08/2026 18:08:10 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599813,4.132202,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#93 HERMES-02</n>
+      <description>21/08/2026 18:14:18 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599797,4.132217,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#94 HERMES-02</n>
+      <description>21/08/2026 18:20:25 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599754,4.132342,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#95 HERMES-02</n>
+      <description>21/08/2026 18:26:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599533,4.132488,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#96 HERMES-02</n>
+      <description>21/08/2026 18:32:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599621,4.13233,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#97 HERMES-02</n>
+      <description>21/08/2026 18:38:47 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599668,4.132275,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#98 HERMES-02</n>
+      <description>21/08/2026 18:44:55 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599605,4.132305,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#99 HERMES-02</n>
+      <description>21/08/2026 18:51:02 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599649,4.13228,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#100 HERMES-02</n>
+      <description>21/08/2026 18:57:10 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599636,4.132369,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#101 HERMES-02</n>
+      <description>21/08/2026 19:09:24 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599623,4.132341,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#102 HERMES-02</n>
+      <description>21/08/2026 19:15:51 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599542,4.132393,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#103 HERMES-02</n>
+      <description>21/08/2026 19:21:31 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59974817,4.132177167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#104 HERMES-02</n>
+      <description>21/08/2026 19:27:05 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960583,4.132313333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#105 HERMES-02</n>
+      <description>21/08/2026 19:33:05 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59963033,4.1322905,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#106 HERMES-02</n>
+      <description>21/08/2026 19:41:04 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5997085,4.132232833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#107 HERMES-02</n>
+      <description>21/08/2026 19:46:39 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59972733,4.1322625,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#108 HERMES-02</n>
+      <description>21/08/2026 19:58:55 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60296167,4.138469,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#109 HERMES-02</n>
+      <description>21/08/2026 20:04:25 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.61744183,4.122248833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#110 HERMES-02</n>
+      <description>21/08/2026 20:10:00 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.629598,4.133463,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#111 HERMES-02</n>
+      <description>21/08/2026 20:15:28 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63493883,4.139601167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#112 HERMES-02</n>
+      <description>21/08/2026 20:20:59 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.6390005,4.139772,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#113 HERMES-02</n>
+      <description>21/08/2026 20:26:35 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63902017,4.140075667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#114 HERMES-02</n>
+      <description>21/08/2026 20:32:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638219,4.137088,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#115 HERMES-02</n>
+      <description>21/08/2026 20:38:21 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.637233,4.136869,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#116 HERMES-02</n>
+      <description>21/08/2026 20:44:28 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638156,4.137097,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#117 HERMES-02</n>
+      <description>21/08/2026 20:50:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638141,4.137126,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#118 HERMES-02</n>
+      <description>21/08/2026 20:56:41 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63815,4.137134,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#119 HERMES-02</n>
+      <description>21/08/2026 21:02:48 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638139,4.137134,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#120 HERMES-02</n>
+      <description>21/08/2026 21:08:54 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638121,4.137123,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#121 HERMES-02</n>
+      <description>21/08/2026 21:15:01 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638106,4.137132,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#122 HERMES-02</n>
+      <description>21/08/2026 21:21:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638133,4.137143,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#123 HERMES-02</n>
+      <description>21/08/2026 21:27:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638152,4.137132,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#124 HERMES-02</n>
+      <description>21/08/2026 21:33:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638136,4.137118,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#125 HERMES-02</n>
+      <description>21/08/2026 21:39:29 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638108,4.137134,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#126 HERMES-02</n>
+      <description>21/08/2026 21:46:27 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63778217,4.1371555,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#127 HERMES-02</n>
+      <description>21/08/2026 21:52:01 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63817167,4.139841833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#128 HERMES-02</n>
+      <description>21/08/2026 21:57:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638226,4.139915,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#129 HERMES-02</n>
+      <description>21/08/2026 22:03:47 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638192,4.139902,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#130 HERMES-02</n>
+      <description>21/08/2026 22:09:53 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638209,4.13994,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#131 HERMES-02</n>
+      <description>21/08/2026 22:16:00 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638272,4.139933,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#132 HERMES-02</n>
+      <description>21/08/2026 22:22:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638274,4.139941,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#133 HERMES-02</n>
+      <description>21/08/2026 22:28:14 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638124,4.139922,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#134 HERMES-02</n>
+      <description>21/08/2026 22:34:21 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638156,4.139919,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#135 HERMES-02</n>
+      <description>21/08/2026 22:40:27 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638217,4.139905,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#136 HERMES-02</n>
+      <description>21/08/2026 22:46:33 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638096,4.139963,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#137 HERMES-02</n>
+      <description>21/08/2026 22:52:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638199,4.139917,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#138 HERMES-02</n>
+      <description>21/08/2026 22:58:46 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638256,4.139933,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#139 HERMES-02</n>
+      <description>21/08/2026 23:04:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638258,4.139926,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#140 HERMES-02</n>
+      <description>21/08/2026 23:11:00 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638227,4.139965,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#141 HERMES-02</n>
+      <description>21/08/2026 23:17:06 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638259,4.139939,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#142 HERMES-02</n>
+      <description>21/08/2026 23:23:12 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638196,4.139946,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#143 HERMES-02</n>
+      <description>21/08/2026 23:29:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638212,4.139939,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#144 HERMES-02</n>
+      <description>21/08/2026 23:35:25 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638228,4.13994,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#145 HERMES-02</n>
+      <description>21/08/2026 23:41:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638226,4.139903,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#146 HERMES-02</n>
+      <description>21/08/2026 23:47:38 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63822,4.139941,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#147 HERMES-02</n>
+      <description>21/08/2026 23:53:45 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638217,4.139923,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#148 HERMES-02</n>
+      <description>21/08/2026 23:59:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63823,4.139908,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#149 HERMES-02</n>
+      <description>22/08/2026 00:05:58 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63823,4.139914,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#150 HERMES-02</n>
+      <description>22/08/2026 00:12:05 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638199,4.139953,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#151 HERMES-02</n>
+      <description>22/08/2026 00:18:11 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638198,4.139932,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#152 HERMES-02</n>
+      <description>22/08/2026 00:24:18 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638236,4.139916,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#153 HERMES-02</n>
+      <description>22/08/2026 00:30:25 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638205,4.139936,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#154 HERMES-02</n>
+      <description>22/08/2026 00:36:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638233,4.139956,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#155 HERMES-02</n>
+      <description>22/08/2026 00:42:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638194,4.139948,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#156 HERMES-02</n>
+      <description>22/08/2026 00:48:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638186,4.139939,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#157 HERMES-02</n>
+      <description>22/08/2026 00:54:50 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638199,4.139881,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#158 HERMES-02</n>
+      <description>22/08/2026 01:07:04 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638166,4.139913,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#159 HERMES-02</n>
+      <description>22/08/2026 01:13:10 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638232,4.139898,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#160 HERMES-02</n>
+      <description>22/08/2026 01:19:17 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638199,4.139903,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#161 HERMES-02</n>
+      <description>22/08/2026 01:25:23 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.6382,4.139884,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#162 HERMES-02</n>
+      <description>22/08/2026 01:38:21 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638229,4.139905,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#163 HERMES-02</n>
+      <description>22/08/2026 01:44:28 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638222,4.139919,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#164 HERMES-02</n>
+      <description>22/08/2026 01:50:34 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638205,4.139923,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#165 HERMES-02</n>
+      <description>22/08/2026 01:56:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638256,4.139923,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#166 HERMES-02</n>
+      <description>22/08/2026 02:02:47 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638217,4.139935,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#167 HERMES-02</n>
+      <description>22/08/2026 02:08:54 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638223,4.139897,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#168 HERMES-02</n>
+      <description>22/08/2026 02:15:00 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638195,4.139917,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#169 HERMES-02</n>
+      <description>22/08/2026 02:21:06 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638135,4.139921,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#170 HERMES-02</n>
+      <description>22/08/2026 02:27:13 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638182,4.13992,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#171 HERMES-02</n>
+      <description>22/08/2026 02:33:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638245,4.139869,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#172 HERMES-02</n>
+      <description>22/08/2026 02:39:26 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638202,4.139895,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#173 HERMES-02</n>
+      <description>22/08/2026 02:45:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638192,4.139898,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#174 HERMES-02</n>
+      <description>22/08/2026 02:51:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638239,4.139894,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#175 HERMES-02</n>
+      <description>22/08/2026 02:57:45 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638225,4.1399,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#176 HERMES-02</n>
+      <description>22/08/2026 03:03:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638208,4.139905,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#177 HERMES-02</n>
+      <description>22/08/2026 03:16:05 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638211,4.139882,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#178 HERMES-02</n>
+      <description>22/08/2026 03:28:17 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638215,4.139969,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#179 HERMES-02</n>
+      <description>22/08/2026 03:40:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63822,4.139904,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#180 HERMES-02</n>
+      <description>22/08/2026 03:52:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638222,4.139912,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#181 HERMES-02</n>
+      <description>22/08/2026 04:04:57 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638213,4.139878,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#182 HERMES-02</n>
+      <description>22/08/2026 04:11:05 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638216,4.139895,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#183 HERMES-02</n>
+      <description>22/08/2026 04:17:11 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63821,4.139886,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#184 HERMES-02</n>
+      <description>22/08/2026 04:23:18 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.638257,4.139884,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#185 HERMES-02</n>
+      <description>22/08/2026 04:35:30 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.607631,4.145799,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#186 HERMES-02</n>
+      <description>22/08/2026 04:47:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599566,4.132399,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#187 HERMES-02</n>
+      <description>22/08/2026 04:54:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957083,4.132399167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#188 HERMES-02</n>
+      <description>22/08/2026 05:00:09 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599599,4.132357833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#189 HERMES-02</n>
+      <description>22/08/2026 05:06:09 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957967,4.132401333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#190 HERMES-02</n>
+      <description>22/08/2026 05:11:49 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59954033,4.132449167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#191 HERMES-02</n>
+      <description>22/08/2026 05:17:20 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59955617,4.132449,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#192 HERMES-02</n>
+      <description>22/08/2026 05:22:48 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960433,4.132504667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#193 HERMES-02</n>
+      <description>22/08/2026 05:28:19 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59951967,4.132460333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#194 HERMES-02</n>
+      <description>22/08/2026 05:33:48 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59956867,4.132394,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#195 HERMES-02</n>
+      <description>22/08/2026 05:39:17 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599519,4.132537,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#196 HERMES-02</n>
+      <description>22/08/2026 05:44:46 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59953267,4.132508333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#197 HERMES-02</n>
+      <description>22/08/2026 05:50:15 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961167,4.132382833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#198 HERMES-02</n>
+      <description>22/08/2026 05:55:44 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59959533,4.132459,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#199 HERMES-02</n>
+      <description>22/08/2026 06:01:13 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996,4.132362667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#200 HERMES-02</n>
+      <description>22/08/2026 06:06:47 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599603,4.132409167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#201 HERMES-02</n>
+      <description>22/08/2026 06:12:14 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958817,4.132393833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#202 HERMES-02</n>
+      <description>22/08/2026 06:17:42 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599573,4.132394,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#203 HERMES-02</n>
+      <description>22/08/2026 06:23:10 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995865,4.1323755,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#204 HERMES-02</n>
+      <description>22/08/2026 06:28:42 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59967667,4.132322667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#205 HERMES-02</n>
+      <description>22/08/2026 06:34:12 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957933,4.132478,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#206 HERMES-02</n>
+      <description>22/08/2026 06:39:42 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996125,4.1324095,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#207 HERMES-02</n>
+      <description>22/08/2026 06:45:10 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59956917,4.132492667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#208 HERMES-02</n>
+      <description>22/08/2026 06:50:37 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960667,4.132497667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#209 HERMES-02</n>
+      <description>22/08/2026 06:56:05 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960017,4.132383167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#210 HERMES-02</n>
+      <description>22/08/2026 07:01:33 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961483,4.132419167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#211 HERMES-02</n>
+      <description>22/08/2026 07:07:02 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996485,4.1325045,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#212 HERMES-02</n>
+      <description>22/08/2026 07:12:33 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59964,4.132446,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#213 HERMES-02</n>
+      <description>22/08/2026 07:18:01 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996245,4.132522167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#214 HERMES-02</n>
+      <description>22/08/2026 07:23:29 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59954317,4.132618,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#215 HERMES-02</n>
+      <description>22/08/2026 07:29:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599554,4.132549833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#216 HERMES-02</n>
+      <description>22/08/2026 07:34:46 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59952083,4.132488333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#217 HERMES-02</n>
+      <description>22/08/2026 07:40:17 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59954967,4.132573667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#218 HERMES-02</n>
+      <description>22/08/2026 07:45:46 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59952883,4.132712167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#219 HERMES-02</n>
+      <description>22/08/2026 07:51:16 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599569,4.132671333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#220 HERMES-02</n>
+      <description>22/08/2026 07:56:44 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996135,4.132678833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#221 HERMES-02</n>
+      <description>22/08/2026 08:02:13 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995415,4.1326825,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#222 HERMES-02</n>
+      <description>22/08/2026 08:07:41 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957583,4.1326165,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#223 HERMES-02</n>
+      <description>22/08/2026 08:13:11 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59954933,4.132591167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#224 HERMES-02</n>
+      <description>22/08/2026 08:18:39 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958567,4.132505167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#225 HERMES-02</n>
+      <description>22/08/2026 08:24:11 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995425,4.1324885,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#226 HERMES-02</n>
+      <description>22/08/2026 08:30:02 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958717,4.132412833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#227 HERMES-02</n>
+      <description>22/08/2026 08:35:30 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59964833,4.132391,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#228 HERMES-02</n>
+      <description>22/08/2026 08:41:04 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59964967,4.132342333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#229 HERMES-02</n>
+      <description>22/08/2026 08:46:35 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599635,4.132375333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#230 HERMES-02</n>
+      <description>22/08/2026 08:52:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995395,4.132525333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#231 HERMES-02</n>
+      <description>22/08/2026 08:57:35 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958567,4.132557167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#232 HERMES-02</n>
+      <description>22/08/2026 09:03:04 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5995435,4.132543667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#233 HERMES-02</n>
+      <description>22/08/2026 09:08:31 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59952767,4.132544667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#234 HERMES-02</n>
+      <description>22/08/2026 09:13:59 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59956367,4.132535,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#235 HERMES-02</n>
+      <description>22/08/2026 09:19:27 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599535,4.1324545,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#236 HERMES-02</n>
+      <description>22/08/2026 09:24:55 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599558,4.1324875,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#237 HERMES-02</n>
+      <description>22/08/2026 09:31:15 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599636,4.132362167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#238 HERMES-02</n>
+      <description>22/08/2026 09:36:53 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599602,4.132459,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#239 HERMES-02</n>
+      <description>22/08/2026 09:42:56 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996065,4.132471667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#240 HERMES-02</n>
+      <description>22/08/2026 09:48:35 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962767,4.132400667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#241 HERMES-02</n>
+      <description>22/08/2026 09:54:38 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59959983,4.132421333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#242 HERMES-02</n>
+      <description>22/08/2026 10:01:11 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59972333,4.132339167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#243 HERMES-02</n>
+      <description>22/08/2026 10:06:57 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962467,4.132390667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#244 HERMES-02</n>
+      <description>22/08/2026 10:12:33 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59955567,4.132439167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#245 HERMES-02</n>
+      <description>22/08/2026 10:18:01 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59953633,4.132456333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#246 HERMES-02</n>
+      <description>22/08/2026 10:23:36 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957417,4.132413333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#247 HERMES-02</n>
+      <description>22/08/2026 10:29:05 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957117,4.132493833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#248 HERMES-02</n>
+      <description>22/08/2026 10:34:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599601,4.132408,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#249 HERMES-02</n>
+      <description>22/08/2026 10:40:51 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599631,4.132531,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#250 HERMES-02</n>
+      <description>22/08/2026 10:46:57 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599626,4.132546,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#251 HERMES-02</n>
+      <description>22/08/2026 10:53:04 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961,4.132353,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#252 HERMES-02</n>
+      <description>22/08/2026 10:59:11 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599592,4.13247,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#253 HERMES-02</n>
+      <description>22/08/2026 11:11:23 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59957,4.132602,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#254 HERMES-02</n>
+      <description>22/08/2026 11:23:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599574,4.132395,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#255 HERMES-02</n>
+      <description>22/08/2026 11:29:43 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599644,4.132427,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#256 HERMES-02</n>
+      <description>22/08/2026 11:35:49 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599569,4.132536,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#257 HERMES-02</n>
+      <description>22/08/2026 11:41:55 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599638,4.132392,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#258 HERMES-02</n>
+      <description>22/08/2026 11:48:02 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599602,4.132406,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#259 HERMES-02</n>
+      <description>22/08/2026 11:54:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599617,4.132379,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#260 HERMES-02</n>
+      <description>22/08/2026 12:00:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599615,4.132373,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#261 HERMES-02</n>
+      <description>22/08/2026 12:06:21 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599595,4.132361,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#262 HERMES-02</n>
+      <description>22/08/2026 12:12:28 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599578,4.132339,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#263 HERMES-02</n>
+      <description>22/08/2026 12:18:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599579,4.132359,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#264 HERMES-02</n>
+      <description>22/08/2026 12:30:48 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958,4.13238,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#265 HERMES-02</n>
+      <description>22/08/2026 12:36:55 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599585,4.132374,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#266 HERMES-02</n>
+      <description>22/08/2026 12:50:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5997325,4.132325333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#267 HERMES-02</n>
+      <description>22/08/2026 12:56:05 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599495,4.132527,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#268 HERMES-02</n>
+      <description>22/08/2026 13:08:21 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.600047,4.131653,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#269 HERMES-02</n>
+      <description>22/08/2026 13:27:01 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.6232515,4.105559333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#270 HERMES-02</n>
+      <description>22/08/2026 13:32:33 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.58874967,4.145773333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#271 HERMES-02</n>
+      <description>22/08/2026 13:38:03 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59729483,4.137663,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#272 HERMES-02</n>
+      <description>22/08/2026 13:43:32 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5993975,4.132149167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#273 HERMES-02</n>
+      <description>22/08/2026 15:08:42 | Estado: ULTIMA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59964783,4.132307167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#274 HERMES-02</n>
+      <description>22/08/2026 15:21:53 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.6000115,4.132205167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#275 HERMES-02</n>
+      <description>22/08/2026 15:28:16 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59973633,4.1326825,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#276 HERMES-02</n>
+      <description>22/08/2026 15:33:48 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59979,4.132266333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#277 HERMES-02</n>
+      <description>22/08/2026 16:01:52 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.61295,4.146256333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#278 HERMES-02</n>
+      <description>22/08/2026 16:07:24 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.62832367,4.1522635,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#279 HERMES-02</n>
+      <description>22/08/2026 16:13:11 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623621,4.165814,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#280 HERMES-02</n>
+      <description>22/08/2026 16:19:25 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623667,4.16582,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#281 HERMES-02</n>
+      <description>22/08/2026 16:25:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623659,4.165829,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#282 HERMES-02</n>
+      <description>22/08/2026 16:31:53 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623671,4.165843,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#283 HERMES-02</n>
+      <description>22/08/2026 16:38:07 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623635,4.165811,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#284 HERMES-02</n>
+      <description>22/08/2026 16:44:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623613,4.165797,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#285 HERMES-02</n>
+      <description>22/08/2026 16:50:36 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623638,4.165802,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#286 HERMES-02</n>
+      <description>22/08/2026 16:56:50 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623643,4.165798,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#287 HERMES-02</n>
+      <description>22/08/2026 17:03:04 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.623655,4.165803,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#288 HERMES-02</n>
+      <description>22/08/2026 17:15:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.62363,4.165806,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#289 HERMES-02</n>
+      <description>22/08/2026 17:22:24 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.62360983,4.165792667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#290 HERMES-02</n>
+      <description>22/08/2026 17:27:53 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.629954,4.1579705,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#291 HERMES-02</n>
+      <description>22/08/2026 17:33:30 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.62442633,4.148202667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#292 HERMES-02</n>
+      <description>22/08/2026 17:39:01 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.61090083,4.146254833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#293 HERMES-02</n>
+      <description>22/08/2026 17:44:52 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.6032415,4.1310845,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#294 HERMES-02</n>
+      <description>22/08/2026 17:50:28 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60178733,4.134224,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#295 HERMES-02</n>
+      <description>22/08/2026 18:02:48 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60583883,4.121875333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#296 HERMES-02</n>
+      <description>23/08/2026 01:28:59 | Estado: ULTIMA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59950783,4.132551,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#297 HERMES-02</n>
+      <description>23/08/2026 01:42:33 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5994565,4.132324,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#298 HERMES-02</n>
+      <description>23/08/2026 02:12:16 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599538,4.132457167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#299 HERMES-02</n>
+      <description>23/08/2026 04:43:04 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59982333,4.132199833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#300 HERMES-02</n>
+      <description>23/08/2026 10:04:42 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960383,4.132487,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#301 HERMES-02</n>
+      <description>23/08/2026 10:11:40 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59959217,4.132486833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#302 HERMES-02</n>
+      <description>23/08/2026 10:19:17 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59953533,4.132335333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#303 HERMES-02</n>
+      <description>23/08/2026 11:44:05 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962,4.132402,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#304 HERMES-02</n>
+      <description>23/08/2026 11:50:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599626,4.132381,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#305 HERMES-02</n>
+      <description>23/08/2026 11:56:33 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599647,4.132395,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#306 HERMES-02</n>
+      <description>23/08/2026 12:02:47 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599638,4.132378,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#307 HERMES-02</n>
+      <description>23/08/2026 12:15:16 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996,4.132412,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#308 HERMES-02</n>
+      <description>23/08/2026 12:21:28 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.5996285,4.132385,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#309 HERMES-02</n>
+      <description>23/08/2026 12:27:27 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59961133,4.132394667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#310 HERMES-02</n>
+      <description>23/08/2026 12:46:52 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599627,4.132378333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#311 HERMES-02</n>
+      <description>23/08/2026 13:02:51 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960033,4.132373333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#312 HERMES-02</n>
+      <description>23/08/2026 13:08:45 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960167,4.132379667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#313 HERMES-02</n>
+      <description>23/08/2026 13:16:46 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960567,4.132390167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#314 HERMES-02</n>
+      <description>23/08/2026 13:53:32 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60599533,4.1450335,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#315 HERMES-02</n>
+      <description>23/08/2026 14:06:31 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63631383,4.155326667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#316 HERMES-02</n>
+      <description>23/08/2026 14:18:58 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63934,4.15425,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#317 HERMES-02</n>
+      <description>23/08/2026 14:25:12 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.639285,4.154153,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#318 HERMES-02</n>
+      <description>23/08/2026 14:31:26 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.639286,4.15426,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#319 HERMES-02</n>
+      <description>23/08/2026 14:37:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.639298,4.154273,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#320 HERMES-02</n>
+      <description>23/08/2026 14:50:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.639304,4.15422,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#321 HERMES-02</n>
+      <description>23/08/2026 14:56:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.639313,4.15425,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#322 HERMES-02</n>
+      <description>23/08/2026 15:02:36 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.639346,4.154282,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#323 HERMES-02</n>
+      <description>23/08/2026 15:09:23 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63582117,4.146183167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#324 HERMES-02</n>
+      <description>23/08/2026 15:15:25 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.618591,4.123659,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#325 HERMES-02</n>
+      <description>23/08/2026 15:21:52 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60036467,4.133476667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#326 HERMES-02</n>
+      <description>23/08/2026 15:27:54 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960133,4.132319167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#327 HERMES-02</n>
+      <description>23/08/2026 15:34:05 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960183,4.132332167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#328 HERMES-02</n>
+      <description>23/08/2026 15:47:03 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59959383,4.132328833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#329 HERMES-02</n>
+      <description>23/08/2026 16:00:04 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962,4.132333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#330 HERMES-02</n>
+      <description>23/08/2026 16:06:18 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599643,4.132312,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#331 HERMES-02</n>
+      <description>23/08/2026 16:13:56 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960833,4.132319333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#332 HERMES-02</n>
+      <description>23/08/2026 16:26:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59962,4.132321,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#333 HERMES-02</n>
+      <description>23/08/2026 16:38:45 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599608,4.132321,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#334 HERMES-02</n>
+      <description>23/08/2026 16:45:00 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599602,4.132316,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#335 HERMES-02</n>
+      <description>23/08/2026 16:51:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599612,4.132337,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#336 HERMES-02</n>
+      <description>23/08/2026 16:57:30 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599601,4.13234,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#337 HERMES-02</n>
+      <description>23/08/2026 17:03:45 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599602,4.132346,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#338 HERMES-02</n>
+      <description>23/08/2026 17:10:00 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599583,4.132333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#339 HERMES-02</n>
+      <description>23/08/2026 17:16:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599594,4.132331,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#340 HERMES-02</n>
+      <description>23/08/2026 17:22:30 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599593,4.132331,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#341 HERMES-02</n>
+      <description>23/08/2026 17:28:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599598,4.132321,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#342 HERMES-02</n>
+      <description>23/08/2026 17:34:59 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599613,4.13232,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#343 HERMES-02</n>
+      <description>23/08/2026 17:41:14 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599616,4.132328,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#344 HERMES-02</n>
+      <description>23/08/2026 17:48:10 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59958467,4.1323195,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#345 HERMES-02</n>
+      <description>23/08/2026 17:54:05 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59959517,4.132321167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#346 HERMES-02</n>
+      <description>23/08/2026 18:00:03 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59960133,4.132317667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#347 HERMES-02</n>
+      <description>23/08/2026 18:12:19 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.4164615,4.311778667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#348 HERMES-02</n>
+      <description>23/08/2026 18:18:16 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.44731483,4.277848,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#349 HERMES-02</n>
+      <description>23/08/2026 18:24:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599575,4.132493,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#350 HERMES-02</n>
+      <description>23/08/2026 18:30:36 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599586,4.132588,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#351 HERMES-02</n>
+      <description>23/08/2026 18:36:50 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599625,4.132486,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#352 HERMES-02</n>
+      <description>23/08/2026 18:43:05 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599576,4.132535,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#353 HERMES-02</n>
+      <description>23/08/2026 18:49:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599581,4.132413,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#354 HERMES-02</n>
+      <description>23/08/2026 18:55:32 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.6099295,4.169234333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#355 HERMES-02</n>
+      <description>23/08/2026 19:01:54 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.700209,4.2427935,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#356 HERMES-02</n>
+      <description>23/08/2026 19:07:52 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.71636067,4.356076,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#357 HERMES-02</n>
+      <description>23/08/2026 19:14:38 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.54178133,4.3692585,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#358 HERMES-02</n>
+      <description>23/08/2026 19:21:12 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.59029833,4.452179833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#359 HERMES-02</n>
+      <description>23/08/2026 19:33:13 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.55988417,4.697214,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#360 HERMES-02</n>
+      <description>23/08/2026 20:51:03 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.599621,4.132383,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#361 HERMES-02</n>
+      <description>23/08/2026 20:57:15 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.60035833,4.134144167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#362 HERMES-02</n>
+      <description>23/08/2026 21:03:18 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.609053,4.126126667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#363 HERMES-02</n>
+      <description>23/08/2026 21:09:20 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63125983,4.119190167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#364 HERMES-02</n>
+      <description>23/08/2026 21:34:36 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63669017,4.123509167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#365 HERMES-02</n>
+      <description>23/08/2026 21:40:28 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.636674,4.123535833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#366 HERMES-02</n>
+      <description>23/08/2026 21:46:20 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.6366655,4.123524,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#367 HERMES-02</n>
+      <description>23/08/2026 21:52:14 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.63667733,4.123510167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#368 HERMES-02</n>
+      <description>23/08/2026 21:58:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-73.6367025,4.1235135,0</coordinates></Point>
+    </Placemark>
+</Document></kml>
