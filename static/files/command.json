@@ -9,6 +9,6 @@
     "device": "HERMES-02",
     "cmd": "ciclo 5",
     "created_at": "2026-08-24T14:50:44.502213",
-    "attempts": 0
+    "attempts": 1
   }
 }
