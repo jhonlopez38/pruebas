@@ -7925,15 +7925,15 @@
     "despertar": 2039,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 3.570341,
-    "lon": -73.716336,
+    "lat": 3.605085,
+    "lon": -73.707458,
     "fecha": "25/08/2026",
-    "hora": "19:25:57",
+    "hora": "19:32:11",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-08-26T02:18:08.064389"
+    "created_at": "2026-08-26T02:18:09.277875"
   },
   {
     "device": "HERMES-02",
@@ -7941,15 +7941,15 @@
     "despertar": 2039,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 3.652505,
-    "lon": -73.704334,
+    "lat": 3.735919,
+    "lon": -73.711729,
     "fecha": "25/08/2026",
-    "hora": "19:38:25",
+    "hora": "19:50:52",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-08-26T02:18:10.408286"
+    "created_at": "2026-08-26T02:18:12.655233"
   },
   {
     "device": "HERMES-02",
