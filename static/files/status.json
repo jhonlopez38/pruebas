@@ -34,18 +34,18 @@
   "DATALOG-01": {
     "device": "DATALOG-01",
     "estado": "NUEVA UBICACION",
-    "despertar": 15,
+    "despertar": 18,
     "ciclo_min": 15,
     "fallos_gps": 0,
-    "lat": 4.823130667,
-    "lon": -74.34579883,
+    "lat": 4.822883333,
+    "lon": -74.34618,
     "fecha": "05/09/2026",
-    "hora": "17:26:46",
+    "hora": "18:14:06",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-09-05T22:27:01.315333"
+    "created_at": "2026-09-05T23:14:29.484702"
   },
   "DATALOG-02": {
     "device": "DATALOG-02",
