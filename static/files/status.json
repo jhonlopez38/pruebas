@@ -30,5 +30,21 @@
     "wifi": "conectado",
     "fw_version": "1.2.0",
     "created_at": "2026-09-05T06:28:29.653356"
+  },
+  "DATALOG-01": {
+    "device": "DATALOG-01",
+    "estado": "SIN GPS",
+    "despertar": 15,
+    "ciclo_min": 5,
+    "fallos_gps": 3,
+    "lat": 0.0,
+    "lon": 0.0,
+    "fecha": "05/09/2026",
+    "hora": "12:24:58",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0-LOG",
+    "created_at": "2026-09-05T17:24:58.390525"
   }
 }
