@@ -12366,5 +12366,21 @@
     "wifi": "conectado",
     "fw_version": "1.2.0-LOG",
     "created_at": "2026-09-05T18:02:59.870195"
+  },
+  {
+    "device": "DATALOG-01",
+    "estado": "SIN GPS",
+    "despertar": 20,
+    "ciclo_min": 15,
+    "fallos_gps": 7,
+    "lat": 0.0,
+    "lon": 0.0,
+    "fecha": "05/09/2026",
+    "hora": "13:43:21",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0-LOG",
+    "created_at": "2026-09-05T18:43:21.028142"
   }
 ]
