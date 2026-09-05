@@ -34,17 +34,17 @@
   "DATALOG-01": {
     "device": "DATALOG-01",
     "estado": "SIN GPS",
-    "despertar": 5,
+    "despertar": 7,
     "ciclo_min": 5,
-    "fallos_gps": 2,
+    "fallos_gps": 3,
     "lat": 0.0,
     "lon": 0.0,
     "fecha": "05/09/2026",
-    "hora": "15:42:11",
+    "hora": "15:51:34",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-09-05T20:42:11.162577"
+    "created_at": "2026-09-05T20:51:41.552359"
   }
 }
