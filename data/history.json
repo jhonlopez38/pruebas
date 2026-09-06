@@ -13445,14 +13445,14 @@
     "despertar": 106,
     "ciclo_min": 15,
     "fallos_gps": 0,
-    "lat": 4.825377,
-    "lon": -74.352311,
+    "lat": 4.825371,
+    "lon": -74.352315,
     "fecha": "06/09/2026",
-    "hora": "15:18:38",
+    "hora": "15:34:40",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-09-06T22:43:28.101374"
+    "created_at": "2026-09-06T22:43:29.350795"
   }
 ]
