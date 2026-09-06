@@ -13518,5 +13518,21 @@
     "wifi": "conectado",
     "fw_version": "1.2.0",
     "created_at": "2026-09-06T22:43:34.657099"
+  },
+  {
+    "device": "DATALOG-01",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 106,
+    "ciclo_min": 15,
+    "fallos_gps": 0,
+    "lat": 4.825363,
+    "lon": -74.352396,
+    "fecha": "06/09/2026",
+    "hora": "16:38:44",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-06T22:43:40.516819"
   }
 ]
