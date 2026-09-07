@@ -37,15 +37,15 @@
     "despertar": 270,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 4.823096,
-    "lon": -74.345831,
+    "lat": 4.82314,
+    "lon": -74.345821,
     "fecha": "07/09/2026",
-    "hora": "14:38:23",
+    "hora": "14:44:37",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0-LOG",
-    "created_at": "2026-09-07T19:50:31.361801"
+    "created_at": "2026-09-07T19:50:32.465824"
   },
   "DATALOG-02": {
     "device": "DATALOG-02",
