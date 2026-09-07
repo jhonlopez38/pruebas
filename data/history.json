@@ -14142,5 +14142,21 @@
     "wifi": "conectado",
     "fw_version": "1.2.0",
     "created_at": "2026-09-07T13:54:45.150228"
+  },
+  {
+    "device": "DATALOG-02",
+    "estado": "SIN GPS",
+    "despertar": 40,
+    "ciclo_min": 15,
+    "fallos_gps": 11,
+    "lat": 0.0,
+    "lon": 0.0,
+    "fecha": "07/09/2026",
+    "hora": "09:26:07",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-07T14:26:37.380759"
   }
 ]
