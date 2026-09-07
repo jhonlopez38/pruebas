@@ -13845,6 +13845,22 @@
     "despertar": 216,
     "ciclo_min": 15,
     "fallos_gps": 0,
+    "lat": 4.825355,
+    "lon": -74.352272,
+    "fecha": "06/09/2026",
+    "hora": "22:31:25",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-07T09:55:57.433414"
+  },
+  {
+    "device": "DATALOG-01",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 216,
+    "ciclo_min": 15,
+    "fallos_gps": 0,
     "lat": 4.825339,
     "lon": -74.35232,
     "fecha": "06/09/2026",
@@ -13854,5 +13870,21 @@
     "wifi": "conectado",
     "fw_version": "1.2.0",
     "created_at": "2026-09-07T09:55:58.904250"
+  },
+  {
+    "device": "DATALOG-01",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 216,
+    "ciclo_min": 15,
+    "fallos_gps": 0,
+    "lat": 4.825362,
+    "lon": -74.352311,
+    "fecha": "06/09/2026",
+    "hora": "23:03:29",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-07T09:56:00.346013"
   }
 ]
