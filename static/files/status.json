@@ -33,19 +33,19 @@
   },
   "DATALOG-01": {
     "device": "DATALOG-01",
-    "estado": "REENVIO PENDIENTE",
+    "estado": "NUEVA UBICACION",
     "despertar": 296,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 4.823128,
-    "lon": -74.345832,
+    "lat": 4.823084833,
+    "lon": -74.34691817,
     "fecha": "07/09/2026",
-    "hora": "17:24:49",
+    "hora": "17:30:46",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0-LOG",
-    "created_at": "2026-09-07T22:30:42.923512"
+    "created_at": "2026-09-07T22:30:57.979701"
   },
   "DATALOG-02": {
     "device": "DATALOG-02",
