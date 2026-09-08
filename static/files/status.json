@@ -33,19 +33,19 @@
   },
   "DATALOG-01": {
     "device": "DATALOG-01",
-    "estado": "NUEVA UBICACION",
-    "despertar": 336,
+    "estado": "ULTIMA UBICACION",
+    "despertar": 337,
     "ciclo_min": 5,
-    "fallos_gps": 0,
+    "fallos_gps": 1,
     "lat": 4.8231475,
     "lon": -74.3458305,
     "fecha": "07/09/2026",
-    "hora": "21:30:50",
+    "hora": "21:57:50",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0-LOG",
-    "created_at": "2026-09-08T02:31:00.553506"
+    "created_at": "2026-09-08T02:58:01.502536"
   },
   "DATALOG-02": {
     "device": "DATALOG-02",
