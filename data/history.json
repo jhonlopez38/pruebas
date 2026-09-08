@@ -15777,6 +15777,22 @@
   },
   {
     "device": "DATALOG-01",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 654,
+    "ciclo_min": 5,
+    "fallos_gps": 0,
+    "lat": 4.730839,
+    "lon": -74.282456,
+    "fecha": "08/09/2026",
+    "hora": "01:46:00",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0-LOG",
+    "created_at": "2026-09-08T19:48:49.139723"
+  },
+  {
+    "device": "DATALOG-01",
     "estado": "NUEVA UBICACION",
     "despertar": 653,
     "ciclo_min": 5,
