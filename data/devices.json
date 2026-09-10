@@ -26,7 +26,8 @@
     "DATALOG-01": {
       "nombre": "DATALOG-01",
       "icono": "antenna",
-      "color": "#00c8ff"
+      "color": "#00c8ff",
+      "owner": "HERDATA"
     }
   }
 }
