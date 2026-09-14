@@ -1,0 +1,1549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+  <n>Respaldo DATALOG-01 05/09/2026 a 08/09/2026</n>
+  <Style id="pointStyle"><IconStyle><color>ff00c8ff</color><scale>0.8</scale></IconStyle></Style>
+  <Placemark><n>Ruta</n><LineString><tessellate>1</tessellate>
+    <coordinates>-74.34562817,4.8232275,0 -74.34577733,4.823228,0 -74.3458055,4.8231245,0 -74.34579883,4.823130667,0 -74.34618,4.822883333,0 -74.34953933,4.82111,0 -74.352312,4.825308333,0 -74.333871,4.787556,0 -74.228654,4.701296,0 -74.213499,4.714393,0 -74.213507,4.714371,0 -74.213523,4.714405,0 -74.227335,4.701941,0 -74.284963,4.730074,0 -74.284976,4.72964,0 -74.284988,4.72963,0 -74.284953,4.729622,0 -74.284999,4.729672,0 -74.284965,4.729666,0 -74.285038,4.729747,0 -74.28497,4.729664,0 -74.284909,4.72952,0 -74.284924,4.729555,0 -74.284943,4.729577,0 -74.284987,4.729627,0 -74.283957,4.728576,0 -74.348944,4.818283,0 -74.353031,4.826695,0 -74.353054,4.826709,0 -74.353084,4.826698,0 -74.353061,4.826728,0 -74.353039,4.826712,0 -74.353064,4.826707,0 -74.353095,4.826714,0 -74.353042,4.826722,0 -74.353077,4.826717,0 -74.353054,4.826705,0 -74.35307,4.826717,0 -74.353083,4.826727,0 -74.353043,4.82671,0 -74.353104,4.826736,0 -74.353075,4.826729,0 -74.353023,4.826688,0 -74.352947,4.82674,0 -74.352962,4.826761,0 -74.35295,4.82672,0 -74.352984,4.826732,0 -74.352962,4.826736,0 -74.352947,4.826757,0 -74.352952,4.826721,0 -74.35298067,4.826742167,0 -74.35189467,4.825195667,0 -74.352325,4.82535,0 -74.352341,4.825346,0 -74.35232267,4.825341333,0 -74.35231983,4.825330333,0 -74.3523045,4.825351833,0 -74.352306,4.825353,0 -74.352312,4.825376,0 -74.35232,4.825387,0 -74.352311,4.825377,0 -74.352315,4.825371,0 -74.352313,4.825362,0 -74.352297,4.82537,0 -74.352289,4.825379,0 -74.352396,4.825363,0 -74.352328,4.8254,0 -74.352331,4.825376,0 -74.352334,4.825393,0 -74.345828,4.823102,0 -74.345851,4.823162,0 -74.345974,4.823118,0 -74.352339,4.825383,0 -74.352344,4.825356,0 -74.352314,4.825356,0 -74.352347,4.825361,0 -74.35232,4.825357,0 -74.352306,4.82537,0 -74.352339,4.825372,0 -74.352352,4.8253,0 -74.352299,4.825353,0 -74.352306,4.825356,0 -74.352316,4.825342,0 -74.352302,4.825325,0 -74.352313,4.825342,0 -74.352272,4.825355,0 -74.35232,4.825339,0 -74.352311,4.825362,0 -74.352293,4.825335,0 -74.352342,4.825318,0 -74.352371,4.825339667,0 -74.33220983,4.807978333,0 -74.147768,4.752305,0 -74.128959,4.709683,0 -74.12209,4.683231,0 -74.135565,4.683362,0 -74.205527,4.697738,0 -74.264988,4.74193,0 -74.335353,4.796262,0 -74.346019,4.823074,0 -74.345805,4.823177,0 -74.345801,4.82316,0 -74.34581367,4.8231805,0 -74.34584383,4.82317,0 -74.345855,4.823134333,0 -74.3458085,4.823177333,0 -74.352345,4.825344333,0 -74.352348,4.825336667,0 -74.352334,4.8253405,0 -74.35232683,4.825335167,0 -74.3523515,4.8253465,0 -74.35232717,4.825328667,0 -74.35234167,4.825344167,0 -74.352346,4.825322,0 -74.348403,4.820187,0 -74.345996,4.823028,0 -74.345834,4.823131,0 -74.345828,4.82318,0 -74.345831,4.823143,0 -74.345821,4.82314,0 -74.3457695,4.823170167,0 -74.34578717,4.823149333,0 -74.345821,4.823098,0 -74.34582217,4.823110833,0 -74.34584067,4.823114,0 -74.34580267,4.823116667,0 -74.3458475,4.823058,0 -74.34582683,4.823042333,0 -74.34581283,4.8231085,0 -74.34576283,4.8231985,0 -74.34579533,4.823078167,0 -74.34573533,4.823173167,0 -74.34583817,4.823038167,0 -74.345811,4.823119,0 -74.345797,4.823097,0 -74.345824,4.823128333,0 -74.345835,4.823134667,0 -74.34582633,4.823119833,0 -74.34588467,4.823125167,0 -74.34580633,4.823163167,0 -74.345832,4.823128,0 -74.34691817,4.823084833,0 -74.352666,4.809376,0 -74.334355,4.785016,0 -74.282406,4.730892,0 -74.28242,4.730886,0 -74.282394,4.730891,0 -74.282415,4.730883,0 -74.28246,4.730837,0 -74.282497,4.730873,0 -74.282406,4.730878,0 -74.282444,4.730873,0 -74.282525,4.730817,0 -74.282464,4.73113,0 -74.304237,4.756557,0 -74.348625,4.806895,0 -74.35364983,4.818787667,0 -74.348948,4.820659167,0 -74.345817,4.823135333,0 -74.345869,4.823117,0 -74.34582617,4.823136667,0 -74.34583867,4.823206333,0 -74.34585267,4.823197833,0 -74.34596767,4.823272667,0 -74.34586133,4.823130833,0 -74.34579933,4.823118333,0 -74.34583683,4.823117833,0 -74.34579383,4.823193333,0 -74.345845,4.823137667,0 -74.3458305,4.8231475,0 -74.34576517,4.823288833,0 -74.35515767,4.809873,0 -74.35162033,4.807019,0 -74.33566717,4.792147333,0 -74.30634283,4.758206167,0 -74.282447,4.73085,0 -74.282447,4.73085,0 -74.282521,4.730911,0 -74.282521,4.730911,0 -74.282521,4.730911,0 -74.282698,4.730939,0 -74.282698,4.730939,0 -74.282526,4.73091,0 -74.282486,4.730883,0 -74.282486,4.730883,0 -74.282472,4.730866,0 -74.282499,4.730881,0 -74.282508,4.730883,0 -74.282466,4.730863,0 -74.282454,4.730855,0 -74.282444,4.730842,0 -74.28243,4.730844,0 -74.282463,4.730868,0 -74.28252,4.730946,0 -74.282452,4.730902,0 -74.28245,4.730864,0 -74.282439,4.73088,0 -74.282443,4.73088,0 -74.282407,4.730873,0 -74.282448,4.730862,0 -74.282434,4.73083,0 -74.282432,4.730815,0 -74.282428,4.730876,0 -74.282421,4.730856,0 -74.282456,4.730839,0 -74.282418,4.730872,0 -74.282432,4.730849,0 -74.28243,4.730846,0 -74.282408,4.730843,0 -74.282415,4.730863,0 -74.282427,4.7309,0 -74.282427,4.730833,0 -74.282436,4.73087,0 -74.282416,4.730877,0 -74.282426,4.730883,0 -74.282443,4.730911,0 -74.282459,4.7309,0 -74.282471,4.730937,0 -74.282458,4.730896,0 -74.282428,4.730882,0 -74.28254,4.730853,0 -74.282603,4.730795,0 -74.282489,4.730885,0 -74.282417,4.73087,0 -74.282395,4.73086,0 -74.282403,4.730862,0 -74.282432,4.730839,0 -74.282437,4.730848,0 -74.282425,4.730855,0 -74.282425,4.730796,0 -74.282417,4.730802,0 -74.282425,4.730901,0 -74.282445,4.730865,0 -74.282442,4.73089,0 -74.28244,4.730863,0 -74.282424,4.730861,0 -74.282444,4.730831,0 -74.282505,4.730928,0 -74.282489,4.730883,0 -74.282453,4.730881,0 -74.282455,4.730907,0 -74.282479,4.730906,0 -74.282425,4.730885,0 -74.282434,4.730894,0 -74.282431,4.730924,0 -74.282402,4.73088,0 -74.261422,4.732059167,0 -74.2722245,4.736151833,0 -74.2818985,4.732150333,0 -74.3085,4.761203167,0 -74.33559417,4.7738445,0 -74.34005083,4.792778833,0 -74.34717783,4.804226833,0 -74.34806833,4.820364,0 -74.34578867,4.823145333,0 -74.345892,4.823070333,0 -74.34581117,4.823115667,0</coordinates></LineString></Placemark>
+    <Placemark>
+      <n>#1 DATALOG-01</n>
+      <description>05/09/2026 16:11:03 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34562817,4.8232275,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#2 DATALOG-01</n>
+      <description>05/09/2026 16:38:13 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34577733,4.823228,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#3 DATALOG-01</n>
+      <description>05/09/2026 17:11:27 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.3458055,4.8231245,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#4 DATALOG-01</n>
+      <description>05/09/2026 17:26:46 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34579883,4.823130667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#5 DATALOG-01</n>
+      <description>05/09/2026 18:14:06 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34618,4.822883333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#6 DATALOG-01</n>
+      <description>05/09/2026 18:29:49 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34953933,4.82111,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#7 DATALOG-01</n>
+      <description>05/09/2026 18:45:58 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352312,4.825308333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#8 DATALOG-01</n>
+      <description>05/09/2026 19:33:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.333871,4.787556,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#9 DATALOG-01</n>
+      <description>05/09/2026 19:49:36 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.228654,4.701296,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#10 DATALOG-01</n>
+      <description>05/09/2026 20:05:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.213499,4.714393,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#11 DATALOG-01</n>
+      <description>05/09/2026 20:21:38 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.213507,4.714371,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#12 DATALOG-01</n>
+      <description>05/09/2026 20:37:38 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.213523,4.714405,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#13 DATALOG-01</n>
+      <description>05/09/2026 20:53:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.227335,4.701941,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#14 DATALOG-01</n>
+      <description>05/09/2026 21:09:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284963,4.730074,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#15 DATALOG-01</n>
+      <description>05/09/2026 21:25:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284976,4.72964,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#16 DATALOG-01</n>
+      <description>05/09/2026 21:41:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284988,4.72963,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#17 DATALOG-01</n>
+      <description>05/09/2026 21:57:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284953,4.729622,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#18 DATALOG-01</n>
+      <description>05/09/2026 22:13:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284999,4.729672,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#19 DATALOG-01</n>
+      <description>05/09/2026 22:45:38 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284965,4.729666,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#20 DATALOG-01</n>
+      <description>05/09/2026 23:17:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.285038,4.729747,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#21 DATALOG-01</n>
+      <description>05/09/2026 23:33:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28497,4.729664,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#22 DATALOG-01</n>
+      <description>06/09/2026 00:21:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284909,4.72952,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#23 DATALOG-01</n>
+      <description>06/09/2026 00:37:34 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284924,4.729555,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#24 DATALOG-01</n>
+      <description>06/09/2026 00:53:33 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284943,4.729577,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#25 DATALOG-01</n>
+      <description>06/09/2026 01:09:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.284987,4.729627,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#26 DATALOG-01</n>
+      <description>06/09/2026 01:41:29 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.283957,4.728576,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#27 DATALOG-01</n>
+      <description>06/09/2026 02:29:29 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.348944,4.818283,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#28 DATALOG-01</n>
+      <description>06/09/2026 03:01:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353031,4.826695,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#29 DATALOG-01</n>
+      <description>06/09/2026 03:17:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353054,4.826709,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#30 DATALOG-01</n>
+      <description>06/09/2026 03:49:33 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353084,4.826698,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#31 DATALOG-01</n>
+      <description>06/09/2026 04:05:33 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353061,4.826728,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#32 DATALOG-01</n>
+      <description>06/09/2026 04:37:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353039,4.826712,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#33 DATALOG-01</n>
+      <description>06/09/2026 04:53:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353064,4.826707,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#34 DATALOG-01</n>
+      <description>06/09/2026 05:25:30 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353095,4.826714,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#35 DATALOG-01</n>
+      <description>06/09/2026 05:41:29 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353042,4.826722,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#36 DATALOG-01</n>
+      <description>06/09/2026 06:13:26 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353077,4.826717,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#37 DATALOG-01</n>
+      <description>06/09/2026 06:29:26 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353054,4.826705,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#38 DATALOG-01</n>
+      <description>06/09/2026 06:45:26 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35307,4.826717,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#39 DATALOG-01</n>
+      <description>06/09/2026 07:01:26 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353083,4.826727,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#40 DATALOG-01</n>
+      <description>06/09/2026 07:17:25 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353043,4.82671,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#41 DATALOG-01</n>
+      <description>06/09/2026 07:33:24 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353104,4.826736,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#42 DATALOG-01</n>
+      <description>06/09/2026 07:49:24 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353075,4.826729,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#43 DATALOG-01</n>
+      <description>06/09/2026 08:05:24 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.353023,4.826688,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#44 DATALOG-01</n>
+      <description>06/09/2026 08:37:25 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352947,4.82674,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#45 DATALOG-01</n>
+      <description>06/09/2026 09:09:26 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352962,4.826761,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#46 DATALOG-01</n>
+      <description>06/09/2026 09:41:27 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35295,4.82672,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#47 DATALOG-01</n>
+      <description>06/09/2026 10:29:30 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352984,4.826732,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#48 DATALOG-01</n>
+      <description>06/09/2026 11:01:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352962,4.826736,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#49 DATALOG-01</n>
+      <description>06/09/2026 11:17:34 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352947,4.826757,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#50 DATALOG-01</n>
+      <description>06/09/2026 11:33:36 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352952,4.826721,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#51 DATALOG-01</n>
+      <description>06/09/2026 11:50:30 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35298067,4.826742167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#52 DATALOG-01</n>
+      <description>06/09/2026 12:05:56 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35189467,4.825195667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#53 DATALOG-01</n>
+      <description>06/09/2026 12:21:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352325,4.82535,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#54 DATALOG-01</n>
+      <description>06/09/2026 12:37:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352341,4.825346,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#55 DATALOG-01</n>
+      <description>06/09/2026 12:54:08 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35232267,4.825341333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#56 DATALOG-01</n>
+      <description>06/09/2026 13:10:14 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35231983,4.825330333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#57 DATALOG-01</n>
+      <description>06/09/2026 13:58:38 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.3523045,4.825351833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#58 DATALOG-01</n>
+      <description>06/09/2026 14:14:29 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352306,4.825353,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#59 DATALOG-01</n>
+      <description>06/09/2026 14:30:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352312,4.825376,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#60 DATALOG-01</n>
+      <description>06/09/2026 15:02:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35232,4.825387,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#61 DATALOG-01</n>
+      <description>06/09/2026 15:18:38 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352311,4.825377,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#62 DATALOG-01</n>
+      <description>06/09/2026 15:34:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352315,4.825371,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#63 DATALOG-01</n>
+      <description>06/09/2026 15:50:43 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352313,4.825362,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#64 DATALOG-01</n>
+      <description>06/09/2026 16:06:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352297,4.82537,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#65 DATALOG-01</n>
+      <description>06/09/2026 16:22:45 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352289,4.825379,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#66 DATALOG-01</n>
+      <description>06/09/2026 16:38:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352396,4.825363,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#67 DATALOG-01</n>
+      <description>06/09/2026 16:54:43 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352328,4.8254,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#68 DATALOG-01</n>
+      <description>06/09/2026 17:10:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352331,4.825376,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#69 DATALOG-01</n>
+      <description>06/09/2026 17:26:45 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352334,4.825393,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#70 DATALOG-01</n>
+      <description>06/09/2026 18:15:18 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345828,4.823102,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#71 DATALOG-01</n>
+      <description>06/09/2026 18:31:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345851,4.823162,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#72 DATALOG-01</n>
+      <description>06/09/2026 18:47:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345974,4.823118,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#73 DATALOG-01</n>
+      <description>06/09/2026 19:03:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352339,4.825383,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#74 DATALOG-01</n>
+      <description>06/09/2026 19:19:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352344,4.825356,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#75 DATALOG-01</n>
+      <description>06/09/2026 19:35:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352314,4.825356,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#76 DATALOG-01</n>
+      <description>06/09/2026 19:51:16 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352347,4.825361,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#77 DATALOG-01</n>
+      <description>06/09/2026 20:07:16 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35232,4.825357,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#78 DATALOG-01</n>
+      <description>06/09/2026 20:23:17 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352306,4.82537,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#79 DATALOG-01</n>
+      <description>06/09/2026 20:39:18 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352339,4.825372,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#80 DATALOG-01</n>
+      <description>06/09/2026 20:55:17 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352352,4.8253,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#81 DATALOG-01</n>
+      <description>06/09/2026 21:11:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352299,4.825353,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#82 DATALOG-01</n>
+      <description>06/09/2026 21:27:20 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352306,4.825356,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#83 DATALOG-01</n>
+      <description>06/09/2026 21:43:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352316,4.825342,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#84 DATALOG-01</n>
+      <description>06/09/2026 21:59:23 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352302,4.825325,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#85 DATALOG-01</n>
+      <description>06/09/2026 22:15:24 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352313,4.825342,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#86 DATALOG-01</n>
+      <description>06/09/2026 22:31:25 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352272,4.825355,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#87 DATALOG-01</n>
+      <description>06/09/2026 22:47:27 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35232,4.825339,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#88 DATALOG-01</n>
+      <description>06/09/2026 23:03:29 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352311,4.825362,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#89 DATALOG-01</n>
+      <description>06/09/2026 23:19:31 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352293,4.825335,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#90 DATALOG-01</n>
+      <description>07/09/2026 04:39:33 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352342,4.825318,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#91 DATALOG-01</n>
+      <description>07/09/2026 04:56:04 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352371,4.825339667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#92 DATALOG-01</n>
+      <description>07/09/2026 05:11:32 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.33220983,4.807978333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#93 DATALOG-01</n>
+      <description>07/09/2026 05:43:12 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.147768,4.752305,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#94 DATALOG-01</n>
+      <description>07/09/2026 05:59:13 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.128959,4.709683,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#95 DATALOG-01</n>
+      <description>07/09/2026 06:15:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.12209,4.683231,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#96 DATALOG-01</n>
+      <description>07/09/2026 06:31:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.135565,4.683362,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#97 DATALOG-01</n>
+      <description>07/09/2026 06:47:14 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.205527,4.697738,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#98 DATALOG-01</n>
+      <description>07/09/2026 07:03:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.264988,4.74193,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#99 DATALOG-01</n>
+      <description>07/09/2026 07:19:16 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.335353,4.796262,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#100 DATALOG-01</n>
+      <description>07/09/2026 07:35:17 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.346019,4.823074,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#101 DATALOG-01</n>
+      <description>07/09/2026 07:51:15 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345805,4.823177,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#102 DATALOG-01</n>
+      <description>07/09/2026 08:23:13 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345801,4.82316,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#103 DATALOG-01</n>
+      <description>07/09/2026 08:39:30 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34581367,4.8231805,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#104 DATALOG-01</n>
+      <description>07/09/2026 08:54:35 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34584383,4.82317,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#105 DATALOG-01</n>
+      <description>07/09/2026 12:03:33 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345855,4.823134333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#106 DATALOG-01</n>
+      <description>07/09/2026 12:08:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.3458085,4.823177333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#107 DATALOG-01</n>
+      <description>07/09/2026 13:16:04 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352345,4.825344333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#108 DATALOG-01</n>
+      <description>07/09/2026 13:21:30 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352348,4.825336667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#109 DATALOG-01</n>
+      <description>07/09/2026 13:26:53 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352334,4.8253405,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#110 DATALOG-01</n>
+      <description>07/09/2026 13:32:14 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35232683,4.825335167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#111 DATALOG-01</n>
+      <description>07/09/2026 13:37:51 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.3523515,4.8253465,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#112 DATALOG-01</n>
+      <description>07/09/2026 13:43:13 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35232717,4.825328667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#113 DATALOG-01</n>
+      <description>07/09/2026 13:48:38 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35234167,4.825344167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#114 DATALOG-01</n>
+      <description>07/09/2026 13:54:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352346,4.825322,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#115 DATALOG-01</n>
+      <description>07/09/2026 14:00:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.348403,4.820187,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#116 DATALOG-01</n>
+      <description>07/09/2026 14:07:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345996,4.823028,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#117 DATALOG-01</n>
+      <description>07/09/2026 14:13:23 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345834,4.823131,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#118 DATALOG-01</n>
+      <description>07/09/2026 14:25:53 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345828,4.82318,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#119 DATALOG-01</n>
+      <description>07/09/2026 14:32:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345831,4.823143,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#120 DATALOG-01</n>
+      <description>07/09/2026 14:44:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345821,4.82314,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#121 DATALOG-01</n>
+      <description>07/09/2026 14:50:36 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.3457695,4.823170167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#122 DATALOG-01</n>
+      <description>07/09/2026 14:55:56 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34578717,4.823149333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#123 DATALOG-01</n>
+      <description>07/09/2026 15:11:38 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345821,4.823098,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#124 DATALOG-01</n>
+      <description>07/09/2026 15:17:27 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34582217,4.823110833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#125 DATALOG-01</n>
+      <description>07/09/2026 15:22:48 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34584067,4.823114,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#126 DATALOG-01</n>
+      <description>07/09/2026 15:30:17 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34580267,4.823116667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#127 DATALOG-01</n>
+      <description>07/09/2026 15:35:41 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.3458475,4.823058,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#128 DATALOG-01</n>
+      <description>07/09/2026 15:41:06 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34582683,4.823042333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#129 DATALOG-01</n>
+      <description>07/09/2026 15:47:52 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34581283,4.8231085,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#130 DATALOG-01</n>
+      <description>07/09/2026 16:00:31 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34576283,4.8231985,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#131 DATALOG-01</n>
+      <description>07/09/2026 16:06:11 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34579533,4.823078167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#132 DATALOG-01</n>
+      <description>07/09/2026 16:11:35 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34573533,4.823173167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#133 DATALOG-01</n>
+      <description>07/09/2026 16:16:56 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34583817,4.823038167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#134 DATALOG-01</n>
+      <description>07/09/2026 16:29:01 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345811,4.823119,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#135 DATALOG-01</n>
+      <description>07/09/2026 16:35:16 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345797,4.823097,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#136 DATALOG-01</n>
+      <description>07/09/2026 16:41:39 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345824,4.823128333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#137 DATALOG-01</n>
+      <description>07/09/2026 16:50:20 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345835,4.823134667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#138 DATALOG-01</n>
+      <description>07/09/2026 17:01:25 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34582633,4.823119833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#139 DATALOG-01</n>
+      <description>07/09/2026 17:06:51 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34588467,4.823125167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#140 DATALOG-01</n>
+      <description>07/09/2026 17:18:57 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34580633,4.823163167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#141 DATALOG-01</n>
+      <description>07/09/2026 17:24:49 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345832,4.823128,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#142 DATALOG-01</n>
+      <description>07/09/2026 17:30:46 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34691817,4.823084833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#143 DATALOG-01</n>
+      <description>07/09/2026 17:42:53 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.352666,4.809376,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#144 DATALOG-01</n>
+      <description>07/09/2026 18:01:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.334355,4.785016,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#145 DATALOG-01</n>
+      <description>07/09/2026 18:20:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282406,4.730892,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#146 DATALOG-01</n>
+      <description>07/09/2026 18:26:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28242,4.730886,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#147 DATALOG-01</n>
+      <description>07/09/2026 18:39:07 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282394,4.730891,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#148 DATALOG-01</n>
+      <description>07/09/2026 18:45:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282415,4.730883,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#149 DATALOG-01</n>
+      <description>07/09/2026 18:51:37 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28246,4.730837,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#150 DATALOG-01</n>
+      <description>07/09/2026 18:57:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282497,4.730873,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#151 DATALOG-01</n>
+      <description>07/09/2026 19:10:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282406,4.730878,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#152 DATALOG-01</n>
+      <description>07/09/2026 19:29:06 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282444,4.730873,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#153 DATALOG-01</n>
+      <description>07/09/2026 19:35:21 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282525,4.730817,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#154 DATALOG-01</n>
+      <description>07/09/2026 19:47:51 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282464,4.73113,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#155 DATALOG-01</n>
+      <description>07/09/2026 19:54:05 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.304237,4.756557,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#156 DATALOG-01</n>
+      <description>07/09/2026 20:06:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.348625,4.806895,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#157 DATALOG-01</n>
+      <description>07/09/2026 20:13:20 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35364983,4.818787667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#158 DATALOG-01</n>
+      <description>07/09/2026 20:19:10 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.348948,4.820659167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#159 DATALOG-01</n>
+      <description>07/09/2026 20:30:03 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345817,4.823135333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#160 DATALOG-01</n>
+      <description>07/09/2026 20:35:25 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345869,4.823117,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#161 DATALOG-01</n>
+      <description>07/09/2026 20:41:07 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34582617,4.823136667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#162 DATALOG-01</n>
+      <description>07/09/2026 20:46:30 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34583867,4.823206333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#163 DATALOG-01</n>
+      <description>07/09/2026 20:52:03 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34585267,4.823197833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#164 DATALOG-01</n>
+      <description>07/09/2026 20:57:25 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34596767,4.823272667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#165 DATALOG-01</n>
+      <description>07/09/2026 21:03:09 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34586133,4.823130833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#166 DATALOG-01</n>
+      <description>07/09/2026 21:08:34 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34579933,4.823118333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#167 DATALOG-01</n>
+      <description>07/09/2026 21:13:56 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34583683,4.823117833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#168 DATALOG-01</n>
+      <description>07/09/2026 21:19:19 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34579383,4.823193333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#169 DATALOG-01</n>
+      <description>07/09/2026 21:24:44 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345845,4.823137667,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#170 DATALOG-01</n>
+      <description>07/09/2026 21:30:50 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.3458305,4.8231475,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#171 DATALOG-01</n>
+      <description>07/09/2026 22:10:14 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34576517,4.823288833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#172 DATALOG-01</n>
+      <description>07/09/2026 22:37:41 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35515767,4.809873,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#173 DATALOG-01</n>
+      <description>07/09/2026 22:43:34 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.35162033,4.807019,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#174 DATALOG-01</n>
+      <description>07/09/2026 22:49:06 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.33566717,4.792147333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#175 DATALOG-01</n>
+      <description>07/09/2026 22:54:28 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.30634283,4.758206167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#176 DATALOG-01</n>
+      <description>07/09/2026 23:15:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282447,4.73085,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#177 DATALOG-01</n>
+      <description>07/09/2026 23:15:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282447,4.73085,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#178 DATALOG-01</n>
+      <description>07/09/2026 23:21:51 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282521,4.730911,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#179 DATALOG-01</n>
+      <description>07/09/2026 23:21:51 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282521,4.730911,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#180 DATALOG-01</n>
+      <description>07/09/2026 23:21:51 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282521,4.730911,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#181 DATALOG-01</n>
+      <description>07/09/2026 23:28:07 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282698,4.730939,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#182 DATALOG-01</n>
+      <description>07/09/2026 23:28:07 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282698,4.730939,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#183 DATALOG-01</n>
+      <description>07/09/2026 23:34:22 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282526,4.73091,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#184 DATALOG-01</n>
+      <description>07/09/2026 23:40:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282486,4.730883,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#185 DATALOG-01</n>
+      <description>07/09/2026 23:40:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282486,4.730883,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#186 DATALOG-01</n>
+      <description>07/09/2026 23:46:55 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282472,4.730866,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#187 DATALOG-01</n>
+      <description>07/09/2026 23:53:11 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282499,4.730881,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#188 DATALOG-01</n>
+      <description>07/09/2026 23:59:27 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282508,4.730883,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#189 DATALOG-01</n>
+      <description>08/09/2026 00:05:43 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282466,4.730863,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#190 DATALOG-01</n>
+      <description>08/09/2026 00:11:59 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282454,4.730855,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#191 DATALOG-01</n>
+      <description>08/09/2026 00:18:16 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282444,4.730842,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#192 DATALOG-01</n>
+      <description>08/09/2026 00:24:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28243,4.730844,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#193 DATALOG-01</n>
+      <description>08/09/2026 00:30:47 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282463,4.730868,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#194 DATALOG-01</n>
+      <description>08/09/2026 00:37:03 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28252,4.730946,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#195 DATALOG-01</n>
+      <description>08/09/2026 00:43:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282452,4.730902,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#196 DATALOG-01</n>
+      <description>08/09/2026 00:49:36 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28245,4.730864,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#197 DATALOG-01</n>
+      <description>08/09/2026 00:55:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282439,4.73088,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#198 DATALOG-01</n>
+      <description>08/09/2026 01:02:07 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282443,4.73088,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#199 DATALOG-01</n>
+      <description>08/09/2026 01:08:23 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282407,4.730873,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#200 DATALOG-01</n>
+      <description>08/09/2026 01:14:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282448,4.730862,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#201 DATALOG-01</n>
+      <description>08/09/2026 01:20:55 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282434,4.73083,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#202 DATALOG-01</n>
+      <description>08/09/2026 01:27:11 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282432,4.730815,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#203 DATALOG-01</n>
+      <description>08/09/2026 01:33:28 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282428,4.730876,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#204 DATALOG-01</n>
+      <description>08/09/2026 01:39:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282421,4.730856,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#205 DATALOG-01</n>
+      <description>08/09/2026 01:46:00 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282456,4.730839,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#206 DATALOG-01</n>
+      <description>08/09/2026 01:52:16 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282418,4.730872,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#207 DATALOG-01</n>
+      <description>08/09/2026 01:58:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282432,4.730849,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#208 DATALOG-01</n>
+      <description>08/09/2026 02:04:48 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28243,4.730846,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#209 DATALOG-01</n>
+      <description>08/09/2026 02:11:04 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282408,4.730843,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#210 DATALOG-01</n>
+      <description>08/09/2026 02:17:20 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282415,4.730863,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#211 DATALOG-01</n>
+      <description>08/09/2026 02:23:36 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282427,4.7309,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#212 DATALOG-01</n>
+      <description>08/09/2026 02:29:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282427,4.730833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#213 DATALOG-01</n>
+      <description>08/09/2026 02:36:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282436,4.73087,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#214 DATALOG-01</n>
+      <description>08/09/2026 02:42:24 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282416,4.730877,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#215 DATALOG-01</n>
+      <description>08/09/2026 02:48:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282426,4.730883,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#216 DATALOG-01</n>
+      <description>08/09/2026 02:54:56 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282443,4.730911,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#217 DATALOG-01</n>
+      <description>08/09/2026 03:01:12 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282459,4.7309,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#218 DATALOG-01</n>
+      <description>08/09/2026 03:07:28 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282471,4.730937,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#219 DATALOG-01</n>
+      <description>08/09/2026 03:13:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282458,4.730896,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#220 DATALOG-01</n>
+      <description>08/09/2026 03:20:00 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282428,4.730882,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#221 DATALOG-01</n>
+      <description>08/09/2026 03:26:16 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28254,4.730853,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#222 DATALOG-01</n>
+      <description>08/09/2026 03:32:32 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282603,4.730795,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#223 DATALOG-01</n>
+      <description>08/09/2026 03:38:48 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282489,4.730885,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#224 DATALOG-01</n>
+      <description>08/09/2026 03:45:04 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282417,4.73087,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#225 DATALOG-01</n>
+      <description>08/09/2026 03:51:20 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282395,4.73086,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#226 DATALOG-01</n>
+      <description>08/09/2026 03:57:36 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282403,4.730862,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#227 DATALOG-01</n>
+      <description>08/09/2026 04:03:52 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282432,4.730839,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#228 DATALOG-01</n>
+      <description>08/09/2026 04:10:08 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282437,4.730848,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#229 DATALOG-01</n>
+      <description>08/09/2026 04:16:24 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282425,4.730855,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#230 DATALOG-01</n>
+      <description>08/09/2026 04:22:40 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282425,4.730796,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#231 DATALOG-01</n>
+      <description>08/09/2026 04:28:56 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282417,4.730802,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#232 DATALOG-01</n>
+      <description>08/09/2026 04:35:12 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282425,4.730901,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#233 DATALOG-01</n>
+      <description>08/09/2026 04:41:30 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282445,4.730865,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#234 DATALOG-01</n>
+      <description>08/09/2026 04:47:46 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282442,4.73089,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#235 DATALOG-01</n>
+      <description>08/09/2026 04:54:02 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.28244,4.730863,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#236 DATALOG-01</n>
+      <description>08/09/2026 05:00:19 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282424,4.730861,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#237 DATALOG-01</n>
+      <description>08/09/2026 05:06:35 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282444,4.730831,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#238 DATALOG-01</n>
+      <description>08/09/2026 05:12:50 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282505,4.730928,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#239 DATALOG-01</n>
+      <description>08/09/2026 05:19:07 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282489,4.730883,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#240 DATALOG-01</n>
+      <description>08/09/2026 05:25:23 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282453,4.730881,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#241 DATALOG-01</n>
+      <description>08/09/2026 05:31:39 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282455,4.730907,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#242 DATALOG-01</n>
+      <description>08/09/2026 05:37:55 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282479,4.730906,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#243 DATALOG-01</n>
+      <description>08/09/2026 05:44:12 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282425,4.730885,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#244 DATALOG-01</n>
+      <description>08/09/2026 05:50:28 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282434,4.730894,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#245 DATALOG-01</n>
+      <description>08/09/2026 05:56:44 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282431,4.730924,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#246 DATALOG-01</n>
+      <description>08/09/2026 06:03:00 | Estado: REENVIO PENDIENTE | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.282402,4.73088,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#247 DATALOG-01</n>
+      <description>08/09/2026 14:41:36 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.261422,4.732059167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#248 DATALOG-01</n>
+      <description>08/09/2026 14:50:08 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.2722245,4.736151833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#249 DATALOG-01</n>
+      <description>08/09/2026 14:57:41 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.2818985,4.732150333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#250 DATALOG-01</n>
+      <description>08/09/2026 15:04:34 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.3085,4.761203167,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#251 DATALOG-01</n>
+      <description>08/09/2026 15:10:54 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.33559417,4.7738445,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#252 DATALOG-01</n>
+      <description>08/09/2026 15:18:16 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34005083,4.792778833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#253 DATALOG-01</n>
+      <description>08/09/2026 15:24:49 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34717783,4.804226833,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#254 DATALOG-01</n>
+      <description>08/09/2026 15:31:54 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34806833,4.820364,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#255 DATALOG-01</n>
+      <description>08/09/2026 15:49:17 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34578867,4.823145333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#256 DATALOG-01</n>
+      <description>08/09/2026 15:50:53 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.345892,4.823070333,0</coordinates></Point>
+    </Placemark>
+    <Placemark>
+      <n>#257 DATALOG-01</n>
+      <description>08/09/2026 15:56:24 | Estado: NUEVA UBICACION | Bat: 0%</description>
+      <styleUrl>#pointStyle</styleUrl>
+      <Point><coordinates>-74.34581117,4.823115667,0</coordinates></Point>
+    </Placemark>
+</Document></kml>
