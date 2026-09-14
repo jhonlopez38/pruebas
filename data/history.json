@@ -16910,5 +16910,21 @@
     "wifi": "conectado",
     "fw_version": "1.2.0-LOG",
     "created_at": "2026-09-14T13:50:46.999220"
+  },
+  {
+    "device": "DATALOG-01",
+    "estado": "NUEVA UBICACION",
+    "despertar": 762,
+    "ciclo_min": 30,
+    "fallos_gps": 0,
+    "lat": 1.19938,
+    "lon": -77.2901205,
+    "fecha": "14/09/2026",
+    "hora": "08:50:51",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0-LOG",
+    "created_at": "2026-09-14T13:51:02.408099"
   }
 ]
