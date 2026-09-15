@@ -12821,6 +12821,22 @@
     "despertar": 2706,
     "ciclo_min": 10,
     "fallos_gps": 2,
+    "lat": 4.123671,
+    "lon": -73.636781,
+    "fecha": "05/09/2026",
+    "hora": "15:12:06",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-15T03:47:44.261451"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 2706,
+    "ciclo_min": 10,
+    "fallos_gps": 2,
     "lat": 4.123597,
     "lon": -73.636681,
     "fecha": "05/09/2026",
@@ -12878,6 +12894,22 @@
     "wifi": "conectado",
     "fw_version": "1.2.0",
     "created_at": "2026-09-05T20:42:11.162577"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 2706,
+    "ciclo_min": 10,
+    "fallos_gps": 2,
+    "lat": 4.123401,
+    "lon": -73.636576,
+    "fecha": "05/09/2026",
+    "hora": "15:45:37",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-15T03:47:47.978767"
   },
   {
     "device": "DATALOG-01",
@@ -12960,6 +12992,22 @@
     "created_at": "2026-09-05T21:11:16.134435"
   },
   {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 2706,
+    "ciclo_min": 10,
+    "fallos_gps": 2,
+    "lat": 4.123514,
+    "lon": -73.636707,
+    "fecha": "05/09/2026",
+    "hora": "16:18:58",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-15T03:47:51.451884"
+  },
+  {
     "device": "DATALOG-01",
     "estado": "NUEVA UBICACION",
     "despertar": 12,
@@ -12990,6 +13038,22 @@
     "wifi": "conectado",
     "fw_version": "1.2.0",
     "created_at": "2026-09-15T03:47:53.812963"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 2706,
+    "ciclo_min": 10,
+    "fallos_gps": 2,
+    "lat": 4.123462,
+    "lon": -73.636679,
+    "fecha": "05/09/2026",
+    "hora": "16:53:00",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-15T03:47:54.865864"
   },
   {
     "device": "DATALOG-02",
