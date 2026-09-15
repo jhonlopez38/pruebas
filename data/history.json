@@ -12501,6 +12501,22 @@
     "despertar": 2705,
     "ciclo_min": 10,
     "fallos_gps": 1,
+    "lat": 4.123467,
+    "lon": -73.636752,
+    "fecha": "05/09/2026",
+    "hora": "11:46:14",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-15T03:34:33.179581"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 2705,
+    "ciclo_min": 10,
+    "fallos_gps": 1,
     "lat": 4.123663,
     "lon": -73.636709,
     "fecha": "05/09/2026",
@@ -12517,15 +12533,15 @@
     "despertar": 2705,
     "ciclo_min": 10,
     "fallos_gps": 1,
-    "lat": 4.123518,
-    "lon": -73.636726,
+    "lat": 4.123198,
+    "lon": -73.636909,
     "fecha": "05/09/2026",
-    "hora": "12:08:49",
+    "hora": "12:20:17",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-09-15T03:34:35.683851"
+    "created_at": "2026-09-15T03:34:36.823073"
   },
   {
     "device": "DATALOG-01",
@@ -12542,6 +12558,22 @@
     "wifi": "conectado",
     "fw_version": "1.2.0-LOG",
     "created_at": "2026-09-05T17:24:58.390525"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 2705,
+    "ciclo_min": 10,
+    "fallos_gps": 1,
+    "lat": 4.123149,
+    "lon": -73.637037,
+    "fecha": "05/09/2026",
+    "hora": "12:32:08",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-15T03:34:37.883221"
   },
   {
     "device": "DATALOG-01",
@@ -12576,22 +12608,6 @@
     "created_at": "2026-09-05T17:43:24.678942"
   },
   {
-    "device": "HERMES-02",
-    "estado": "REENVIO PENDIENTE",
-    "despertar": 2705,
-    "ciclo_min": 10,
-    "fallos_gps": 1,
-    "lat": 4.123476,
-    "lon": -73.636781,
-    "fecha": "05/09/2026",
-    "hora": "12:44:42",
-    "bateria_v": 0,
-    "bateria_pct": 0,
-    "wifi": "conectado",
-    "fw_version": "1.2.0",
-    "created_at": "2026-09-15T03:34:39.148174"
-  },
-  {
     "device": "DATALOG-01",
     "estado": "SIN GPS",
     "despertar": 18,
@@ -12606,6 +12622,22 @@
     "wifi": "conectado",
     "fw_version": "1.2.0-LOG",
     "created_at": "2026-09-05T18:02:59.870195"
+  },
+  {
+    "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 2705,
+    "ciclo_min": 10,
+    "fallos_gps": 1,
+    "lat": 4.123483,
+    "lon": -73.636882,
+    "fecha": "05/09/2026",
+    "hora": "13:08:56",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-09-15T03:34:41.420345"
   },
   {
     "device": "DATALOG-01",
