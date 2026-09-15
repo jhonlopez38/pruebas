@@ -21,15 +21,15 @@
     "despertar": 2705,
     "ciclo_min": 10,
     "fallos_gps": 1,
-    "lat": 4.123476,
-    "lon": -73.636781,
+    "lat": 4.123583,
+    "lon": -73.63668,
     "fecha": "05/09/2026",
-    "hora": "12:44:42",
+    "hora": "12:56:57",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-09-15T03:34:39.148174"
+    "created_at": "2026-09-15T03:34:40.323923"
   },
   "DATALOG-01": {
     "device": "DATALOG-01",
