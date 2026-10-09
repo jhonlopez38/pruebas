@@ -22565,14 +22565,14 @@
     "despertar": 3282,
     "ciclo_min": 10,
     "fallos_gps": 0,
-    "lat": 4.123445,
-    "lon": -73.636703,
+    "lat": 4.123601,
+    "lon": -73.636624,
     "fecha": "08/10/2026",
-    "hora": "21:09:45",
+    "hora": "21:31:59",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-10-09T04:12:43.294959"
+    "created_at": "2026-10-09T04:12:45.797876"
   }
 ]
