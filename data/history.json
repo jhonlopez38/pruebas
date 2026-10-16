@@ -25745,6 +25745,22 @@
   },
   {
     "device": "HERMES-02",
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 3783,
+    "ciclo_min": 10,
+    "fallos_gps": 4,
+    "lat": 4.123565,
+    "lon": -73.636565,
+    "fecha": "11/10/2026",
+    "hora": "10:23:29",
+    "bateria_v": 0,
+    "bateria_pct": 0,
+    "wifi": "conectado",
+    "fw_version": "1.2.0",
+    "created_at": "2026-10-16T15:38:31.358432"
+  },
+  {
+    "device": "HERMES-02",
     "estado": "ULTIMA UBICACION",
     "despertar": 3710,
     "ciclo_min": 10,
