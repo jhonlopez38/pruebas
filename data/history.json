@@ -26437,15 +26437,15 @@
     "despertar": 3786,
     "ciclo_min": 10,
     "fallos_gps": 0,
-    "lat": 4.123589,
-    "lon": -73.636592,
+    "lat": 4.123736,
+    "lon": -73.636493,
     "fecha": "11/10/2026",
-    "hora": "23:08:04",
+    "hora": "23:30:38",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-10-16T16:13:18.913512"
+    "created_at": "2026-10-16T16:13:21.765729"
   },
   {
     "device": "HERMES-02",
