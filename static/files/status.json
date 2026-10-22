@@ -66,17 +66,17 @@
   "HERMES-03": {
     "device": "HERMES-03",
     "estado": "NUEVA UBICACION",
-    "despertar": 42,
+    "despertar": 43,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 4.8231035,
-    "lon": -74.3458475,
+    "lat": 4.823082,
+    "lon": -74.34584867,
     "fecha": "22/10/2026",
-    "hora": "14:59:38",
+    "hora": "15:04:58",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.0",
-    "created_at": "2026-10-22T19:59:48.155573"
+    "created_at": "2026-10-22T20:05:07.249072"
   }
 }
