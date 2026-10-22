@@ -1,5 +1,16 @@
 {
-  "Hermesadmin": {},
+  "Hermesadmin": {
+    "HERMES-003": {
+      "device_id": "HERMES-003",
+      "device": "HERMES-003",
+      "nombre": "HERMES-003",
+      "name": "HERMES-003",
+      "icono": "📡",
+      "color": "#ff0088",
+      "owner": "Hermesadmin",
+      "created_at": "2026-10-22T14:57:31.389299"
+    }
+  },
   "MINI1.1.8": {
     "HERMES-01": {
       "device_id": "HERMES-01",
