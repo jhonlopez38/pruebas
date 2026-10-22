@@ -3,10 +3,10 @@
     "username": "Hermesadmin",
     "email": "Hermesadmin",
     "name": "Administrador HERMES",
-    "password": "$2b$12$YOluZUHG5UzwmE4xVBSajevCFNmKNT4zvYPvi2Kr9PN7jYt89zuWW",
+    "password": "$2b$12$uvPOHHtl2WY30/2MiCDiQ.BvgLLEVeqvHXVlsKvlPksGyfJtoLeqm",
     "role": "admin",
     "created_at": "2026-06-05T01:05:01.395604",
-    "updated_at": "2026-09-10T14:06:27.938014"
+    "updated_at": "2026-10-22T11:30:41.287805"
   },
   "MINI1.1.8": {
     "username": "MINI1.1.8",
