@@ -12,6 +12,16 @@
     }
   },
   "MINI1.1.8": {
+    "HERMES-003": {
+      "device_id": "HERMES-003",
+      "device": "HERMES-003",
+      "nombre": "HERMES-003",
+      "name": "HERMES-003",
+      "icono": "📡",
+      "color": "#ff0088",
+      "owner": "MINI1.1.8",
+      "created_at": "2026-10-22T14:57:35.675273"
+    },
     "HERMES-01": {
       "device_id": "HERMES-01",
       "device": "HERMES-01",
