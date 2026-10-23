@@ -65,18 +65,18 @@
   },
   "HERMES-03": {
     "device": "HERMES-03",
-    "estado": "NUEVA UBICACION",
-    "despertar": 285,
+    "estado": "REENVIO PENDIENTE",
+    "despertar": 301,
     "ciclo_min": 5,
     "fallos_gps": 0,
-    "lat": 4.823146667,
-    "lon": -74.34592233,
+    "lat": 4.82321,
+    "lon": -74.345889,
     "fecha": "23/10/2026",
-    "hora": "15:10:06",
+    "hora": "15:15:57",
     "bateria_v": 0,
     "bateria_pct": 0,
     "wifi": "conectado",
     "fw_version": "1.2.1",
-    "created_at": "2026-10-23T20:10:18.000059"
+    "created_at": "2026-10-23T21:49:15.751096"
   }
 }
