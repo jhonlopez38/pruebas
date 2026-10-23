@@ -1798,11 +1798,18 @@ async function cargarDispositivos(){
       sel.appendChild(opt);
     });
 
-    // Restaurar selección anterior o usar el primero
-    if(sorted.includes(cur)) sel.value = cur;
-    else sel.value = sorted[0];
+    // Restaurar seleccion: primero la que ya estaba en pantalla, si no la
+    // guardada de la sesion anterior, y como ultimo recurso el primero de la
+    // lista. Antes solo existia el ultimo caso y cada recarga saltaba a otro
+    // equipo mostrando datos que no correspondian.
+    let guardada = "";
+    try{ guardada = localStorage.getItem("hermes_devsel") || ""; }catch(e){}
+    if(sorted.includes(cur))           sel.value = cur;
+    else if(sorted.includes(guardada)) sel.value = guardada;
+    else                               sel.value = sorted[0];
 
     CUR_DEV = sel.value;
+    try{ localStorage.setItem("hermes_devsel", CUR_DEV); }catch(e){}
     document.getElementById("h-unit").innerText = CUR_DEV;
 
   }catch(e){ console.log("cargarDispositivos:", e); }
@@ -1810,6 +1817,9 @@ async function cargarDispositivos(){
 
 function onDevChange(){
   CUR_DEV=document.getElementById("devSelect").value;
+  // Recordar la seleccion. Sin esto, cada F5 volvia al primer equipo de la
+  // lista y el tablero mostraba otro dispositivo sin avisar.
+  try{ localStorage.setItem("hermes_devsel", CUR_DEV); }catch(e){}
   document.getElementById("h-unit").innerText=CUR_DEV;
   document.getElementById("dpName").innerText=CUR_DEV;
   // Actualizar labels de archivos con el device activo
@@ -1817,7 +1827,14 @@ function onDevChange(){
   const kml = document.getElementById("kmlLabel");
   if(csv) csv.innerText = CUR_DEV.toLowerCase().replace("-","_") + ".csv";
   if(kml) kml.innerText = "ruta_" + CUR_DEV.toLowerCase().replace("-","_") + ".kml";
+  // Limpiar de inmediato los campos que vienen de /device-status. Si no, se
+  // quedan con los valores del equipo ANTERIOR hasta el siguiente sondeo
+  // (30 s), y el panel muestra el despertar y el firmware de otro equipo.
+  ["despV","fwV","batV","falV","wifiV","cicV"].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.innerText="--";
+  });
   resetPlayState();
+  statusDisp();                       // refrescar YA, no esperar al temporizador
   if(CUR_MODE==="live")actualizar();
 }
 
@@ -2025,15 +2042,38 @@ function statusDisp(){
       const fwEl=document.getElementById("fwV");
       if(fwEl) fwEl.innerText=d.fw_version?"v"+d.fw_version:"--";
       document.getElementById("despV").innerText=d.despertar||"--";
-      document.getElementById("ultCon").innerText=horaCol();
       const cm=d.ciclo_min||0;
+      // ANTIGUEDAD DEL ULTIMO REPORTE. El panel mostraba "ACTIVO · Senal
+      // Excelente" con la ultima posicion conocida aunque el equipo llevara
+      // semanas apagado: HERMES-01 lleva asi desde agosto y HERMES-02 estuvo
+      // una semana sin que el tablero lo indicara. Si el ultimo dato supera
+      // 3 ciclos, el estado pasa a SIN REPORTAR.
+      let edadMin=null;
+      if(d.created_at){
+        const t=Date.parse(/[zZ]$|[+-]\d{2}:?\d{2}$/.test(d.created_at)?d.created_at:d.created_at+"Z");
+        if(!isNaN(t)) edadMin=(Date.now()-t)/60000;
+      }
+      const vencido = edadMin!==null && edadMin > (cm||5)*3 + 5;
+      const ucEl=document.getElementById("ultCon");
+      if(edadMin===null)   ucEl.innerText=horaCol();
+      else if(edadMin<60)  ucEl.innerText=Math.round(edadMin)+" min";
+      else if(edadMin<1440)ucEl.innerText=(edadMin/60).toFixed(1)+" h";
+      else                 ucEl.innerText=Math.round(edadMin/1440)+" dias";
+      ucEl.className = vencido ? "val er" : "val";
       document.getElementById("cicV").innerText=cm?cm+" min":"--";
       document.getElementById("h-ciclo").innerText=cm?cm+" min":"-- min";
       CICLOS.forEach((c,i)=>{const el=document.getElementById("cy"+i);if(el)el.classList.toggle("active",c===cm);});
       if(cm){const idx=CICLOS.indexOf(cm);document.getElementById("cyDesc").innerText=`Ciclo ${idx+1} activo (${cm} min)`;}
       const est=(d.estado||"").toUpperCase();
       const he=document.getElementById("h-est"),hg=document.getElementById("h-gps"),bdg=document.getElementById("bdg");
-      if(est.includes("NUEVA")||est.includes("UBICACION")||est.includes("OK")){
+      if(vencido){
+        // El equipo dejo de reportar: manda la antiguedad, no el ultimo estado.
+        he.innerText="SIN REPORTAR";he.className="hs-v err";
+        hg.innerText="SIN DATOS";   hg.className="hs-v err";
+        bdg.innerHTML='<span class="badge b-er">SIN REPORTAR</span>';
+        const gs=document.getElementById("gpsS");
+        gs.innerText=ucEl.innerText+" sin datos"; gs.className="val er";
+      } else if(est.includes("NUEVA")||est.includes("UBICACION")||est.includes("OK")){
         he.innerText="OPERATIVO";he.className="hs-v ok";hg.innerText="LOCK";hg.className="hs-v ok";
         bdg.innerHTML='<span class="badge b-ok">ACTIVO</span>';
         document.getElementById("gpsS").className="val ok";
