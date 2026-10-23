@@ -17,5 +17,11 @@
     "cmd": "status",
     "created_at": "2026-09-17T02:24:52.097036",
     "attempts": 0
+  },
+  "HERMES-03": {
+    "device": "HERMES-03",
+    "cmd": "update",
+    "created_at": "2026-10-23T14:20:59.615269",
+    "attempts": 0
   }
 }
