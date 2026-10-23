@@ -243,15 +243,21 @@ def gh_push_history(local_hist, excluir=None):
     except Exception as e:
         print("[GH] Error fusionando history.json:", e)
 
-def gh_put_file(path: str, content: str, message: str = "HERMES data update"):
-    """Crear o actualizar archivo en GitHub."""
+def gh_put_file(path: str, content: str, message: str = "HERMES data update",
+                ya_b64: bool = False):
+    """Crear o actualizar archivo en GitHub.
+
+    ya_b64=True indica que 'content' YA viene en base64 y no debe codificarse
+    otra vez. Necesario para archivos binarios como el .bin del OTA: antes se
+    codificaba dos veces y en GitHub quedaba texto base64 en lugar del binario.
+    """
     if not USE_GITHUB:
         return False
     try:
         import urllib.request
         existing = gh_get_file(path)
         sha = existing.get("sha") if existing else None
-        encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
+        encoded = content if ya_b64 else base64.b64encode(content.encode("utf-8")).decode("utf-8")
         payload = json.dumps({
             "message": message,
             "content": encoded,
@@ -352,6 +358,26 @@ def sync_from_github():
             print("[GH] Sincronizado: gps_log.csv", file=sys.stderr)
     except Exception as e:
         print(f"[GH] No se pudo sincronizar CSV: {e}", file=sys.stderr)
+
+    # Firmware OTA (binario). Render borra el disco en CADA despliegue y en
+    # cada spin-down, asi que sin esta restauracion el .bin desaparecia y el
+    # equipo recibia 404 al intentar actualizarse. Las rutas se escriben
+    # literales porque FIRMWARE_PATH se define mas abajo en el archivo.
+    try:
+        _fw_dir = os.path.join(STATIC_DIR, "firmware")
+        data = gh_get_file("static/firmware/hermes.bin")
+        if data and data.get("content"):
+            os.makedirs(_fw_dir, exist_ok=True)
+            with open(os.path.join(_fw_dir, "hermes.bin"), "wb") as f:
+                f.write(base64.b64decode(data["content"]))
+            ver = gh_get_file("static/firmware/version.txt")
+            if ver and ver.get("content"):
+                with open(os.path.join(_fw_dir, "version.txt"), "w",
+                          encoding="utf-8") as f:
+                    f.write(base64.b64decode(ver["content"]).decode("utf-8"))
+            print("[GH] Firmware OTA restaurado desde GitHub", file=sys.stderr)
+    except Exception as e:
+        print(f"[GH] Sin firmware OTA en GitHub: {e}", file=sys.stderr)
 
 def init_files():
     for path, default in [
@@ -1084,12 +1110,24 @@ def device_status_get(device: str = "HERMES-01", user=Depends(get_user)):
     return read_json(STATUS_FILE, {}).get(device, {})
 
 @app.get("/status")
-def get_all_status(): return read_json(STATUS_FILE, {})
+def get_all_status(user=Depends(get_user)):
+    """Estado de los equipos VISIBLES para este usuario.
+
+    Antes no exigia token y devolvia TODOS los equipos a cualquiera. El
+    selector de la webapp se arma uniendo /devices con /status, asi que un
+    usuario con un solo equipo asignado terminaba viendo la flota completa.
+    """
+    s = read_json(STATUS_FILE, {})
+    perm = permitidos(user)              # None = admin, sin restriccion
+    if perm is None:
+        return s
+    return {k: v for k, v in s.items() if k in perm}
 
 @app.get("/status/{device_id}")
-def get_status(device_id: str):
+def get_status(device_id: str, user=Depends(get_user)):
     s = read_json(STATUS_FILE, {})
     if device_id not in s: raise HTTPException(404, "Dispositivo no encontrado")
+    exigir_acceso(user, device_id)
     return s[device_id]
 
 
@@ -1501,14 +1539,19 @@ async def upload_firmware(request: Request, admin=Depends(require_admin)):
         size_kb = round(len(body) / 1024, 1)
         print(f"[OTA] Firmware subido: {size_kb} KB v{version}", flush=True)
 
-        # Subir a GitHub también
+        # Subir a GitHub también: es la UNICA copia que sobrevive a un
+        # redeploy de Render. La version tambien, para poder restaurarla.
         if USE_GITHUB:
             import base64
             encoded = base64.b64encode(body).decode("utf-8")
             t = threading.Thread(target=gh_put_file,
                 args=(f"static/firmware/hermes.bin", encoded,
-                      f"OTA firmware v{version}"), daemon=True)
+                      f"OTA firmware v{version}", True), daemon=True)
             t.start()
+            t2 = threading.Thread(target=gh_put_file,
+                args=("static/firmware/version.txt", version,
+                      f"OTA version v{version}"), daemon=True)
+            t2.start()
 
         return {"ok": True, "size_kb": size_kb, "version": version,
                 "msg": f"Firmware v{version} ({size_kb} KB) subido correctamente"}
